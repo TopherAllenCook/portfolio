@@ -152,4 +152,170 @@ export const works: Work[] = [
     accent: "#2F4858",
     image: "/works/inscipher.jpeg",
   },
+  {
+    slug: "get-found-ai",
+    client: "Get Found AI",
+    role: "Founder, Designer & Builder",
+    period: "2025 — Present",
+    category: "Independent Product",
+    headline:
+      "Building the visibility layer wedding vendors need inside AI search.",
+    summary:
+      "Designed and built a product that helps wedding vendors get surfaced inside ChatGPT, Perplexity, and Gemini results. The audit engine grades a vendor's web presence against how LLMs actually retrieve and rank information, then prescribes the structured content and AEO work to close the gap. Positioning, IA, product design, copy, and engineering all owned end to end.",
+    highlights: [
+      "Identified a real category gap: wedding vendors are largely invisible to LLM-powered search",
+      "Designed an audit engine that scores AEO posture and prescribes specific fixes",
+      "Shipped marketing site, product flow, and reporting layer solo, AI-native stack",
+    ],
+    metrics: [
+      { label: "Scope", value: "End to end" },
+      { label: "Disciplines", value: "5" },
+      { label: "Stack", value: "Next.js + AI" },
+    ],
+    link: { label: "getfoundai.co", href: "https://getfoundai.co" },
+    accent: "#4A6B8A",
+    image: "/works/get-found-ai.jpeg",
+  },
+  {
+    slug: "glide-cleaners",
+    client: "Glide Cleaners",
+    role: "Designer & Builder",
+    period: "2025",
+    category: "Independent Web Build",
+    headline:
+      "A polished consumer site shipped in days using modern AI-native build tools.",
+    summary:
+      "Designed and built a clean, conversion-minded marketing site for Glide Cleaners using a low-code, AI-assisted build stack. The project demonstrates how I compress design and build timelines without compromising on brand quality, copy, or UX.",
+    highlights: [
+      "Built the full marketing site in days, not weeks",
+      "Owned brand design, copy, IA, and conversion architecture",
+      "Shipped using AI-assisted tooling (Lovable + Claude) for rapid iteration",
+    ],
+    metrics: [
+      { label: "Build time", value: "Days" },
+      { label: "Scope", value: "End to end" },
+      { label: "Stack", value: "AI-native" },
+    ],
+    link: {
+      label: "glide-sparkle-hub.lovable.app",
+      href: "https://glide-sparkle-hub.lovable.app",
+    },
+    accent: "#1F6F8B",
+    image: "/works/glide-cleaners.jpeg",
+  },
+  {
+    slug: "glide-window-cleaning-audit",
+    client: "Glide Window Cleaning",
+    role: "Paid Media Consultant",
+    period: "2026",
+    category: "Consulting Audit",
+    headline:
+      "A full Google Ads audit and rebuild plan for a multi-market home-services brand.",
+    summary:
+      "Conducted a 360-day audit of Glide Window Cleaning's Google Ads account ($16K spend, 309 conversions) and authored a complete rebuild plan. Diagnosed the real problem (a starved learning signal and a missing search foundation, not a weak category) and prescribed a geo-segmented structure with branded protection, offline conversion uploads, and disciplined bidding tiers across Arizona, Utah, and Denver.",
+    highlights: [
+      "Diagnosed under-1% impression share against competitors operating in the 20-30% range",
+      "Designed a market-by-market budget and bid plan to push into the competitive tier",
+      "Prescribed branded search, offline conversion uploads, and a manual rebuild before automation",
+    ],
+    metrics: [
+      { label: "Spend audited", value: "$16K" },
+      { label: "Period reviewed", value: "360 days" },
+      { label: "Markets planned", value: "3" },
+    ],
+    accent: "#4F7CAC",
+    image: "/works/glide-window-cleaning.jpeg",
+  },
+  {
+    slug: "dieu-humilie",
+    client: "Dieu Humilié",
+    role: "Brand & Product Designer",
+    period: "2021",
+    category: "Brand Concept & Advertising",
+    headline:
+      "Repositioning the men's hairpiece category as luxury, ethical, and unapologetically masculine.",
+    summary:
+      "Concepted and designed an end-to-end brand and product line for Dieu Humilié, a luxury, ethically sourced men's hairpiece brand. Customer research, positioning, brand identity, product line architecture, packaging, and an advertising campaign built to destigmatize the category and speak to a man who wants to feel powerful, handsome, and confident.",
+    highlights: [
+      "Built the positioning on direct research with hair-replacement customers and luxury buyers",
+      "Designed brand identity, product line (adhesive, hair masque, cologne), and packaging system",
+      "Wrote and art-directed the launch advertising and social campaign",
+    ],
+    metrics: [
+      { label: "Disciplines", value: "5" },
+      { label: "Product SKUs", value: "4" },
+      { label: "Scope", value: "End to end" },
+    ],
+    accent: "#A6826A",
+    image: "/works/dieu-humilie.jpeg",
+  },
+  {
+    slug: "amavi",
+    client: "Amavi (doTERRA R&D)",
+    role: "Associate Product Marketing & Brand Manager",
+    period: "2021",
+    category: "Market Research & Product Concept",
+    headline:
+      "A research-backed product concept for men's essential-oil fragrance, a category doTERRA hadn't entered.",
+    summary:
+      "Authored the market research, competitive benchmarking, persona work, and product concept for Amavi, a proposed men's essential-oil fragrance line for doTERRA. Mapped a $31B global fragrance market, defined the target buyer, and designed a three-product launch concept (Azul, Roso, Noir) priced to undercut category leaders while staying ethically sourced.",
+    highlights: [
+      "Sized the global fragrance market and built a competitive benchmark against Skylar, Henry Rose, Le Labo",
+      "Defined a target buyer and use occasions backed by Mintel and survey data",
+      "Designed a three-product sampler concept with sustainable packaging and a $24 retail price point",
+    ],
+    metrics: [
+      { label: "Market size mapped", value: "$31B" },
+      { label: "Concepts designed", value: "3" },
+      { label: "Benchmarks", value: "5" },
+    ],
+    accent: "#3E5B6A",
+    image: "/works/amavi.jpeg",
+  },
+  {
+    slug: "doterra-wellness-program",
+    client: "doTERRA Wellness Programs",
+    role: "Associate Product Marketing & Brand Manager",
+    period: "2021",
+    category: "Customer Research & UX",
+    headline:
+      "Finding out why doTERRA customers dropped a 3-month Wellness Program early, and what to change.",
+    summary:
+      "Owned the customer research project investigating why doTERRA Wellness Program participants dropped before completing the 3-month track. Designed and ran a 200+ respondent survey, analyzed expectations vs. experience, and surfaced the structural changes (product variety, choice, ordering flexibility, pricing) needed to lift completion.",
+    highlights: [
+      "Designed and ran a survey with 202 analyzed responses across customer types",
+      "Identified the core drivers of drop-off (cost, lack of choice, fixed kit ordering, low product variety)",
+      "Translated findings into program-level recommendations for product, pricing, and UX teams",
+    ],
+    metrics: [
+      { label: "Respondents", value: "202" },
+      { label: "Programs studied", value: "3" },
+      { label: "Avg. satisfaction", value: "4.04 / 5" },
+    ],
+    accent: "#5A7C5A",
+    image: "/works/wellness-program.jpeg",
+  },
+  {
+    slug: "doterra-mothers-day-2020",
+    client: "doTERRA Mother's Day 2020",
+    role: "Associate Product Marketing & Brand Manager",
+    period: "2020",
+    category: "Campaign & Creative",
+    headline:
+      "A Mother's Day campaign for doTERRA's WQA Florals line, anchored by a story about the women worth celebrating.",
+    summary:
+      "Concepted, wrote, and shipped the Mother's Day 2020 promotional campaign for doTERRA's WQA Florals collection (Rose, Neroli, Jasmine, Magnolia, Blue Lotus). Authored the brand narrative (\"We are bright, charming, beautiful, strong, smart, creative, lovers, mothers, sisters, daughters, women, precious.\") and produced a full set of social, story, and ad creative across Instagram, Facebook, and WhatsApp.",
+    highlights: [
+      "Wrote the campaign manifesto and product sourcing stories for five WQA Florals",
+      "Designed a full social and ad asset pack spanning story, square, and horizontal formats",
+      "Coordinated cross-functional rollout across paid, organic, and lifecycle channels",
+    ],
+    metrics: [
+      { label: "Products featured", value: "5" },
+      { label: "Asset formats", value: "8+" },
+      { label: "Channels", value: "Paid, organic, CRM" },
+    ],
+    accent: "#C2554A",
+    image: "/works/mothers-day-2020.jpeg",
+  },
 ];
