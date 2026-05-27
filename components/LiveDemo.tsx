@@ -1,116 +1,114 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getBrand } from "@/lib/brands";
 
-const WEBHOOKS = {
-  four_surfaces:
-    "https://financiallyfitphotographe.app.n8n.cloud/webhook/tbf-content-demo",
-  full_stack:
-    "https://financiallyfitphotographe.app.n8n.cloud/webhook/tbf-content-stack",
-} as const;
+type Mode = "short" | "full";
 
-type Mode = keyof typeof WEBHOOKS;
-
-type FourSurfaces = {
-  instagram: string;
-  linkedin: string;
-  email_subject: string;
-  email_body: string;
-  blog_headline: string;
-  blog_lede: string;
+// TBF Full Stack response shape
+type TbfFullStack = {
+  social: {
+    instagram: string;
+    linkedin: string;
+    email_subject: string;
+    email_body: string;
+    blog_headline: string;
+    blog_lede: string;
+  };
+  seo: SeoBlock;
+  aeo: AeoBlock;
+  geo: { definition_snippet: string; comparison_snippet: string; statistic_snippet: string };
 };
 
-type FullStack = {
-  social: FourSurfaces;
-  seo: {
-    meta_title: string;
-    meta_description: string;
-    h1: string;
-    primary_keyword: string;
-    internal_link_suggestions: { anchor: string; target_url: string }[];
-    schema_jsonld: string;
-  };
-  aeo: {
-    question: string;
-    direct_answer: string;
-    full_answer: string;
-    schema_faq_markup: string;
-  };
+// Romanoff Full Stack response shape
+type RomanoffFullStack = {
+  press_quote: string;
+  instagram: string;
+  tiktok_script: string;
+  podcast_pitch: string;
+  seo: SeoBlock;
+  aeo: AeoBlock;
   geo: {
     definition_snippet: string;
-    comparison_snippet: string;
-    statistic_snippet: string;
+    three_signs_snippet: string;
+    clinical_reframe_snippet: string;
+    permission_grant_snippet: string;
   };
 };
 
-type FourSurfacesResponse = {
-  surfaces: FourSurfaces;
+type SeoBlock = {
+  meta_title: string;
+  meta_description: string;
+  h1: string;
+  primary_keyword: string;
+  internal_link_suggestions: { anchor: string; target_url: string }[];
+  schema_jsonld: string;
+};
+
+type AeoBlock = {
+  question: string;
+  direct_answer: string;
+  full_answer: string;
+  schema_faq_markup: string;
+};
+
+type TbfShortResponse = {
+  surfaces: TbfFullStack["social"];
   voice_manual_version: string;
   model: string;
 };
 
-type FullStackResponse = {
-  stack: FullStack;
+type FullResponse = {
+  stack: TbfFullStack | RomanoffFullStack;
   voice_manual_version: string;
   brain_files_referenced: string[];
   model: string;
 };
 
-const PRESET_TOPICS = [
-  {
-    label: "UCLA research grant",
-    value:
-      "Nexus Agriscience selected for UCLA-led, California state-funded cannabis research grant. TBF terpene oils will be the input dataset.",
-  },
-  {
-    label: "Pine-129 vintage release",
-    value:
-      "TBF just released the 2025 Pine-129 vintage at 8.2% caryophyllene by GC-MS, the highest concentration recorded for this cultivar.",
-  },
-  {
-    label: "Vape thermal stability",
-    value:
-      "New internal GC-MS data shows TBF Gas-707 holds flavor integrity at 230°C, where most monoterpene-dominant blends drop off above 180°C.",
-  },
-];
-
-const AUDIENCES: { id: "vape" | "beverage" | "edible" | "distributor"; label: string }[] = [
-  { id: "vape", label: "Vape R&D" },
-  { id: "beverage", label: "Beverage formulator" },
-  { id: "edible", label: "Edible formulator" },
-  { id: "distributor", label: "Distributor / procurement" },
-];
-
-export default function LiveDemo() {
-  const [mode, setMode] = useState<Mode>("four_surfaces");
-  const [topic, setTopic] = useState(PRESET_TOPICS[0].value);
-  const [audience, setAudience] = useState<typeof AUDIENCES[number]["id"]>("vape");
+export default function LiveDemo({ brandSlug }: { brandSlug: string }) {
+  const brand = getBrand(brandSlug);
+  const hasShort = !!brand.webhooks.short;
+  const [mode, setMode] = useState<Mode>(hasShort ? "short" : "full");
+  const [topic, setTopic] = useState(brand.presets[0].value);
+  const [audience, setAudience] = useState<string>(brand.audiences[0].id);
   const [loading, setLoading] = useState(false);
   const [elapsed, setElapsed] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [fourResult, setFourResult] = useState<FourSurfacesResponse | null>(null);
-  const [stackResult, setStackResult] = useState<FullStackResponse | null>(null);
+  const [shortResult, setShortResult] = useState<TbfShortResponse | null>(null);
+  const [fullResult, setFullResult] = useState<FullResponse | null>(null);
+
+  // Reset state when brand or mode changes
+  useEffect(() => {
+    setMode(hasShort ? "short" : "full");
+    setTopic(brand.presets[0].value);
+    setAudience(brand.audiences[0].id);
+    setShortResult(null);
+    setFullResult(null);
+    setElapsed(null);
+    setError(null);
+  }, [brand.slug, brand.presets, brand.audiences, hasShort]);
 
   async function generate() {
     setLoading(true);
     setError(null);
     setElapsed(null);
-    setFourResult(null);
-    setStackResult(null);
+    setShortResult(null);
+    setFullResult(null);
     const startedAt = Date.now();
 
     try {
+      const url = mode === "short" ? brand.webhooks.short! : brand.webhooks.full;
       const body =
-        mode === "four_surfaces" ? { topic } : { topic, audience };
-      const resp = await fetch(WEBHOOKS[mode], {
+        mode === "short" ? { topic } : { topic, audience };
+      const resp = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       if (!resp.ok) throw new Error(`Webhook returned ${resp.status}`);
       const data = await resp.json();
-      if (mode === "four_surfaces") setFourResult(data as FourSurfacesResponse);
-      else setStackResult(data as FullStackResponse);
+      if (mode === "short") setShortResult(data as TbfShortResponse);
+      else setFullResult(data as FullResponse);
       setElapsed(Date.now() - startedAt);
     } catch (e) {
       setError(
@@ -123,39 +121,41 @@ export default function LiveDemo() {
     }
   }
 
-  const expectedSeconds = mode === "four_surfaces" ? 30 : 60;
+  const expectedSeconds = mode === "short" ? 30 : 60;
 
   return (
     <div className="not-prose">
-      {/* Mode tabs */}
-      <div className="flex flex-wrap gap-2 mb-4">
-        <ModeTab
-          active={mode === "four_surfaces"}
-          onClick={() => setMode("four_surfaces")}
-          title="Four Surfaces"
-          subtitle="Social drop · ~30s"
-        />
-        <ModeTab
-          active={mode === "full_stack"}
-          onClick={() => setMode("full_stack")}
-          title="Full Content Stack"
-          subtitle="Social + SEO + AEO + GEO · ~60s"
-        />
-      </div>
+      {/* Mode tabs (only if brand has a short workflow) */}
+      {hasShort && (
+        <div className="flex flex-wrap gap-2 mb-4">
+          <ModeTab
+            active={mode === "short"}
+            onClick={() => setMode("short")}
+            title="Four Surfaces"
+            subtitle="Social drop · ~30s"
+          />
+          <ModeTab
+            active={mode === "full"}
+            onClick={() => setMode("full")}
+            title="Full Content Stack"
+            subtitle="Social + SEO + AEO + GEO · ~60s"
+          />
+        </div>
+      )}
 
       {/* Input panel */}
       <div className="border border-[color:var(--line)] rounded-lg bg-white/60 p-5 md:p-6">
         <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
           <p className="eyebrow">Input</p>
           <span className="text-[10px] tabular-nums text-[color:var(--muted)] uppercase tracking-widest">
-            {mode === "four_surfaces"
-              ? "POSTs to /webhook/tbf-content-demo · Claude Sonnet 4.6 · Voice Manual v1"
-              : "POSTs to /webhook/tbf-content-stack · 9 brain files loaded · Claude Sonnet 4.6"}
+            POSTs to {mode === "short" ? new URL(brand.webhooks.short!).pathname : new URL(brand.webhooks.full).pathname}
+            {" · "}
+            Claude Sonnet 4.6 · {brand.brainFiles.length} brain files loadable
           </span>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-3">
-          {PRESET_TOPICS.map((p) => (
+          {brand.presets.map((p) => (
             <button
               key={p.label}
               onClick={() => setTopic(p.value)}
@@ -178,14 +178,14 @@ export default function LiveDemo() {
           onChange={(e) => setTopic(e.target.value)}
           disabled={loading}
           rows={3}
-          className="w-full text-sm border border-[color:var(--line)] rounded-md bg-white px-4 py-3 leading-relaxed text-[color:var(--ink-2)] focus:outline-none focus:ring-2 focus:ring-[color:#4F7A3C]/40 focus:border-[color:#4F7A3C] resize-y disabled:opacity-60"
-          placeholder="Paste a news event, harvest update, or product spec..."
+          className="w-full text-sm border border-[color:var(--line)] rounded-md bg-white px-4 py-3 leading-relaxed text-[color:var(--ink-2)] focus:outline-none focus:ring-2 focus:ring-[#4F7A3C]/40 focus:border-[#4F7A3C] resize-y disabled:opacity-60"
+          placeholder="Paste a news event, topic, or angle..."
         />
 
-        {mode === "full_stack" && (
+        {mode === "full" && (
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <span className="text-xs text-[color:var(--muted)] mr-1">Audience:</span>
-            {AUDIENCES.map((a) => (
+            {brand.audiences.map((a) => (
               <button
                 key={a.id}
                 onClick={() => setAudience(a.id)}
@@ -193,9 +193,14 @@ export default function LiveDemo() {
                 className={
                   "text-xs px-3 py-1 rounded-full border transition-colors " +
                   (audience === a.id
-                    ? "bg-[#4F7A3C] text-white border-[#4F7A3C]"
+                    ? "text-white border-current"
                     : "bg-white border-[color:var(--line)] hover:bg-[color:var(--bg-elev)]") +
                   (loading ? " opacity-50 cursor-not-allowed" : "")
+                }
+                style={
+                  audience === a.id
+                    ? { backgroundColor: brand.accent, borderColor: brand.accent }
+                    : undefined
                 }
               >
                 {a.label}
@@ -213,7 +218,7 @@ export default function LiveDemo() {
             {loading ? (
               <>
                 <span className="inline-block h-3 w-3 rounded-full border-2 border-[color:var(--bg)] border-t-transparent animate-spin" />
-                Generating {mode === "four_surfaces" ? "four surfaces" : "the full stack"}…
+                Generating {mode === "short" ? "four surfaces" : "the full stack"}…
               </>
             ) : (
               <>
@@ -234,21 +239,18 @@ export default function LiveDemo() {
           {elapsed !== null && (
             <span className="text-xs text-[color:var(--muted)] tabular-nums">
               Completed in {(elapsed / 1000).toFixed(1)}s · model:{" "}
-              {(fourResult ?? stackResult)?.model} · manual:{" "}
-              {(fourResult ?? stackResult)?.voice_manual_version}
-              {stackResult && (
+              {(shortResult ?? fullResult)?.model} · manual:{" "}
+              {(shortResult ?? fullResult)?.voice_manual_version}
+              {fullResult && (
                 <>
-                  {" · "}
-                  brain files loaded:{" "}
-                  {stackResult.brain_files_referenced.length}
+                  {" · "}brain files loaded: {fullResult.brain_files_referenced.length}
                 </>
               )}
             </span>
           )}
           {loading && (
             <span className="text-xs text-[color:var(--muted)]">
-              ~{expectedSeconds}s end-to-end. The agent loads the brain, calls
-              Claude, parses structured output, and returns.
+              ~{expectedSeconds}s end-to-end.
             </span>
           )}
         </div>
@@ -261,11 +263,14 @@ export default function LiveDemo() {
       </div>
 
       {/* Results */}
-      {mode === "four_surfaces" && (
-        <FourSurfacesResults loading={loading} result={fourResult} />
+      {mode === "short" && (
+        <TbfShortResults loading={loading} result={shortResult} />
       )}
-      {mode === "full_stack" && (
-        <FullStackResults loading={loading} result={stackResult} />
+      {mode === "full" && brand.shape === "tbf" && (
+        <TbfFullResults loading={loading} result={fullResult as { stack: TbfFullStack } | null} />
+      )}
+      {mode === "full" && brand.shape === "romanoff" && (
+        <RomanoffFullResults loading={loading} result={fullResult as { stack: RomanoffFullStack } | null} />
       )}
     </div>
   );
@@ -305,207 +310,135 @@ function ModeTab({
   );
 }
 
-function FourSurfacesResults({
+function TbfShortResults({
   loading,
   result,
 }: {
   loading: boolean;
-  result: FourSurfacesResponse | null;
+  result: TbfShortResponse | null;
 }) {
   return (
     <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
-      <ResultCard
-        surface="Instagram caption"
-        meta={result ? `${countWords(result.surfaces.instagram)} words` : "—"}
-        loading={loading}
-        body={result?.surfaces.instagram}
-      />
-      <ResultCard
-        surface="LinkedIn post"
-        meta={result ? `${countWords(result.surfaces.linkedin)} words` : "—"}
-        loading={loading}
-        body={result?.surfaces.linkedin}
-      />
-      <ResultCard
-        surface="Cold email"
-        meta={result ? `${countWords(result.surfaces.email_body)} words` : "—"}
-        loading={loading}
-        body={
-          result
-            ? {
-                subject: result.surfaces.email_subject,
-                body: result.surfaces.email_body,
-              }
-            : undefined
-        }
-      />
-      <ResultCard
-        surface="Blog opener"
-        meta={result ? `${countWords(result.surfaces.blog_lede)} words` : "—"}
-        loading={loading}
-        body={
-          result
-            ? {
-                headline: result.surfaces.blog_headline,
-                lede: result.surfaces.blog_lede,
-              }
-            : undefined
-        }
-      />
+      <ResultCard surface="Instagram caption" meta={result ? `${wc(result.surfaces.instagram)} words` : "—"} loading={loading} body={result?.surfaces.instagram} />
+      <ResultCard surface="LinkedIn post" meta={result ? `${wc(result.surfaces.linkedin)} words` : "—"} loading={loading} body={result?.surfaces.linkedin} />
+      <ResultCard surface="Cold email" meta={result ? `${wc(result.surfaces.email_body)} words` : "—"} loading={loading} body={result ? { subject: result.surfaces.email_subject, body: result.surfaces.email_body } : undefined} />
+      <ResultCard surface="Blog opener" meta={result ? `${wc(result.surfaces.blog_lede)} words` : "—"} loading={loading} body={result ? { headline: result.surfaces.blog_headline, lede: result.surfaces.blog_lede } : undefined} />
     </div>
   );
 }
 
-function FullStackResults({
+function TbfFullResults({
   loading,
   result,
 }: {
   loading: boolean;
-  result: FullStackResponse | null;
+  result: { stack: TbfFullStack } | null;
 }) {
   const empty = !loading && !result;
   return (
     <div className="mt-6 space-y-6">
-      {/* SOCIAL row */}
       <StackRow title="Social" badge="6 surfaces" tint="#161512">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <ResultCard
-            surface="Instagram"
-            meta={result ? `${countWords(result.stack.social.instagram)} words` : "—"}
-            loading={loading}
-            body={result?.stack.social.instagram}
-          />
-          <ResultCard
-            surface="LinkedIn"
-            meta={result ? `${countWords(result.stack.social.linkedin)} words` : "—"}
-            loading={loading}
-            body={result?.stack.social.linkedin}
-          />
-          <ResultCard
-            surface="Cold email"
-            meta={result ? `${countWords(result.stack.social.email_body)} words` : "—"}
-            loading={loading}
-            body={
-              result
-                ? {
-                    subject: result.stack.social.email_subject,
-                    body: result.stack.social.email_body,
-                  }
-                : undefined
-            }
-          />
-          <ResultCard
-            surface="Blog opener"
-            meta={result ? `${countWords(result.stack.social.blog_lede)} words` : "—"}
-            loading={loading}
-            body={
-              result
-                ? {
-                    headline: result.stack.social.blog_headline,
-                    lede: result.stack.social.blog_lede,
-                  }
-                : undefined
-            }
-          />
+          <ResultCard surface="Instagram" meta={result ? `${wc(result.stack.social.instagram)} words` : "—"} loading={loading} body={result?.stack.social.instagram} />
+          <ResultCard surface="LinkedIn" meta={result ? `${wc(result.stack.social.linkedin)} words` : "—"} loading={loading} body={result?.stack.social.linkedin} />
+          <ResultCard surface="Cold email" meta={result ? `${wc(result.stack.social.email_body)} words` : "—"} loading={loading} body={result ? { subject: result.stack.social.email_subject, body: result.stack.social.email_body } : undefined} />
+          <ResultCard surface="Blog opener" meta={result ? `${wc(result.stack.social.blog_lede)} words` : "—"} loading={loading} body={result ? { headline: result.stack.social.blog_headline, lede: result.stack.social.blog_lede } : undefined} />
         </div>
       </StackRow>
-
-      {/* SEO row */}
-      <StackRow title="SEO" badge="meta + schema + links" tint="#4F7A3C">
-        {empty ? (
-          <EmptyHint mode="SEO" />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <FieldCard label="Meta title" loading={loading} value={result?.stack.seo.meta_title} mono />
-            <FieldCard label="H1" loading={loading} value={result?.stack.seo.h1} />
-            <FieldCard label="Primary keyword" loading={loading} value={result?.stack.seo.primary_keyword} mono />
-            <FieldCard
-              label="Meta description"
-              loading={loading}
-              value={result?.stack.seo.meta_description}
-              cols={3}
-            />
-            <FieldCard
-              label="Internal link suggestions"
-              loading={loading}
-              value={result?.stack.seo.internal_link_suggestions
-                ?.map((l) => `→ "${l.anchor}" → ${l.target_url}`)
-                .join("\n")}
-              cols={3}
-              mono
-            />
-            <FieldCard
-              label="Schema.org JSON-LD"
-              loading={loading}
-              value={safePrettyJSON(result?.stack.seo.schema_jsonld)}
-              cols={3}
-              mono
-              scroll
-            />
-          </div>
-        )}
-      </StackRow>
-
-      {/* AEO row */}
-      <StackRow title="AEO" badge="answer-engine-optimized" tint="#7C5B3F">
-        {empty ? (
-          <EmptyHint mode="AEO" />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FieldCard label="Question (search query)" loading={loading} value={result?.stack.aeo.question} cols={2} />
-            <FieldCard
-              label="Direct answer (the snippet AI engines lift)"
-              loading={loading}
-              value={result?.stack.aeo.direct_answer}
-              cols={2}
-              accent
-            />
-            <FieldCard
-              label="Full answer"
-              loading={loading}
-              value={result?.stack.aeo.full_answer}
-              cols={2}
-            />
-            <FieldCard
-              label="Schema.org FAQPage markup"
-              loading={loading}
-              value={safePrettyJSON(result?.stack.aeo.schema_faq_markup)}
-              cols={2}
-              mono
-              scroll
-            />
-          </div>
-        )}
-      </StackRow>
-
-      {/* GEO row */}
+      <SeoRow loading={loading} value={result?.stack.seo} empty={empty} />
+      <AeoRow loading={loading} value={result?.stack.aeo} empty={empty} />
       <StackRow title="GEO" badge="3 quote-ready snippet types" tint="#B94A2C">
-        {empty ? (
-          <EmptyHint mode="GEO" />
-        ) : (
+        {empty ? <EmptyHint mode="GEO" /> : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <FieldCard
-              label="Definition snippet"
-              loading={loading}
-              value={result?.stack.geo.definition_snippet}
-              accent
-            />
-            <FieldCard
-              label="Comparison snippet"
-              loading={loading}
-              value={result?.stack.geo.comparison_snippet}
-              accent
-            />
-            <FieldCard
-              label="Statistic snippet"
-              loading={loading}
-              value={result?.stack.geo.statistic_snippet}
-              accent
-            />
+            <FieldCard label="Definition snippet" loading={loading} value={result?.stack.geo.definition_snippet} accent />
+            <FieldCard label="Comparison snippet" loading={loading} value={result?.stack.geo.comparison_snippet} accent />
+            <FieldCard label="Statistic snippet" loading={loading} value={result?.stack.geo.statistic_snippet} accent />
           </div>
         )}
       </StackRow>
     </div>
+  );
+}
+
+function RomanoffFullResults({
+  loading,
+  result,
+}: {
+  loading: boolean;
+  result: { stack: RomanoffFullStack } | null;
+}) {
+  const empty = !loading && !result;
+  return (
+    <div className="mt-6 space-y-6">
+      <StackRow title="Press + Social" badge="4 surfaces" tint="#161512">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ResultCard surface="Press quote" meta={result ? `${wc(result.stack.press_quote)} words` : "—"} loading={loading} body={result?.stack.press_quote} />
+          <ResultCard surface="Instagram caption" meta={result ? `${wc(result.stack.instagram)} words` : "—"} loading={loading} body={result?.stack.instagram} />
+          <ResultCard surface="TikTok / Reel script" meta={result ? `${wc(result.stack.tiktok_script)} words` : "—"} loading={loading} body={result?.stack.tiktok_script} />
+          <ResultCard surface="Podcast pitch" meta={result ? `${wc(result.stack.podcast_pitch)} words` : "—"} loading={loading} body={result?.stack.podcast_pitch} />
+        </div>
+      </StackRow>
+      <SeoRow loading={loading} value={result?.stack.seo} empty={empty} />
+      <AeoRow loading={loading} value={result?.stack.aeo} empty={empty} />
+      <StackRow title="GEO" badge="4 quote-ready snippet types" tint="#7C5B8C">
+        {empty ? <EmptyHint mode="GEO" /> : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FieldCard label="Definition snippet" loading={loading} value={result?.stack.geo.definition_snippet} accent />
+            <FieldCard label="Three-signs snippet" loading={loading} value={result?.stack.geo.three_signs_snippet} accent />
+            <FieldCard label="Clinical reframe snippet" loading={loading} value={result?.stack.geo.clinical_reframe_snippet} accent />
+            <FieldCard label="Permission grant snippet" loading={loading} value={result?.stack.geo.permission_grant_snippet} accent />
+          </div>
+        )}
+      </StackRow>
+    </div>
+  );
+}
+
+function SeoRow({
+  loading,
+  value,
+  empty,
+}: {
+  loading: boolean;
+  value?: SeoBlock;
+  empty: boolean;
+}) {
+  return (
+    <StackRow title="SEO" badge="meta + schema + links" tint="#4F7A3C">
+      {empty ? <EmptyHint mode="SEO" /> : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <FieldCard label="Meta title" loading={loading} value={value?.meta_title} mono />
+          <FieldCard label="H1" loading={loading} value={value?.h1} />
+          <FieldCard label="Primary keyword" loading={loading} value={value?.primary_keyword} mono />
+          <FieldCard label="Meta description" loading={loading} value={value?.meta_description} cols={3} />
+          <FieldCard label="Internal link suggestions" loading={loading} value={value?.internal_link_suggestions?.map((l) => `→ "${l.anchor}" → ${l.target_url}`).join("\n")} cols={3} mono />
+          <FieldCard label="Schema.org JSON-LD" loading={loading} value={safeJSON(value?.schema_jsonld)} cols={3} mono scroll />
+        </div>
+      )}
+    </StackRow>
+  );
+}
+
+function AeoRow({
+  loading,
+  value,
+  empty,
+}: {
+  loading: boolean;
+  value?: AeoBlock;
+  empty: boolean;
+}) {
+  return (
+    <StackRow title="AEO" badge="answer-engine-optimized" tint="#7C5B3F">
+      {empty ? <EmptyHint mode="AEO" /> : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FieldCard label="Question (search query)" loading={loading} value={value?.question} cols={2} />
+          <FieldCard label="Direct answer (the snippet AI engines lift)" loading={loading} value={value?.direct_answer} cols={2} accent />
+          <FieldCard label="Full answer" loading={loading} value={value?.full_answer} cols={2} />
+          <FieldCard label="Schema.org FAQPage markup" loading={loading} value={safeJSON(value?.schema_faq_markup)} cols={2} mono scroll />
+        </div>
+      )}
+    </StackRow>
   );
 }
 
@@ -524,10 +457,7 @@ function StackRow({
     <div>
       <div className="flex items-baseline justify-between mb-3">
         <div className="flex items-baseline gap-3">
-          <h3
-            className="font-display text-xl tracking-tight"
-            style={{ color: tint }}
-          >
+          <h3 className="font-display text-xl tracking-tight" style={{ color: tint }}>
             {title}
           </h3>
           <span className="text-xs text-[color:var(--muted)]">{badge}</span>
@@ -584,8 +514,7 @@ function ResultCard({
       {body && typeof body === "object" && "subject" in body && (
         <div className="mt-4 text-sm text-[color:var(--ink-2)] leading-relaxed">
           <p className="text-xs">
-            <span className="text-[color:var(--muted)]">Subject:</span>{" "}
-            {body.subject}
+            <span className="text-[color:var(--muted)]">Subject:</span> {body.subject}
           </p>
           <p className="mt-3 whitespace-pre-wrap">{body.body}</p>
         </div>
@@ -620,12 +549,7 @@ function FieldCard({
   scroll?: boolean;
   accent?: boolean;
 }) {
-  const span =
-    cols === 3
-      ? "md:col-span-3"
-      : cols === 2
-      ? "md:col-span-2"
-      : "md:col-span-1";
+  const span = cols === 3 ? "md:col-span-3" : cols === 2 ? "md:col-span-2" : "md:col-span-1";
   return (
     <div
       className={
@@ -678,11 +602,11 @@ function SkeletonLine({ width }: { width: string }) {
   );
 }
 
-function countWords(s: string): number {
+function wc(s: string): number {
   return s.trim().split(/\s+/).filter(Boolean).length;
 }
 
-function safePrettyJSON(maybeJSON: string | undefined): string | undefined {
+function safeJSON(maybeJSON: string | undefined): string | undefined {
   if (!maybeJSON) return undefined;
   try {
     return JSON.stringify(JSON.parse(maybeJSON), null, 2);

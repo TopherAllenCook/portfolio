@@ -52,6 +52,9 @@ next-env.d.ts
 /.playwright-mcp/
 /.skool-scrape/
 /.tbf-voice/
+/.sabrina-voice/
+/live-*.png
+/live-*.jpeg
 
 # vercel
 .vercel

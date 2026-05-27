@@ -1,34 +1,30 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const BRAIN_FILES: { slug: string; title: string; tagline: string; emoji: string }[] = [
-  { slug: "voice-manual", title: "voice-manual.md", tagline: "9-axis stylometric profile. The system prompt for every agent.", emoji: "🎙️" },
-  { slug: "brand-canon", title: "brand-canon.md", tagline: "Verbatim one-liners and trademarked phrasings.", emoji: "📜" },
-  { slug: "product-catalog", title: "product-catalog.md", tagline: "Every SKU by aroma family. Real names, real numbers.", emoji: "📦" },
-  { slug: "formulator-personas", title: "formulator-personas.md", tagline: "Four B2B reader profiles with vocabulary keys.", emoji: "👥" },
-  { slug: "seo-keywords", title: "seo-keywords.md", tagline: "Keyword universe + on-page schema requirements.", emoji: "🔍" },
-  { slug: "aeo-questions", title: "aeo-questions.md", tagline: "20 questions formulators ask AI engines.", emoji: "💬" },
-  { slug: "geo-snippets", title: "geo-snippets.md", tagline: "Quote-ready definitions, comparisons, statistics.", emoji: "✂️" },
-  { slug: "harvest-vintages", title: "harvest-vintages.md", tagline: "Vintage timeline 2003-2025 with operational facts.", emoji: "🌱" },
-  { slug: "research-corpus", title: "research-corpus.md", tagline: "The peer-reviewed citation backbone.", emoji: "📚" },
-  { slug: "automation-stack", title: "automation-stack.md", tagline: "Live workflows + the queued roadmap.", emoji: "⚙️" },
-];
+import { getBrand } from "@/lib/brands";
 
 type Cache = Record<string, string>;
 
-export default function BrainExplorer() {
-  const [active, setActive] = useState<string>("voice-manual");
+export default function BrainExplorer({ brandSlug }: { brandSlug: string }) {
+  const brand = getBrand(brandSlug);
+  const firstSlug = brand.brainFiles[0].slug;
+  const [active, setActive] = useState<string>(firstSlug);
   const [cache, setCache] = useState<Cache>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Reset cache + active file when brand changes
+  useEffect(() => {
+    setCache({});
+    setActive(brand.brainFiles[0].slug);
+  }, [brand.slug, brand.brainFiles]);
 
   useEffect(() => {
     if (cache[active]) return;
     let cancelled = false;
     setLoading(true);
     setError(null);
-    fetch(`/brain/${active}.md`)
+    fetch(`${brand.brainBase}/${active}.md`)
       .then((r) => {
         if (!r.ok) throw new Error(`Failed to load ${active}.md (${r.status})`);
         return r.text();
@@ -42,9 +38,9 @@ export default function BrainExplorer() {
     return () => {
       cancelled = true;
     };
-  }, [active, cache]);
+  }, [active, cache, brand.brainBase]);
 
-  const activeFile = BRAIN_FILES.find((f) => f.slug === active)!;
+  const activeFile = brand.brainFiles.find((f) => f.slug === active)!;
   const body = cache[active];
   const wordCount = body ? body.trim().split(/\s+/).filter(Boolean).length : 0;
 
@@ -53,13 +49,13 @@ export default function BrainExplorer() {
       {/* File tree */}
       <aside className="col-span-12 md:col-span-4 border-b md:border-b-0 md:border-r border-[color:var(--line)] bg-white/60">
         <div className="p-4 border-b border-[color:var(--line)]">
-          <p className="eyebrow">.tbf-voice/brain/</p>
+          <p className="eyebrow">{brand.brainBase.replace(/^\//, ".")}/ </p>
           <p className="text-xs text-[color:var(--muted)] mt-1">
-            {BRAIN_FILES.length} files · ~50KB · git-versioned · human-editable
+            {brand.brainFiles.length} files · git-versioned · human-editable
           </p>
         </div>
         <ul className="divide-y divide-[color:var(--line)] max-h-[520px] overflow-y-auto">
-          {BRAIN_FILES.map((f) => (
+          {brand.brainFiles.map((f) => (
             <li key={f.slug}>
               <button
                 onClick={() => setActive(f.slug)}

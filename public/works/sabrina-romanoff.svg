@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Dr. Sabrina Romanoff content operating system: brain, agent, workflows">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3efe7"/>
+      <stop offset="100%" stop-color="#ece5d8"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(22,21,18,0.04)" stroke-width="1"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7C5B8C"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+
+  <text x="80" y="90" font-family="Georgia, serif" font-size="28" fill="#161512" letter-spacing="-0.5">Content Operating System — Brain · Agent · Workflows</text>
+  <text x="80" y="120" font-family="Inter, sans-serif" font-size="14" fill="#6b6760" letter-spacing="2.5" text-transform="uppercase">PROPOSED ARCHITECTURE FOR DR. SABRINA ROMANOFF</text>
+
+  <!-- BRAIN -->
+  <g transform="translate(80, 200)">
+    <rect width="420" height="560" rx="14" fill="#ffffff" stroke="#161512" stroke-width="1.5"/>
+    <rect x="0" y="0" width="420" height="48" rx="14" fill="#161512"/>
+    <rect x="0" y="34" width="420" height="14" fill="#161512"/>
+    <text x="24" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#f3efe7" letter-spacing="0.5">01 · BRAIN</text>
+    <text x="180" y="32" font-family="Inter, sans-serif" font-size="13" fill="#a8a39a">Obsidian / Markdown vault</text>
+
+    <g font-family="Inter, sans-serif" font-size="13" fill="#2a2722">
+      <rect x="24" y="76" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="103">🎙️  voice-manual.md</text>
+      <text x="350" y="103" font-size="11" fill="#6b6760">v1</text>
+
+      <rect x="24" y="128" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="155">📜  brand-canon.md</text>
+
+      <rect x="24" y="180" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="207">🩺  services-catalog.md</text>
+
+      <rect x="24" y="232" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="259">👥  audience-personas.md</text>
+
+      <rect x="24" y="284" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="311">🔍  seo-keywords.md</text>
+
+      <rect x="24" y="336" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="363">💬  aeo-questions.md</text>
+
+      <rect x="24" y="388" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="415">✂️  geo-snippets.md</text>
+
+      <rect x="24" y="440" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="467">📰  press-history.md</text>
+      <text x="340" y="467" font-size="11" fill="#6b6760">40+ outlets</text>
+
+      <rect x="24" y="492" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="519">📚  research-corpus.md</text>
+    </g>
+  </g>
+
+  <!-- AGENT -->
+  <g transform="translate(590, 200)">
+    <rect width="420" height="560" rx="14" fill="#ffffff" stroke="#161512" stroke-width="1.5"/>
+    <rect x="0" y="0" width="420" height="48" rx="14" fill="#7C5B8C"/>
+    <rect x="0" y="34" width="420" height="14" fill="#7C5B8C"/>
+    <text x="24" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#f3efe7" letter-spacing="0.5">02 · AGENT</text>
+    <text x="180" y="32" font-family="Inter, sans-serif" font-size="13" fill="#e5d6ed">Claude Code · skills · MCP</text>
+
+    <g font-family="Inter, sans-serif" font-size="14" fill="#2a2722">
+      <text x="24" y="96" font-size="11" fill="#6b6760" letter-spacing="1.5">READS</text>
+      <rect x="24" y="106" width="372" height="36" rx="6" fill="#f3efe7"/>
+      <text x="40" y="129">Whole Obsidian vault, on every task</text>
+
+      <text x="24" y="180" font-size="11" fill="#6b6760" letter-spacing="1.5">SKILLS ENABLED</text>
+
+      <rect x="24" y="192" width="372" height="32" rx="6" fill="#f5edf9"/>
+      <text x="40" y="213">✉️  Gmail · press replies + pitch outbound</text>
+
+      <rect x="24" y="232" width="372" height="32" rx="6" fill="#f5edf9"/>
+      <text x="40" y="253">📅  Calendar · therapy intake + media slots</text>
+
+      <rect x="24" y="272" width="372" height="32" rx="6" fill="#f5edf9"/>
+      <text x="40" y="293">📊  Airtable · press queue + content DB</text>
+
+      <rect x="24" y="312" width="372" height="32" rx="6" fill="#f5edf9"/>
+      <text x="40" y="333">📢  Cultural-moment watcher (RSS)</text>
+
+      <rect x="24" y="352" width="372" height="32" rx="6" fill="#f5edf9"/>
+      <text x="40" y="373">📺  Reality-TV recap prep skill</text>
+
+      <rect x="24" y="392" width="372" height="32" rx="6" fill="#f5edf9"/>
+      <text x="40" y="413">🎙️  Podcast pitch generator</text>
+
+      <text x="24" y="464" font-size="11" fill="#6b6760" letter-spacing="1.5">DRAFTS</text>
+      <rect x="24" y="476" width="372" height="52" rx="6" fill="#f3efe7"/>
+      <text x="40" y="498">Press quote · IG · TikTok · Pitch · SEO/AEO/GEO</text>
+      <text x="40" y="518" font-size="12" fill="#6b6760">…all loaded with voice-manual.md first</text>
+    </g>
+  </g>
+
+  <!-- WORKFLOWS -->
+  <g transform="translate(1100, 200)">
+    <rect width="420" height="560" rx="14" fill="#ffffff" stroke="#161512" stroke-width="1.5"/>
+    <rect x="0" y="0" width="420" height="48" rx="14" fill="#b94a2c"/>
+    <rect x="0" y="34" width="420" height="14" fill="#b94a2c"/>
+    <text x="24" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#f3efe7" letter-spacing="0.5">03 · WORKFLOWS</text>
+    <text x="180" y="32" font-family="Inter, sans-serif" font-size="13" fill="#f5d9cd">n8n · triggers + plumbing</text>
+
+    <g font-family="Inter, sans-serif" font-size="13" fill="#2a2722">
+      <rect x="24" y="76" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="95" font-weight="600">📰 Press-quote generator</text>
+      <text x="40" y="111" font-size="11" fill="#6b6760">journalist request → 2-3 quote drafts in &lt;3 min</text>
+
+      <rect x="24" y="128" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="147" font-weight="600">📢 Cultural-moment watcher</text>
+      <text x="40" y="163" font-size="11" fill="#6b6760">RSS + trend feeds → press angle + IG + Reel</text>
+
+      <rect x="24" y="180" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="199" font-weight="600">📺 Reality-TV recap engine</text>
+      <text x="40" y="215" font-size="11" fill="#6b6760">episode → 5-8 clinical takes for TV appearance</text>
+
+      <rect x="24" y="232" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="251" font-weight="600">🎙️ Podcast pitch engine</text>
+      <text x="40" y="267" font-size="11" fill="#6b6760">target list → custom pitch + 3 topics each</text>
+
+      <rect x="24" y="284" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="303" font-weight="600">💬 Therapy-prospect FAQ bot</text>
+      <text x="40" y="319" font-size="11" fill="#6b6760">intake form → pre-consult reply with FAQs</text>
+
+      <rect x="24" y="336" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="355" font-weight="600">🔍 AEO page generator</text>
+      <text x="40" y="371" font-size="11" fill="#6b6760">25 questions → /answers/&lt;slug&gt; pages w/ schema</text>
+
+      <rect x="24" y="388" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="407" font-weight="600">📧 Newsletter engine (queued)</text>
+      <text x="40" y="423" font-size="11" fill="#6b6760">Tuesday cron → 300-500 word digest</text>
+
+      <rect x="24" y="440" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="459" font-weight="600">📊 Press-cluster digest</text>
+      <text x="40" y="475" font-size="11" fill="#6b6760">Friday recap of mentions + new outlets</text>
+
+      <rect x="24" y="492" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="511" font-weight="600">+ adjacent surface</text>
+      <text x="40" y="527" font-size="11" fill="#6b6760">whatever the next quarter needs</text>
+    </g>
+  </g>
+
+  <line x1="500" y1="480" x2="590" y2="480" stroke="#161512" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="1010" y1="480" x2="1100" y2="480" stroke="#161512" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <text x="800" y="830" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="18" fill="#6b6760">One brain. One agent. One workflow engine. Press-cluster authority on autopilot.</text>
+</svg>

@@ -15,6 +15,32 @@ export type Work = {
 
 export const works: Work[] = [
   {
+    slug: "sabrina-romanoff",
+    client: "Dr. Sabrina Romanoff",
+    role: "Marketing Engineer (Pitch)",
+    period: "2026 — Proposal",
+    category: "Personal Brand · Press · Clinical Practice",
+    headline:
+      "A press-cluster-on-autopilot content operating system for a Harvard-trained clinical psychologist with a 40-outlet media footprint.",
+    summary:
+      "A live application of the Marketing Engineer toolkit, scoped for Dr. Sabrina Romanoff. Captured her Voice Manual from her owned site plus aggregated press voice, built a 10-file brain (services, audience personas, press history, AEO question library, GEO snippet templates, research corpus), shipped a live n8n workflow that returns press quotes, IG captions, TikTok scripts, podcast pitches, and full SEO+AEO+GEO surfaces in under a minute. Same brain-agent-workflows architecture as the TBF build, applied to a personal-brand vertical.",
+    highlights: [
+      "Scraped Dr. Romanoff's owned site + 40+ press outlet footprint into a single Voice Manual",
+      "Built a 10-file Obsidian brain covering services, audiences, press history, SEO/AEO/GEO assets, research corpus",
+      "Published an n8n workflow generating 7 on-brand surfaces (press, IG, TikTok, pitch, SEO, AEO, GEO) per topic",
+      "Demonstrated the methodology generalizes from B2B agritech (TBF) to personal-brand creator economy without changing the architecture",
+    ],
+    metrics: [
+      { label: "Brain files shipped", value: "10" },
+      { label: "Surfaces per run", value: "7" },
+      { label: "Press outlets cataloged", value: "40+" },
+      { label: "Audience personas", value: "4" },
+    ],
+    link: { label: "drsabrinaromanoff.com", href: "https://drsabrinaromanoff.com" },
+    accent: "#7C5B8C",
+    image: "/works/sabrina-romanoff.svg",
+  },
+  {
     slug: "nexus-marketing-engineer",
     client: "Nexus Agriscience / Terpene Belt Farms",
     role: "Marketing Engineer (Pitch)",

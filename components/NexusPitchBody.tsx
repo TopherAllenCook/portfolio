@@ -77,7 +77,7 @@ export default function NexusPitchBody() {
           templates, the harvest journal, the cited research corpus, the
           brand canon, and the live automation roadmap.
         </p>
-        <BrainExplorer />
+        <BrainExplorer brandSlug="tbf" />
         <p className="mt-6 text-sm text-[color:var(--muted)]">
           Every workflow loads these as a system prompt. Edit one file, every
           downstream surface inherits the change.
@@ -145,7 +145,7 @@ export default function NexusPitchBody() {
           quote-ready snippets (definition, comparison, statistic). About 60
           seconds for the full stack.
         </p>
-        <LiveDemo />
+        <LiveDemo brandSlug="tbf" />
       </Section>
 
       <Section
