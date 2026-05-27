@@ -40,11 +40,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local screenshots from QA captures
+# local screenshots from QA captures (kept at repo root, not bundled with the site)
 /portfolio-*.png
 /portfolio-*.jpeg
 /homepage-*.png
 /nexus-case-study-*.png
+/case-study-*.png
+/pitch-nexus-*.png
 
 # local scratch / scraping working dirs (not part of the portfolio)
 /.playwright-mcp/
