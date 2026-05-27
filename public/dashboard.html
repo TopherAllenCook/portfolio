@@ -7,114 +7,203 @@
 <title>Nexus Agriscience · Marketing Engineer Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg:#f3efe7;--bg-elev:#ebe6dc;--bg-soft:rgba(255,255,255,.6);
-    --ink:#161512;--ink-2:#2a2722;--muted:#6b6760;
-    --line:rgba(22,21,18,.12);--line-strong:rgba(22,21,18,.22);
-    --accent-tbf:#4F7A3C;--accent-romanoff:#7C5B8C;--accent-warn:#b94a2c;
-    --radius:10px;
-    --font-sans:'Inter',system-ui,sans-serif;
+    --bg:#f3efe7; --bg-2:#ece7da; --bg-elev:#e6e0d0;
+    --paper:#ffffff; --paper-2:rgba(255,255,255,.62);
+    --ink:#111110; --ink-2:#36322c; --ink-3:#615b51; --muted:#8a8479;
+    --line:rgba(17,17,16,.10); --line-2:rgba(17,17,16,.06); --line-strong:rgba(17,17,16,.22);
+    --tbf:#3f6230; --tbf-soft:rgba(63,98,48,.10); --tbf-line:rgba(63,98,48,.22);
+    --romanoff:#6e4d80; --romanoff-soft:rgba(110,77,128,.10); --romanoff-line:rgba(110,77,128,.22);
+    --warn:#9b3a1c;
+    --font-sans:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;
     --font-display:'Instrument Serif',Georgia,serif;
+    --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px;
+    --s-7:32px; --s-8:40px; --s-9:48px; --s-10:64px; --s-11:80px; --s-12:96px;
+    --r-1:6px; --r-2:10px; --r-3:14px; --r-pill:9999px;
+    --ease:cubic-bezier(.2,.7,.2,1);
+    --t-fast:120ms; --t:200ms; --t-slow:360ms;
   }
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
-  body{min-height:100vh}
-  h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:-.02em;margin:0}
-  pre,code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-  .eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500}
-  a{color:inherit}
-  button{font:inherit;cursor:pointer}
-  ::selection{background:var(--ink);color:var(--bg)}
+  *::selection{background:var(--ink);color:var(--bg)}
+  html,body{margin:0;padding:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:"ss01","cv11";font-size:15px;line-height:1.55}
+  body{
+    background-image:
+      radial-gradient(at 0% 0%,rgba(255,255,255,.6) 0%,transparent 50%),
+      radial-gradient(at 100% 0%,rgba(63,98,48,.04) 0%,transparent 50%),
+      radial-gradient(at 100% 100%,rgba(110,77,128,.04) 0%,transparent 50%);
+    background-attachment:fixed;
+  }
+  h1,h2,h3,h4{font-family:var(--font-display);font-weight:400;margin:0;letter-spacing:-0.02em;color:var(--ink)}
+  h1{font-size:22px;line-height:1.1}
+  .display-1{font-size:clamp(38px,4.6vw,56px);line-height:1.02;letter-spacing:-0.028em}
+  .display-2{font-size:clamp(28px,3vw,36px);line-height:1.06;letter-spacing:-0.024em}
+  .display-3{font-size:22px;line-height:1.1;letter-spacing:-0.018em}
+  .display-i{font-style:italic}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
+  .eyebrow{font-family:var(--font-sans);font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+  .micro{font-family:var(--font-mono);font-size:11px;color:var(--muted);font-feature-settings:"tnum","cv11"}
+  .tnum{font-variant-numeric:tabular-nums}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:var(--r-pill);background:var(--bg-2);border:1px solid var(--line);font-size:11px;color:var(--ink-3);font-weight:450}
+  .dot{display:inline-block;width:6px;height:6px;border-radius:50%}
 
-  /* layout */
-  .topbar{position:sticky;top:0;z-index:30;background:rgba(243,239,231,.92);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
-  .topbar-inner{max-width:1400px;margin:0 auto;padding:14px 24px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .brand{display:flex;gap:10px;align-items:baseline}
-  .brand h1{font-size:20px}
-  .brand .sub{color:var(--muted);font-size:13px}
-  .topbar .meta{color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+  /* === TOPBAR ============================================== */
+  .topbar{position:sticky;top:0;z-index:30;background:rgba(243,239,231,.84);backdrop-filter:saturate(170%) blur(14px);-webkit-backdrop-filter:saturate(170%) blur(14px);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:1480px;margin:0 auto;padding:var(--s-4) var(--s-6);display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);flex-wrap:wrap}
+  .brand{display:flex;align-items:baseline;gap:var(--s-3)}
+  .brand .mark{font-family:var(--font-display);font-size:22px;line-height:1;color:var(--ink);letter-spacing:-0.02em}
+  .brand .div{width:1px;height:18px;background:var(--line);transform:translateY(2px);margin:0 var(--s-2)}
+  .brand .sub{color:var(--muted);font-size:13px;font-weight:450;letter-spacing:-0.01em}
+  .topbar .meta{display:flex;gap:var(--s-4);align-items:center;color:var(--muted);font-size:11px;font-family:var(--font-mono);font-feature-settings:"tnum"}
+  .topbar .meta .green{color:var(--tbf)}
+  @media (max-width:640px){.topbar .meta{display:none}}
 
-  main{max-width:1400px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:340px 1fr;gap:28px}
-  @media (max-width:1000px){main{grid-template-columns:1fr}}
+  /* === LAYOUT ============================================== */
+  main{max-width:1480px;margin:0 auto;padding:var(--s-9) var(--s-6) var(--s-12);display:grid;grid-template-columns:300px 1fr;gap:var(--s-9)}
+  @media (max-width:1100px){main{grid-template-columns:1fr;gap:var(--s-6);padding-top:var(--s-7)}}
 
-  /* sidebar */
+  /* === SIDEBAR ============================================== */
   aside{position:sticky;top:84px;align-self:start}
-  @media (max-width:1000px){aside{position:static}}
-  aside .group{margin-bottom:18px}
-  aside .group-title{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
-  aside .group-title h3{font-size:13px;font-family:var(--font-sans);font-weight:600;letter-spacing:.04em}
-  aside .group-title span{color:var(--muted);font-size:10px;letter-spacing:.18em;text-transform:uppercase}
-  aside .group .swatch{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;transform:translateY(-1px)}
-  aside ul{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:var(--radius);background:#fff}
-  aside li+li{border-top:1px solid var(--line)}
-  aside li button{width:100%;text-align:left;background:transparent;border:none;padding:14px 16px;display:block;transition:background .12s}
-  aside li button:hover{background:var(--bg-elev)}
-  aside li button.active{background:var(--ink);color:var(--bg)}
-  aside li button.active .badge{color:rgba(243,239,231,.7)}
-  aside li button .label{font-size:14px;font-weight:500;line-height:1.25;display:flex;align-items:center;gap:6px}
-  aside li button .badge{margin-top:4px;display:block;color:var(--muted);font-size:11px;line-height:1.3}
+  @media (max-width:1100px){aside{position:static}}
+  .nav-group{margin-bottom:var(--s-6)}
+  .nav-group-head{display:flex;align-items:baseline;justify-content:space-between;padding:0 var(--s-2) var(--s-2);}
+  .nav-group-head .ttl{display:flex;align-items:baseline;gap:var(--s-2);font-weight:500;font-size:13px;color:var(--ink-2)}
+  .nav-group-head .count{font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:.08em}
+  .nav-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+  .nav-list li{border-bottom:1px solid var(--line-2)}
+  .nav-item{width:100%;display:grid;grid-template-columns:auto 1fr;gap:var(--s-3);align-items:start;padding:var(--s-4) var(--s-2);text-align:left;transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
+  .nav-item .idx{font-family:var(--font-mono);font-size:10px;font-weight:500;color:var(--muted);min-width:18px;padding-top:3px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+  .nav-item .label{font-weight:500;font-size:14px;line-height:1.25;color:var(--ink)}
+  .nav-item .badge{display:block;margin-top:var(--s-1);font-size:11px;line-height:1.35;color:var(--muted)}
+  .nav-item:hover{background:var(--paper-2)}
+  .nav-item.active{background:var(--paper)}
+  .nav-item.active .idx{color:var(--ink)}
+  .nav-item.active .label{font-weight:600}
+  .nav-item.tbf.active{box-shadow:inset 3px 0 0 var(--tbf)}
+  .nav-item.romanoff.active{box-shadow:inset 3px 0 0 var(--romanoff)}
 
-  /* main panel */
-  .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:18px}
-  .panel h2{font-size:24px;line-height:1.1;margin-bottom:6px}
-  .panel .description{color:var(--ink-2);font-size:14px;line-height:1.55;margin-bottom:18px}
-  .panel .meta{display:flex;flex-wrap:wrap;gap:14px;color:var(--muted);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
-  .panel .meta span{display:inline-flex;align-items:center;gap:6px}
-  .panel .meta b{font-weight:500;color:var(--ink-2);letter-spacing:0;text-transform:none;font-size:12px}
+  /* === WORKSPACE ============================================ */
+  #workspace{min-width:0}
+  .header-panel{padding:var(--s-8) var(--s-9);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-3);position:relative;overflow:hidden}
+  .header-panel.tbf{background:linear-gradient(180deg,var(--paper) 0%,var(--paper) 60%,var(--tbf-soft) 100%)}
+  .header-panel.romanoff{background:linear-gradient(180deg,var(--paper) 0%,var(--paper) 60%,var(--romanoff-soft) 100%)}
+  .header-top{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);margin-bottom:var(--s-3);flex-wrap:wrap}
+  .breadcrumb{display:flex;align-items:center;gap:var(--s-2);color:var(--muted);font-size:12px;font-weight:450}
+  .breadcrumb .chev{opacity:.5}
+  .breadcrumb .brand-chip{display:inline-flex;align-items:center;gap:var(--s-2);font-weight:500;color:var(--ink-2)}
+  .header-eta{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+  .wf-label{margin-top:var(--s-2)}
+  .wf-description{max-width:62ch;color:var(--ink-2);font-size:16px;line-height:1.55;margin:var(--s-4) 0 var(--s-6)}
+  .wf-meta{display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-5);align-items:center;border-top:1px solid var(--line-2);padding-top:var(--s-5)}
+  .wf-meta .item{display:inline-flex;align-items:baseline;gap:var(--s-2);font-size:12px}
+  .wf-meta .k{color:var(--muted);font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+  .wf-meta .v{color:var(--ink-2);font-family:var(--font-mono);font-size:11.5px}
+  .wf-meta .v.serif{font-family:var(--font-display);font-size:14px;letter-spacing:-0.01em;color:var(--ink)}
 
-  .form-grid{display:grid;gap:12px}
-  label.field>span.lbl{display:block;font-size:11px;font-weight:600;letter-spacing:.05em;margin-bottom:4px;color:var(--ink-2)}
-  input[type=text],input[type=number],textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:#fff;font-family:var(--font-sans);font-size:13px;color:var(--ink-2);resize:vertical}
-  input[type=text]:focus,input[type=number]:focus,textarea:focus{outline:none;border-color:var(--ink-2);box-shadow:0 0 0 2px rgba(22,21,18,.06)}
-  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-  .chip{font-size:11px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;transition:all .12s}
-  .chip:hover{background:var(--bg-elev)}
+  /* === INPUT BLOCK ========================================== */
+  .input-panel{margin-top:var(--s-6);padding:var(--s-7) var(--s-8);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-3)}
+  .panel-eyebrow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--s-5)}
+  .panel-eyebrow .tag{font-size:10px;color:var(--muted);font-family:var(--font-mono);letter-spacing:.06em}
+
+  /* preset chips */
+  .chips{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-bottom:var(--s-4)}
+  .chip{font-size:12px;padding:6px 12px;border-radius:var(--r-pill);background:transparent;border:1px solid var(--line);color:var(--ink-2);font-weight:450;transition:background var(--t-fast),border-color var(--t-fast),color var(--t-fast)}
+  .chip:hover{background:var(--bg-2);border-color:var(--line-strong)}
   .chip.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-  .audience .chip.active{background:var(--accent-tbf);border-color:var(--accent-tbf);color:#fff}
-  .audience-romanoff .chip.active{background:var(--accent-romanoff);border-color:var(--accent-romanoff);color:#fff}
+  .chips.audience .chip.active{background:var(--tbf);border-color:var(--tbf);color:#fff}
+  .chips.audience-romanoff .chip.active{background:var(--romanoff);border-color:var(--romanoff);color:#fff}
 
-  .actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px}
-  button.run{background:var(--ink);color:var(--bg);border:none;border-radius:8px;padding:11px 18px;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:opacity .12s}
-  button.run:hover{opacity:.92}
-  button.run:disabled{opacity:.45;cursor:not-allowed}
-  .status{color:var(--muted);font-size:11px;font-family:ui-monospace,monospace}
+  /* fields */
+  .form{display:grid;gap:var(--s-5)}
+  .field{display:block}
+  .field .lbl{display:block;font-size:11px;font-weight:500;color:var(--ink-3);letter-spacing:.04em;margin-bottom:var(--s-2)}
+  .field textarea,.field input[type=text],.field input[type=number]{
+    width:100%;font-family:var(--font-sans);font-size:15px;font-weight:450;color:var(--ink);
+    background:transparent;border:none;border-bottom:1px solid var(--line);
+    padding:var(--s-2) 0 var(--s-3);transition:border-color var(--t-fast),box-shadow var(--t-fast);
+    resize:vertical;line-height:1.5
+  }
+  .field textarea{min-height:88px}
+  .field textarea:focus,.field input:focus{outline:none;border-color:var(--ink);box-shadow:0 1px 0 0 var(--ink)}
+  .field input[type=number]{max-width:140px}
+  .field textarea::placeholder,.field input::placeholder{color:var(--muted);font-weight:400}
 
-  .error{margin-top:14px;border:1px solid #f2c4be;background:#fdeae6;color:#7c1f0d;padding:10px 12px;border-radius:8px;font-size:13px}
+  /* actions */
+  .actions{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);flex-wrap:wrap;margin-top:var(--s-6);padding-top:var(--s-5);border-top:1px solid var(--line-2)}
+  .run-btn{
+    display:inline-flex;align-items:center;gap:var(--s-2);
+    background:var(--ink);color:var(--bg);
+    font-weight:500;font-size:14px;letter-spacing:-0.005em;
+    padding:12px 22px 12px 22px;border-radius:var(--r-pill);
+    box-shadow:0 8px 24px -10px rgba(17,17,16,.45),0 1px 0 0 rgba(255,255,255,.04) inset,0 0 0 1px var(--ink);
+    transition:transform var(--t-fast),box-shadow var(--t-fast),opacity var(--t-fast)
+  }
+  .run-btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px -10px rgba(17,17,16,.55),0 1px 0 0 rgba(255,255,255,.04) inset,0 0 0 1px var(--ink)}
+  .run-btn:active{transform:translateY(0)}
+  .run-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .run-btn svg{transition:transform var(--t-fast)}
+  .run-btn:hover svg{transform:translate(2px,-2px)}
+  .spinner{display:inline-block;width:11px;height:11px;border:1.6px solid rgba(243,239,231,.4);border-top-color:var(--bg);border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .status{display:inline-flex;align-items:center;gap:var(--s-2);font-family:var(--font-mono);font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .status .led{width:6px;height:6px;border-radius:50%;background:var(--tbf);box-shadow:0 0 0 3px rgba(63,98,48,.12)}
+  .status.error .led{background:var(--warn);box-shadow:0 0 0 3px rgba(155,58,28,.12)}
+  .err{margin-top:var(--s-4);background:#fbe9e3;border:1px solid #ecc4b8;color:#6f1f0c;padding:var(--s-3) var(--s-4);border-radius:var(--r-2);font-size:13px}
 
-  /* results */
-  .results{margin-top:20px;display:grid;gap:18px}
-  .result-row h3{font-size:18px;line-height:1.2;display:inline-block;margin-right:10px}
-  .result-row .row-badge{color:var(--muted);font-size:11px}
-  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  @media (max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr}}
-  .card{background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
-  .card.accent{background:var(--bg-elev)}
-  .card .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
-  .card .top .ttl{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-  .card .top .wc{font-size:10px;color:var(--muted);font-family:ui-monospace,monospace}
-  .card .body{font-size:13px;color:var(--ink-2);line-height:1.55;white-space:pre-wrap}
-  .card .body .subj{font-size:11px;color:var(--muted)}
-  .card .body .hd{font-family:var(--font-display);font-size:16px;line-height:1.2}
-  .card pre.body{white-space:pre-wrap;font-family:ui-monospace,monospace;font-size:12px}
-  .empty{font-style:italic;color:var(--muted);font-size:13px}
-  .placeholder{padding:22px;text-align:center;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-style:italic;font-size:13px}
+  /* === RESULTS ============================================== */
+  .results{margin-top:var(--s-7);display:grid;gap:var(--s-7)}
+  .row-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-3);margin-bottom:var(--s-4);padding-bottom:var(--s-3);border-bottom:1px solid var(--line-2)}
+  .row-head h3{font-size:24px;line-height:1.1;letter-spacing:-0.018em}
+  .row-head .tag{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-transform:lowercase}
+  .row-head .accent{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:var(--s-2);transform:translateY(-2px)}
+  .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4)}
+  .g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-4)}
+  @media (max-width:900px){.g2,.g3{grid-template-columns:1fr}}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-2);padding:var(--s-5) var(--s-5);transition:border-color var(--t-fast),box-shadow var(--t-fast);min-height:180px;display:flex;flex-direction:column;gap:var(--s-3)}
+  .card.accent{background:var(--bg-elev);border-color:transparent}
+  .card.accent.tbf{background:var(--tbf-soft);border:1px solid var(--tbf-line)}
+  .card.accent.romanoff{background:var(--romanoff-soft);border:1px solid var(--romanoff-line)}
+  .card:hover{box-shadow:0 2px 0 rgba(17,17,16,.04)}
+  .card .top{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-3)}
+  .card .ttl{font-size:10px;font-weight:600;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+  .card .wc{font-family:var(--font-mono);font-size:10px;color:var(--muted)}
+  .card .body{font-size:14px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap;word-wrap:break-word}
+  .card .body .subj{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);display:block;margin-bottom:var(--s-3)}
+  .card .body .hd{font-family:var(--font-display);font-size:20px;line-height:1.15;color:var(--ink);display:block;margin-bottom:var(--s-3);letter-spacing:-0.018em}
+  .card pre.body{white-space:pre-wrap;font-family:var(--font-mono);font-size:12px;line-height:1.5;color:var(--ink-2);max-height:200px;overflow-y:auto}
+  .card.empty .body,.card .empty{font-style:italic;color:var(--muted);font-size:13px}
 
   /* skeleton */
-  @keyframes pulse{0%{opacity:.7}50%{opacity:.45}100%{opacity:.7}}
-  .skel{height:10px;background:var(--line);border-radius:4px;margin-top:6px;animation:pulse 1.2s ease-in-out infinite}
-  .skel.w-9{width:90%}.skel.w-8{width:80%}.skel.w-7{width:75%}
+  @keyframes pulse{0%,100%{opacity:.55}50%{opacity:.32}}
+  .skel{height:11px;background:var(--line);border-radius:4px;animation:pulse 1.4s var(--ease) infinite}
+  .skel+.skel{margin-top:var(--s-2)}
+  .skel.w9{width:90%}.skel.w8{width:78%}.skel.w7{width:64%}.skel.w6{width:48%}
 
-  /* quote card variant */
-  .quote{background:var(--bg-elev);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
-  .quote .angle{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-  .quote q{font-style:italic;font-size:14px;line-height:1.55;color:var(--ink-2)}
+  /* quote card */
+  .quote{background:var(--bg-elev);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:var(--r-2);padding:var(--s-5)}
+  .quote.romanoff{border-left-color:var(--romanoff)}
+  .quote .angle{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--s-3)}
+  .quote q{font-family:var(--font-display);font-style:italic;font-size:18px;line-height:1.4;color:var(--ink);quotes:"\201C""\201D""\2018""\2019"}
 
-  /* footer */
-  footer{max-width:1400px;margin:0 auto;padding:0 24px 40px;color:var(--muted);font-size:12px}
-  footer a{text-decoration:none;border-bottom:1px solid currentColor}
+  /* empty result placeholder */
+  .placeholder{padding:var(--s-9) var(--s-8);text-align:center;background:var(--paper);border:1px dashed var(--line-strong);border-radius:var(--r-3);color:var(--muted)}
+  .placeholder .hd{font-family:var(--font-display);font-size:26px;line-height:1.15;color:var(--ink-2);margin-bottom:var(--s-3);letter-spacing:-0.018em}
+  .placeholder .sub{font-size:14px;max-width:42ch;margin:0 auto;line-height:1.55}
+
+  /* === FOOTER =============================================== */
+  footer{max-width:1480px;margin:0 auto;padding:0 var(--s-6) var(--s-9);color:var(--muted);font-size:12px;display:flex;gap:var(--s-5);align-items:center;flex-wrap:wrap}
+  footer a{border-bottom:1px solid var(--line);padding-bottom:1px;transition:color var(--t-fast),border-color var(--t-fast)}
+  footer a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+  /* === MOTION =============================================== */
+  @media (prefers-reduced-motion:no-preference){
+    .reveal{animation:reveal 380ms var(--ease) both}
+    @keyframes reveal{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  }
 </style>
 </head>
 <body>
@@ -122,61 +211,89 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <h1>Nexus Agriscience</h1>
-      <span class="sub">/ Marketing Engineer Dashboard</span>
+      <span class="mark">Nexus Agriscience</span>
+      <span class="div" aria-hidden="true"></span>
+      <span class="sub">Marketing Engineer Dashboard</span>
     </div>
-    <span class="meta">7 live n8n workflows · Claude Sonnet 4.6 · brain-loaded</span>
+    <div class="meta">
+      <span><span class="dot" style="background:var(--tbf);display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;transform:translateY(-1px)"></span>7 LIVE WORKFLOWS</span>
+      <span>·</span>
+      <span>CLAUDE SONNET 4.6</span>
+      <span>·</span>
+      <span>BRAIN-LOADED</span>
+    </div>
   </div>
 </header>
 
 <main>
   <aside>
-    <div class="group">
-      <div class="group-title">
-        <h3><span class="swatch" style="background:var(--accent-tbf)"></span>Terpene Belt Farms</h3>
-        <span>4 workflows</span>
+    <div class="nav-group">
+      <div class="nav-group-head">
+        <span class="ttl"><span class="dot" style="background:var(--tbf)"></span>Terpene Belt Farms</span>
+        <span class="count">4 / 4</span>
       </div>
-      <ul id="tbf-list"></ul>
+      <ul class="nav-list" id="tbf-list"></ul>
     </div>
-    <div class="group">
-      <div class="group-title">
-        <h3><span class="swatch" style="background:var(--accent-romanoff)"></span>Showcase: Dr. Romanoff</h3>
-        <span>3 workflows</span>
+    <div class="nav-group">
+      <div class="nav-group-head">
+        <span class="ttl"><span class="dot" style="background:var(--romanoff)"></span>Showcase · Dr. Romanoff</span>
+        <span class="count">3 / 3</span>
       </div>
-      <ul id="romanoff-list"></ul>
+      <ul class="nav-list" id="romanoff-list"></ul>
     </div>
   </aside>
 
   <section id="workspace">
-    <div class="panel" id="header-panel">
-      <h2 id="wf-label">Pick a workflow</h2>
-      <p class="description" id="wf-description">Select any workflow from the sidebar. Inputs render automatically. Click Run to POST to the live n8n webhook and watch the agent generate on-brand output in seconds.</p>
-      <div class="meta">
-        <span><b id="wf-n8nname">—</b></span>
-        <span>POSTs to <b id="wf-webhook">—</b></span>
-        <span>Expected: <b id="wf-eta">—</b></span>
+    <article class="header-panel" id="header-panel">
+      <header class="header-top">
+        <div class="breadcrumb" id="breadcrumb">
+          <span>Workflows</span>
+          <span class="chev">›</span>
+          <span class="brand-chip" id="brand-chip"><span class="dot" id="brand-dot" style="background:var(--tbf);display:inline-block;width:6px;height:6px;border-radius:50%"></span><span id="brand-name">TBF</span></span>
+        </div>
+        <span class="header-eta">Expected · <span id="wf-eta">—</span></span>
+      </header>
+
+      <h2 class="display-1 wf-label" id="wf-label">Four Surfaces</h2>
+      <p class="wf-description" id="wf-description">Single topic in, four polished social surfaces out. The simplest demonstration of voice-manual-driven generation.</p>
+
+      <div class="wf-meta">
+        <span class="item"><span class="k">n8n workflow</span><span class="v serif" id="wf-n8nname">—</span></span>
+        <span class="item"><span class="k">POST</span><span class="v" id="wf-webhook">—</span></span>
+        <span class="item"><span class="k">model</span><span class="v">claude-sonnet-4-6</span></span>
+      </div>
+    </article>
+
+    <section class="input-panel" id="input-panel">
+      <div class="panel-eyebrow">
+        <span class="eyebrow">Input</span>
+        <span class="tag">brain loaded · 10 markdown files</span>
       </div>
 
       <div class="chips" id="wf-presets"></div>
-      <div class="form-grid" id="wf-inputs"></div>
+      <div class="form" id="wf-inputs"></div>
 
       <div class="actions">
-        <button class="run" id="run-btn" disabled>
+        <button class="run-btn" id="run-btn" disabled>
           Run the agent
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <span class="status" id="status"></span>
       </div>
 
-      <div class="error" id="error" style="display:none"></div>
-    </div>
+      <div class="err" id="error" style="display:none"></div>
+    </section>
 
     <div id="results" class="results"></div>
   </section>
 </main>
 
 <footer>
-  Dashboard for <a href="/pitch/nexus">/pitch/nexus</a> and <a href="/pitch/sabrina">/pitch/sabrina</a>. Single static file at /dashboard.html — open it anywhere, hit any workflow.
+  <span>Dashboard for <a href="/pitch/nexus">/pitch/nexus</a> · <a href="/pitch/sabrina">/pitch/sabrina</a></span>
+  <span>·</span>
+  <span>Single static file at <span class="micro">/dashboard.html</span></span>
+  <span>·</span>
+  <span>Open anywhere, trigger any workflow.</span>
 </footer>
 
 <script>
@@ -195,7 +312,7 @@ const WORKFLOWS = [
       {label:"Pine-129 vintage", values:{topic:"TBF just released the 2025 Pine-129 vintage at 8.2% caryophyllene by GC-MS, the highest concentration recorded for this cultivar."}},
       {label:"Vape thermal stability", values:{topic:"New internal GC-MS data shows TBF Gas-707 holds flavor integrity at 230°C, where most monoterpene-dominant blends drop off above 180°C."}},
     ],
-    description:"Single topic in, four polished social surfaces out (Instagram, LinkedIn, cold email, blog opener). Simplest demo of voice-manual-driven generation."
+    description:"Single topic in, four polished social surfaces out. Instagram caption, LinkedIn post, cold email, and blog opener — all in TBF voice. The simplest demonstration of voice-manual-driven generation."
   },
   {
     id:"tbf_full_stack", group:"tbf",
@@ -213,7 +330,7 @@ const WORKFLOWS = [
       {label:"Pine-129 vintage", values:{topic:"TBF just released the 2025 Pine-129 vintage at 8.2% caryophyllene by GC-MS, the highest concentration recorded for this cultivar.", audience:"vape"}},
       {label:"Beverage solubility", values:{topic:"New emulsification protocol allows TBF Citrus-78 to dose at 0.03% in carbonated beverages without phase separation across the 90-day shelf life.", audience:"beverage"}}
     ],
-    description:"Flagship workflow. Topic + audience in. Returns six social surfaces plus a complete SEO bundle, AEO Q&A with FAQPage schema, and three GEO quote-ready snippets."
+    description:"Flagship workflow. Topic plus audience in. Returns six social surfaces plus a complete SEO bundle, AEO Q&A with FAQPage schema, and three GEO quote-ready snippets."
   },
   {
     id:"tbf_sample_pack_triage", group:"tbf",
@@ -231,7 +348,7 @@ const WORKFLOWS = [
       {label:"RTD beverage startup", values:{company_name:"Cann", website:"drinkcann.com", product_description:"Low-dose CBD + THC sparkling social tonics. RTD beverages.", requester_title:"Beverage Formulation Lead"}},
       {label:"Solventless extractor", values:{company_name:"710 Labs", website:"710labs.com", product_description:"Solventless concentrate brand. Live rosin badder, hash, infused pre-rolls. Premium positioning.", requester_title:"Head of R&D"}}
     ],
-    description:"Every sample request is a pipeline event. Classifies the prospect, scores fit, picks the right sample pack, drafts a personalized technical follow-up email in TBF voice."
+    description:"Every sample-pack request is a pipeline event. Classifies the prospect, scores fit, picks the right sample pack, and drafts a personalized technical follow-up email in TBF voice."
   },
   {
     id:"tbf_blog_splinter", group:"tbf",
@@ -246,7 +363,7 @@ const WORKFLOWS = [
       {label:"Caryophyllene blog", values:{title:"Why Caryophyllene Concentration Is the Metric Your Sesquiterpene Supplier Has Been Avoiding", content:"The conventional wisdom in terpene formulation holds that a complex profile is automatically a better profile. More compounds, the thinking goes, means a richer entourage effect and a more defensible product story. That assumption deserves scrutiny, because complexity without concentration data is just noise on a GC-MS readout. Caryophyllene is the clearest counterexample. As a bicyclic sesquiterpene with a 15-carbon backbone, it occupies a chemically distinct tier from the linalools and myrcenes that dominate most commodity blends. Its molecular architecture resists oxidative degradation at elevated temperatures, it survives the viscosity and flash-point demands of distillate-carrier systems, and its concentration, measured in precise percentage points, is a direct predictor of how a profile will perform after 90 days of accelerated aging. The 2025 Pine-129 vintage from our fields in The California Terpene Belt registers 8.2% caryophyllene on GC×GC analysis."}},
       {label:"Vintage primer", values:{title:"Seasonal Terpene Vintage Reports: How Harvest Month Changes Profile Chemistry", content:"In cannabis terpene production, timing is everything. Environmental variables like temperature, light intensity, and humidity during late flowering significantly impact terpene biosynthesis. Early-season harvests favor monoterpenes producing light, citrusy profiles ideal for vapes and beverages. Mid-season hits the optimal balance with the highest total terpene content. Late-season produces sesquiterpene-rich extracts with deeper, spicier characteristics suited for premium concentrates."}}
     ],
-    description:"Paste a TBF long-form blog. The agent splinters it into a multi-platform pack: 3 LinkedIn carousels, 2 X threads, 5 IG captions, 3 pull-quote tweets, and a cold-email pitch."
+    description:"Paste a TBF long-form blog. The agent splinters it into a multi-platform pack — three LinkedIn carousels, two X threads, five Instagram captions, three pull-quote tweets, and a cold-email pitch."
   },
 
   // ---- ROMANOFF SHOWCASE ----
@@ -266,7 +383,7 @@ const WORKFLOWS = [
       {label:"Loneliness epidemic", values:{topic:"The Surgeon General's 2023 advisory framed loneliness as a public health crisis. What clinicians are actually seeing in their practices in 2026.", audience:"press"}},
       {label:"Reality TV breakup", values:{topic:"A high-profile reality TV couple just publicly split mid-season. Press wants a clinical read on their on-camera communication patterns.", audience:"press"}}
     ],
-    description:"Cross-vertical showcase: same brain-agent-workflows architecture applied to a personal-brand client. Returns press quote, IG, TikTok script, podcast pitch, plus SEO/AEO/GEO."
+    description:"Cross-vertical showcase: same brain-agent-workflows architecture applied to a personal-brand client. Returns a press quote, Instagram caption, TikTok script, podcast pitch, plus SEO, AEO, and GEO output."
   },
   {
     id:"romanoff_press_quote", group:"romanoff",
@@ -283,7 +400,7 @@ const WORKFLOWS = [
       {label:"Holiday family stress", values:{outlet:"Today Show", topic:"Managing holiday family stress. Boundaries with in-laws, sibling dynamics, when to skip the visit entirely.", word_count:"45"}},
       {label:"Workplace burnout 2026", values:{outlet:"Forbes", topic:"The new face of workplace burnout in 2026. Post-pandemic shifts, the always-on culture, and what HR is missing.", word_count:"80"}}
     ],
-    description:"Single-purpose workflow tuned for journalist deadlines. Three distinct quote variants (mechanism-led, reframe-led, three-signs), a pull-quote line, and the credentials block for attribution."
+    description:"Single-purpose workflow tuned for journalist deadlines. Returns three distinct quote variants (mechanism-led, reframe-led, three-signs), a pull-quote line, and the credentials block for attribution."
   },
   {
     id:"romanoff_aeo_page", group:"romanoff",
@@ -296,7 +413,7 @@ const WORKFLOWS = [
       {label:"Doomscrolling at night", values:{question:"Why does my anxiety get worse when I doomscroll at night?"}},
       {label:"Communication death spiral", values:{question:"What is the communication death spiral in couples?"}}
     ],
-    description:"Takes a search-style question, returns a complete answer page tuned for AI engines: SVO direct answer, full body, ethics caveat, Schema.org FAQPage + Person markup, and 4 GEO snippets."
+    description:"Takes a search-style question, returns a complete answer page tuned to be cited by AI engines: SVO direct answer, full body, ethics caveat, Schema.org FAQPage and Person markup, plus four GEO snippets."
   }
 ];
 
@@ -311,12 +428,14 @@ const $$ = (s,r=document) => Array.from(r.querySelectorAll(s));
 function renderSidebar(){
   const tbf = WORKFLOWS.filter(w=>w.group==="tbf");
   const ro  = WORKFLOWS.filter(w=>w.group==="romanoff");
-  $("#tbf-list").innerHTML = tbf.map(w => listItem(w)).join("");
-  $("#romanoff-list").innerHTML = ro.map(w => listItem(w)).join("");
-  $$("aside button").forEach(b => b.addEventListener("click", () => activate(b.dataset.id)));
+  $("#tbf-list").innerHTML = tbf.map((w,i) => listItem(w,i)).join("");
+  $("#romanoff-list").innerHTML = ro.map((w,i) => listItem(w,i)).join("");
+  $$("aside .nav-item").forEach(b => b.addEventListener("click", () => activate(b.dataset.id)));
 }
-function listItem(w){
-  return `<li><button data-id="${w.id}" class="${w.id===activeId?'active':''}"><span class="label">${w.label}</span><span class="badge">${w.badge}</span></button></li>`;
+function listItem(w,i){
+  const idx = String(i+1).padStart(2,"0");
+  const active = w.id===activeId ? "active" : "";
+  return `<li><button class="nav-item ${w.group} ${active}" data-id="${w.id}"><span class="idx">${idx}</span><span><span class="label">${w.label}</span><span class="badge">${w.badge}</span></span></button></li>`;
 }
 
 // ----- Activate workflow -----
@@ -324,13 +443,21 @@ function activate(id){
   activeId = id;
   const w = WORKFLOWS.find(x=>x.id===id);
   if (!w) return;
+
   $("#wf-label").textContent = w.label;
   $("#wf-description").textContent = w.description;
   $("#wf-n8nname").textContent = w.n8nName;
   $("#wf-webhook").textContent = new URL(w.webhook).pathname;
   $("#wf-eta").textContent = `~${w.eta}s`;
 
-  // Reset inputs to first preset if any, else defaults
+  // brand theming on header
+  const hp = $("#header-panel");
+  hp.classList.remove("tbf","romanoff");
+  hp.classList.add(w.group);
+  $("#brand-dot").style.background = w.group === "tbf" ? "var(--tbf)" : "var(--romanoff)";
+  $("#brand-name").textContent = w.group === "tbf" ? "Terpene Belt Farms" : "Showcase · Dr. Romanoff";
+
+  // Reset inputs
   inputs = {};
   for (const f of w.fields){
     if ("default" in f) inputs[f.name] = f.default;
@@ -345,6 +472,7 @@ function activate(id){
   renderInputs(w);
   $("#run-btn").disabled = false;
   $("#status").textContent = "";
+  $("#status").classList.remove("error");
   $("#error").style.display="none";
   renderResults(w, null, false);
 }
@@ -396,7 +524,9 @@ async function run(){
   const w = WORKFLOWS.find(x=>x.id===activeId);
   if (!w) return;
   $("#run-btn").disabled = true;
-  $("#status").textContent = `Running… ~${w.eta}s expected.`;
+  $("#run-btn").innerHTML = `<span class="spinner" aria-hidden="true"></span>Running…`;
+  $("#status").innerHTML = `<span class="led"></span><span>~${w.eta}s expected · brain loading</span>`;
+  $("#status").classList.remove("error");
   $("#error").style.display="none";
   renderResults(w, null, true);
 
@@ -410,14 +540,16 @@ async function run(){
     if (!resp.ok) throw new Error(`Webhook returned ${resp.status}`);
     const data = await resp.json();
     const elapsed = ((Date.now()-started)/1000).toFixed(1);
-    $("#status").textContent = `Completed in ${elapsed}s · workflow: ${w.n8nName}`;
+    $("#status").innerHTML = `<span class="led"></span><span>Completed in ${elapsed}s · ${w.n8nName}</span>`;
     renderResults(w, data, false);
   } catch(e){
     $("#error").textContent = e.message || "Generation failed. Try again.";
     $("#error").style.display="block";
-    $("#status").textContent = "";
+    $("#status").innerHTML = `<span class="led"></span><span>failed</span>`;
+    $("#status").classList.add("error");
   } finally {
     $("#run-btn").disabled = false;
+    $("#run-btn").innerHTML = `Run the agent <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   }
 }
 
@@ -427,228 +559,234 @@ $("#run-btn").addEventListener("click", run);
 function renderResults(w, data, loading){
   const el = $("#results");
   if (!data && !loading){
-    el.innerHTML = `<div class="placeholder">Pick a preset above or type your own input, then hit Run the agent.</div>`;
+    el.innerHTML = `<div class="placeholder reveal">
+      <div class="hd">Pick a preset, hit Run.</div>
+      <div class="sub">The agent loads ${w?.group==='romanoff' ? '10' : '10'} brain files, calls Claude Sonnet 4.6, and returns structured JSON. Results render below.</div>
+    </div>`;
     return;
   }
-  if (w.renderer === "tbf_four") el.innerHTML = renderTbfFour(data, loading);
-  else if (w.renderer === "tbf_full") el.innerHTML = renderTbfFull(data, loading);
-  else if (w.renderer === "romanoff_full") el.innerHTML = renderRomanoffFull(data, loading);
-  else if (w.renderer === "press_quotes") el.innerHTML = renderPressQuotes(data, loading);
-  else if (w.renderer === "aeo_page") el.innerHTML = renderAeoPage(data, loading);
-  else if (w.renderer === "triage") el.innerHTML = renderTriage(data, loading);
-  else if (w.renderer === "splinter") el.innerHTML = renderSplinter(data, loading);
-  else el.innerHTML = `<pre class="card body">${escapeHTML(JSON.stringify(data,null,2))}</pre>`;
+  let html = "";
+  if (w.renderer === "tbf_four") html = renderTbfFour(data, loading, w);
+  else if (w.renderer === "tbf_full") html = renderTbfFull(data, loading, w);
+  else if (w.renderer === "romanoff_full") html = renderRomanoffFull(data, loading, w);
+  else if (w.renderer === "press_quotes") html = renderPressQuotes(data, loading, w);
+  else if (w.renderer === "aeo_page") html = renderAeoPage(data, loading, w);
+  else if (w.renderer === "triage") html = renderTriage(data, loading, w);
+  else if (w.renderer === "splinter") html = renderSplinter(data, loading, w);
+  else html = `<pre class="card"><pre class="body">${escapeHTML(JSON.stringify(data,null,2))}</pre></pre>`;
+  el.innerHTML = `<div class="reveal">${html}</div>`;
 }
 
-function rowHeader(title, badge){
-  return `<div class="result-row"><h3>${title}</h3><span class="row-badge">${badge}</span></div>`;
+function rowHeader(title, badge, group){
+  const accentColor = group==="romanoff" ? "var(--romanoff)" : "var(--tbf)";
+  return `<div class="row-head"><h3><span class="accent" style="background:${accentColor}"></span>${title}</h3><span class="tag">${badge}</span></div>`;
 }
-function card(title, meta, body, accent){
-  return `<div class="card ${accent?'accent':''}"><div class="top"><span class="ttl">${title}</span><span class="wc">${meta||""}</span></div><div class="body">${body}</div></div>`;
+function card(title, meta, body, opts={}){
+  const cls = (opts.accent ? "accent " : "") + (opts.group || "");
+  return `<div class="card ${cls}"><div class="top"><span class="ttl">${title}</span><span class="wc">${meta||""}</span></div><div class="body">${body}</div></div>`;
 }
 function skelCard(title){
-  return `<div class="card"><div class="top"><span class="ttl">${title}</span></div><div class="skel"></div><div class="skel w-9"></div><div class="skel w-8"></div></div>`;
+  return `<div class="card"><div class="top"><span class="ttl">${title}</span></div><div class="body"><div class="skel w9"></div><div class="skel w8"></div><div class="skel w7"></div><div class="skel w9"></div><div class="skel w6"></div></div></div>`;
 }
 function fieldCard(label, value, opts={}){
-  if (opts.loading) return `<div class="card ${opts.accent?'accent':''}"><div class="top"><span class="ttl">${label}</span></div><div class="skel"></div><div class="skel w-9"></div></div>`;
+  const cls = "card " + (opts.accent ? "accent " : "") + (opts.group || "");
+  if (opts.loading) return `<div class="${cls}"><div class="top"><span class="ttl">${label}</span></div><div class="body"><div class="skel w9"></div><div class="skel w7"></div></div></div>`;
   if (!value) return `<div class="card"><div class="top"><span class="ttl">${label}</span></div><div class="body empty">—</div></div>`;
   const body = opts.mono ? `<pre class="body">${escapeHTML(value)}</pre>` : `<div class="body">${escapeHTML(value).replace(/\n/g,"<br>")}</div>`;
-  return `<div class="card ${opts.accent?'accent':''}"><div class="top"><span class="ttl">${label}</span></div>${body}</div>`;
+  return `<div class="${cls}"><div class="top"><span class="ttl">${label}</span></div>${body}</div>`;
 }
 
-function renderTbfFour(d, loading){
+function renderTbfFour(d, loading, w){
   const s = d?.surfaces || {};
   return [
-    rowHeader("Four Surfaces","social drop"),
-    `<div class="grid-2">
+    rowHeader("Four Surfaces","social drop","tbf"),
+    `<div class="g2">
       ${loading && !s.instagram ? skelCard("Instagram") : card("Instagram", wc(s.instagram)+" words", escapeMulti(s.instagram))}
       ${loading && !s.linkedin ? skelCard("LinkedIn") : card("LinkedIn", wc(s.linkedin)+" words", escapeMulti(s.linkedin))}
-      ${loading && !s.email_body ? skelCard("Cold email") : card("Cold email", wc(s.email_body)+" words", `<span class="subj">Subject:</span> ${escapeHTML(s.email_subject||"")}<br><br>${escapeMulti(s.email_body)}`)}
-      ${loading && !s.blog_lede ? skelCard("Blog opener") : card("Blog opener", wc(s.blog_lede)+" words", `<div class="hd">${escapeHTML(s.blog_headline||"")}</div><br>${escapeMulti(s.blog_lede)}`)}
+      ${loading && !s.email_body ? skelCard("Cold email") : card("Cold email", wc(s.email_body)+" words", `<span class="subj">Subject: ${escapeHTML(s.email_subject||"")}</span>${escapeMulti(s.email_body)}`)}
+      ${loading && !s.blog_lede ? skelCard("Blog opener") : card("Blog opener", wc(s.blog_lede)+" words", `<span class="hd">${escapeHTML(s.blog_headline||"")}</span>${escapeMulti(s.blog_lede)}`)}
     </div>`
   ].join("");
 }
 
-function renderTbfFull(d, loading){
+function renderTbfFull(d, loading, w){
   const s = d?.stack || {};
   return [
-    rowHeader("Social","6 surfaces"),
-    `<div class="grid-2">
+    rowHeader("Social","6 surfaces","tbf"),
+    `<div class="g2">
       ${loading && !s.social?.instagram ? skelCard("Instagram") : card("Instagram", wc(s.social?.instagram)+" words", escapeMulti(s.social?.instagram))}
       ${loading && !s.social?.linkedin ? skelCard("LinkedIn") : card("LinkedIn", wc(s.social?.linkedin)+" words", escapeMulti(s.social?.linkedin))}
-      ${loading && !s.social?.email_body ? skelCard("Cold email") : card("Cold email", wc(s.social?.email_body)+" words", `<span class="subj">Subject:</span> ${escapeHTML(s.social?.email_subject||"")}<br><br>${escapeMulti(s.social?.email_body)}`)}
-      ${loading && !s.social?.blog_lede ? skelCard("Blog opener") : card("Blog opener", wc(s.social?.blog_lede)+" words", `<div class="hd">${escapeHTML(s.social?.blog_headline||"")}</div><br>${escapeMulti(s.social?.blog_lede)}`)}
+      ${loading && !s.social?.email_body ? skelCard("Cold email") : card("Cold email", wc(s.social?.email_body)+" words", `<span class="subj">Subject: ${escapeHTML(s.social?.email_subject||"")}</span>${escapeMulti(s.social?.email_body)}`)}
+      ${loading && !s.social?.blog_lede ? skelCard("Blog opener") : card("Blog opener", wc(s.social?.blog_lede)+" words", `<span class="hd">${escapeHTML(s.social?.blog_headline||"")}</span>${escapeMulti(s.social?.blog_lede)}`)}
     </div>`,
-    rowHeader("SEO","meta + schema + links"),
-    `<div class="grid-3">
+    rowHeader("SEO","meta · schema · internal links","tbf"),
+    `<div class="g3">
       ${fieldCard("Meta title", s.seo?.meta_title, {mono:true,loading})}
       ${fieldCard("H1", s.seo?.h1, {loading})}
       ${fieldCard("Primary keyword", s.seo?.primary_keyword, {mono:true,loading})}
     </div>
-    <div style="margin-top:14px">
+    <div style="margin-top:var(--s-4);display:grid;gap:var(--s-4)">
       ${fieldCard("Meta description", s.seo?.meta_description, {loading})}
-      ${fieldCard("Internal links", s.seo?.internal_link_suggestions ? s.seo.internal_link_suggestions.map(l=>'→ "'+l.anchor+'" → '+l.target_url).join("\n") : "", {mono:true,loading})}
-      ${fieldCard("Schema.org JSON-LD", safeJSON(s.seo?.schema_jsonld), {mono:true,loading})}
+      ${fieldCard("Internal link suggestions", s.seo?.internal_link_suggestions ? s.seo.internal_link_suggestions.map(l=>'→ "'+l.anchor+'" → '+l.target_url).join("\n") : "", {mono:true,loading})}
+      ${fieldCard("Schema.org JSON-LD (paste into <head>)", safeJSON(s.seo?.schema_jsonld), {mono:true,loading})}
     </div>`,
-    rowHeader("AEO","answer-engine-optimized"),
-    `<div class="grid-2">
-      ${fieldCard("Question", s.aeo?.question, {loading})}
-      ${fieldCard("Direct answer (the snippet AI engines lift)", s.aeo?.direct_answer, {accent:true,loading})}
+    rowHeader("AEO","answer-engine-optimized","tbf"),
+    `<div class="g2">
+      ${fieldCard("Question (search query)", s.aeo?.question, {loading})}
+      ${fieldCard("Direct answer · the snippet AI engines lift", s.aeo?.direct_answer, {accent:true,group:"tbf",loading})}
     </div>
-    <div style="margin-top:14px">
+    <div style="margin-top:var(--s-4);display:grid;gap:var(--s-4)">
       ${fieldCard("Full answer", s.aeo?.full_answer, {loading})}
-      ${fieldCard("FAQPage Schema", safeJSON(s.aeo?.schema_faq_markup), {mono:true,loading})}
+      ${fieldCard("FAQPage schema markup", safeJSON(s.aeo?.schema_faq_markup), {mono:true,loading})}
     </div>`,
-    rowHeader("GEO","3 snippet types"),
-    `<div class="grid-3">
-      ${fieldCard("Definition snippet", s.geo?.definition_snippet, {accent:true,loading})}
-      ${fieldCard("Comparison snippet", s.geo?.comparison_snippet, {accent:true,loading})}
-      ${fieldCard("Statistic snippet", s.geo?.statistic_snippet, {accent:true,loading})}
+    rowHeader("GEO","3 quote-ready snippet types","tbf"),
+    `<div class="g3">
+      ${fieldCard("Definition", s.geo?.definition_snippet, {accent:true,group:"tbf",loading})}
+      ${fieldCard("Comparison", s.geo?.comparison_snippet, {accent:true,group:"tbf",loading})}
+      ${fieldCard("Statistic", s.geo?.statistic_snippet, {accent:true,group:"tbf",loading})}
     </div>`
   ].join("");
 }
 
-function renderRomanoffFull(d, loading){
+function renderRomanoffFull(d, loading, w){
   const s = d?.stack || {};
   return [
-    rowHeader("Press + Social","4 surfaces"),
-    `<div class="grid-2">
+    rowHeader("Press + Social","4 surfaces","romanoff"),
+    `<div class="g2">
       ${loading && !s.press_quote ? skelCard("Press quote") : card("Press quote", wc(s.press_quote)+" words", escapeMulti(s.press_quote))}
       ${loading && !s.instagram ? skelCard("Instagram") : card("Instagram", wc(s.instagram)+" words", escapeMulti(s.instagram))}
       ${loading && !s.tiktok_script ? skelCard("TikTok / Reel") : card("TikTok / Reel script", wc(s.tiktok_script)+" words", escapeMulti(s.tiktok_script))}
       ${loading && !s.podcast_pitch ? skelCard("Podcast pitch") : card("Podcast pitch", wc(s.podcast_pitch)+" words", escapeMulti(s.podcast_pitch))}
     </div>`,
-    rowHeader("SEO","meta + schema + links"),
-    `<div class="grid-3">
+    rowHeader("SEO","meta · schema · internal links","romanoff"),
+    `<div class="g3">
       ${fieldCard("Meta title", s.seo?.meta_title, {mono:true,loading})}
       ${fieldCard("H1", s.seo?.h1, {loading})}
       ${fieldCard("Primary keyword", s.seo?.primary_keyword, {mono:true,loading})}
     </div>
-    <div style="margin-top:14px">
+    <div style="margin-top:var(--s-4);display:grid;gap:var(--s-4)">
       ${fieldCard("Meta description", s.seo?.meta_description, {loading})}
-      ${fieldCard("Internal links", s.seo?.internal_link_suggestions ? s.seo.internal_link_suggestions.map(l=>'→ "'+l.anchor+'" → '+l.target_url).join("\n") : "", {mono:true,loading})}
+      ${fieldCard("Internal link suggestions", s.seo?.internal_link_suggestions ? s.seo.internal_link_suggestions.map(l=>'→ "'+l.anchor+'" → '+l.target_url).join("\n") : "", {mono:true,loading})}
       ${fieldCard("Schema.org JSON-LD", safeJSON(s.seo?.schema_jsonld), {mono:true,loading})}
     </div>`,
-    rowHeader("AEO","answer-engine-optimized"),
-    `<div class="grid-2">
-      ${fieldCard("Question", s.aeo?.question, {loading})}
-      ${fieldCard("Direct answer (the snippet AI engines lift)", s.aeo?.direct_answer, {accent:true,loading})}
+    rowHeader("AEO","answer-engine-optimized","romanoff"),
+    `<div class="g2">
+      ${fieldCard("Question (search query)", s.aeo?.question, {loading})}
+      ${fieldCard("Direct answer · names her by name", s.aeo?.direct_answer, {accent:true,group:"romanoff",loading})}
     </div>
-    <div style="margin-top:14px">
+    <div style="margin-top:var(--s-4);display:grid;gap:var(--s-4)">
       ${fieldCard("Full answer", s.aeo?.full_answer, {loading})}
-      ${fieldCard("FAQPage Schema", safeJSON(s.aeo?.schema_faq_markup), {mono:true,loading})}
+      ${fieldCard("FAQPage schema markup", safeJSON(s.aeo?.schema_faq_markup), {mono:true,loading})}
     </div>`,
-    rowHeader("GEO","4 snippet types"),
-    `<div class="grid-2">
-      ${fieldCard("Definition", s.geo?.definition_snippet, {accent:true,loading})}
-      ${fieldCard("Three-signs", s.geo?.three_signs_snippet, {accent:true,loading})}
-      ${fieldCard("Clinical reframe", s.geo?.clinical_reframe_snippet, {accent:true,loading})}
-      ${fieldCard("Permission grant", s.geo?.permission_grant_snippet, {accent:true,loading})}
+    rowHeader("GEO","4 quote-ready snippet types","romanoff"),
+    `<div class="g2">
+      ${fieldCard("Definition", s.geo?.definition_snippet, {accent:true,group:"romanoff",loading})}
+      ${fieldCard("Three-signs", s.geo?.three_signs_snippet, {accent:true,group:"romanoff",loading})}
+      ${fieldCard("Clinical reframe", s.geo?.clinical_reframe_snippet, {accent:true,group:"romanoff",loading})}
+      ${fieldCard("Permission grant", s.geo?.permission_grant_snippet, {accent:true,group:"romanoff",loading})}
     </div>`
   ].join("");
 }
 
-function renderPressQuotes(d, loading){
+function renderPressQuotes(d, loading, w){
   const q = d?.quotes || {};
   function quoteCard(v){
-    if (loading && !v) return `<div class="quote"><div class="angle">Variant</div><div class="skel"></div><div class="skel w-9"></div><div class="skel w-8"></div></div>`;
+    if (loading && !v) return `<div class="quote romanoff"><div class="angle">Variant</div><div class="skel w9"></div><div class="skel w8"></div><div class="skel w7"></div></div>`;
     if (!v) return "";
-    return `<div class="quote"><div class="angle">Variant · ${escapeHTML(v.angle||"")}</div><q>${escapeHTML(v.quote||"")}</q></div>`;
+    return `<div class="quote romanoff"><div class="angle">Variant · ${escapeHTML(v.angle||"")}</div><q>${escapeHTML(v.quote||"")}</q></div>`;
   }
   return [
-    rowHeader("Three quote variants","journalist can pick the angle"),
-    `<div class="grid-3">${quoteCard(q.variant_a)}${quoteCard(q.variant_b)}${quoteCard(q.variant_c)}</div>`,
-    rowHeader("Pull-quote + cred block","for publication"),
-    `<div class="grid-2">
-      ${fieldCard("Suggested pull-quote (the callout)", q.suggested_pull_quote, {accent:true,loading})}
-      ${fieldCard("Credentials block (for attribution)", q.credentials, {loading})}
+    rowHeader("Three quote variants","journalist picks the angle","romanoff"),
+    `<div class="g3">${quoteCard(q.variant_a)}${quoteCard(q.variant_b)}${quoteCard(q.variant_c)}</div>`,
+    rowHeader("Pull-quote + cred block","for the publication","romanoff"),
+    `<div class="g2">
+      ${fieldCard("Suggested pull-quote · the callout line", q.suggested_pull_quote, {accent:true,group:"romanoff",loading})}
+      ${fieldCard("Credentials block · for attribution", q.credentials, {loading})}
     </div>`
   ].join("");
 }
 
-function renderAeoPage(d, loading){
+function renderAeoPage(d, loading, w){
   const p = d?.page || {};
   return [
-    rowHeader("Page metadata","/answers/&lt;slug&gt;"),
-    `<div class="grid-3">
+    rowHeader("Page metadata","/answers/<slug>","romanoff"),
+    `<div class="g3">
       ${fieldCard("URL slug", p.url_slug, {mono:true,loading})}
       ${fieldCard("Meta title", p.meta_title, {loading})}
       ${fieldCard("H1 (declarative)", p.h1, {loading})}
     </div>
-    <div style="margin-top:14px">
-      ${fieldCard("Meta description", p.meta_description, {loading})}
-    </div>`,
-    rowHeader("Answer body","what AI engines lift"),
+    <div style="margin-top:var(--s-4)">${fieldCard("Meta description", p.meta_description, {loading})}</div>`,
+    rowHeader("Answer body","what AI engines lift","romanoff"),
     `<div>
-      ${fieldCard("Direct answer (SVO, names her)", p.direct_answer, {accent:true,loading})}
-      <div style="margin-top:14px">${fieldCard("Full answer", p.full_answer, {loading})}</div>
-      <div style="margin-top:14px">${fieldCard("Ethics caveat", p.ethics_caveat, {loading})}</div>
+      ${fieldCard("Direct answer · SVO, names her", p.direct_answer, {accent:true,group:"romanoff",loading})}
+      <div style="margin-top:var(--s-4)">${fieldCard("Full answer", p.full_answer, {loading})}</div>
+      <div style="margin-top:var(--s-4)">${fieldCard("Ethics caveat", p.ethics_caveat, {loading})}</div>
     </div>`,
-    rowHeader("Schema markup","paste into &lt;head&gt;"),
-    `<div class="grid-2">
-      ${fieldCard("FAQPage Schema", safeJSON(p.schema_faq_markup), {mono:true,loading})}
-      ${fieldCard("Person Schema (author)", safeJSON(p.schema_person_markup), {mono:true,loading})}
+    rowHeader("Schema markup","paste into <head>","romanoff"),
+    `<div class="g2">
+      ${fieldCard("FAQPage schema", safeJSON(p.schema_faq_markup), {mono:true,loading})}
+      ${fieldCard("Person schema · author", safeJSON(p.schema_person_markup), {mono:true,loading})}
     </div>`,
-    rowHeader("GEO snippets","quote-ready"),
-    `<div class="grid-2">
-      ${fieldCard("Definition", p.geo_snippets?.definition_snippet, {accent:true,loading})}
-      ${fieldCard("Three-signs", p.geo_snippets?.three_signs_snippet, {accent:true,loading})}
-      ${fieldCard("Clinical reframe", p.geo_snippets?.clinical_reframe_snippet, {accent:true,loading})}
-      ${fieldCard("Permission grant", p.geo_snippets?.permission_grant_snippet, {accent:true,loading})}
+    rowHeader("GEO snippets","quote-ready","romanoff"),
+    `<div class="g2">
+      ${fieldCard("Definition", p.geo_snippets?.definition_snippet, {accent:true,group:"romanoff",loading})}
+      ${fieldCard("Three-signs", p.geo_snippets?.three_signs_snippet, {accent:true,group:"romanoff",loading})}
+      ${fieldCard("Clinical reframe", p.geo_snippets?.clinical_reframe_snippet, {accent:true,group:"romanoff",loading})}
+      ${fieldCard("Permission grant", p.geo_snippets?.permission_grant_snippet, {accent:true,group:"romanoff",loading})}
     </div>`
   ].join("");
 }
 
-function renderTriage(d, loading){
+function renderTriage(d, loading, w){
   const t = d?.triage || {};
   return [
-    rowHeader("Triage decision","agent classifies, scores, picks sample pack"),
-    `<div class="grid-3">
-      ${fieldCard("Primary category", t.classification ? `${t.classification.primary_category} (${Math.round(t.classification.confidence*100)}% confident)` : "", {accent:true,loading})}
-      ${fieldCard("Fit score (0-100)", t.fit_score!=null ? String(t.fit_score) : "", {accent:true,loading})}
-      ${fieldCard("Recommended sample pack", t.recommended_sample_pack, {accent:true,loading})}
+    rowHeader("Triage decision","agent classifies, scores, picks pack","tbf"),
+    `<div class="g3">
+      ${fieldCard("Primary category", t.classification ? `${t.classification.primary_category} (${Math.round(t.classification.confidence*100)}% confident)` : "", {accent:true,group:"tbf",loading})}
+      ${fieldCard("Fit score · 0-100", t.fit_score!=null ? String(t.fit_score) : "", {accent:true,group:"tbf",loading})}
+      ${fieldCard("Recommended sample pack", t.recommended_sample_pack, {accent:true,group:"tbf",loading})}
     </div>
-    <div style="margin-top:14px">
+    <div style="margin-top:var(--s-4);display:grid;gap:var(--s-4)">
       ${fieldCard("Classification reasoning", t.classification?.reasoning, {loading})}
       ${fieldCard("Fit reasoning", t.fit_reasoning, {loading})}
       ${fieldCard("Likely formulation problem TBF can solve", t.likely_formulation_problem, {loading})}
     </div>`,
-    rowHeader("Personalized follow-up email","ready to send"),
-    `<div>${loading && !t.email ? skelCard("Email") : card("Email", wc(t.email?.body)+" words", `<span class="subj">Subject:</span> ${escapeHTML(t.email?.subject||"")}<br><br>${escapeMulti(t.email?.body)}`)}</div>`
+    rowHeader("Personalized follow-up email","ready to send","tbf"),
+    loading && !t.email ? skelCard("Email") : card("Email", wc(t.email?.body)+" words", `<span class="subj">Subject: ${escapeHTML(t.email?.subject||"")}</span>${escapeMulti(t.email?.body)}`)
   ].join("");
 }
 
-function renderSplinter(d, loading){
+function renderSplinter(d, loading, w){
   const s = d?.splinter || {};
   const carouselsHtml = (s.linkedin_carousels && s.linkedin_carousels.length ? s.linkedin_carousels : [null,null,null]).map((c,i) => {
-    if (loading && !c) return `<div class="card"><div class="top"><span class="ttl">Carousel ${i+1}</span></div><div class="skel"></div><div class="skel w-9"></div><div class="skel w-8"></div></div>`;
+    if (loading && !c) return `<div class="card"><div class="top"><span class="ttl">Carousel ${i+1}</span></div><div class="body"><div class="skel w9"></div><div class="skel w8"></div><div class="skel w7"></div></div></div>`;
     if (!c) return "";
-    const slides = c.slides.map((sl,j) => `<div style="border-top:1px solid var(--line);margin-top:6px;padding-top:6px"><div style="font-size:10px;color:var(--muted)">Slide ${j+1}</div><div style="font-weight:500">${escapeHTML(sl.headline||"")}</div><div>${escapeHTML(sl.body||"")}</div></div>`).join("");
-    return `<div class="card"><div class="top"><span class="ttl">Carousel ${i+1}</span></div><div class="body"><div style="font-weight:500">${escapeHTML(c.hook||"")}</div>${slides}<div style="font-style:italic;margin-top:6px">${escapeHTML(c.close||"")}</div></div></div>`;
+    const slides = c.slides.map((sl,j) => `<div style="border-top:1px solid var(--line);margin-top:var(--s-3);padding-top:var(--s-3)"><div class="micro" style="margin-bottom:4px">Slide ${j+1}</div><div style="font-weight:500;color:var(--ink);margin-bottom:2px">${escapeHTML(sl.headline||"")}</div><div>${escapeHTML(sl.body||"")}</div></div>`).join("");
+    return `<div class="card"><div class="top"><span class="ttl">Carousel ${i+1}</span></div><div class="body"><div style="font-weight:500;color:var(--ink)">${escapeHTML(c.hook||"")}</div>${slides}<div style="font-style:italic;margin-top:var(--s-3);color:var(--ink-3)">${escapeHTML(c.close||"")}</div></div></div>`;
   }).join("");
   const threadsHtml = (s.x_threads && s.x_threads.length ? s.x_threads : [null,null]).map((t,i) => {
-    if (loading && !t) return `<div class="card"><div class="top"><span class="ttl">Thread ${i+1}</span></div><div class="skel"></div><div class="skel w-9"></div></div>`;
+    if (loading && !t) return `<div class="card"><div class="top"><span class="ttl">Thread ${i+1}</span></div><div class="body"><div class="skel w9"></div><div class="skel w8"></div></div></div>`;
     if (!t) return "";
-    const fol = t.follow_tweets.map(tw => `<div style="border-left:1px solid var(--line);padding-left:8px;margin-top:4px">${escapeHTML(tw)}</div>`).join("");
-    return `<div class="card"><div class="top"><span class="ttl">Thread ${i+1}</span></div><div class="body"><div style="border-left:2px solid var(--ink);padding-left:8px;font-weight:500">${escapeHTML(t.hook_tweet||"")}</div>${fol}<div style="border-left:2px solid var(--muted);padding-left:8px;margin-top:4px;font-style:italic">${escapeHTML(t.close_tweet||"")}</div></div></div>`;
+    const fol = t.follow_tweets.map(tw => `<div style="border-left:1px solid var(--line);padding-left:var(--s-3);margin-top:var(--s-2)">${escapeHTML(tw)}</div>`).join("");
+    return `<div class="card"><div class="top"><span class="ttl">Thread ${i+1}</span></div><div class="body"><div style="border-left:3px solid var(--ink);padding-left:var(--s-3);font-weight:500;color:var(--ink)">${escapeHTML(t.hook_tweet||"")}</div>${fol}<div style="border-left:3px solid var(--muted);padding-left:var(--s-3);margin-top:var(--s-2);font-style:italic;color:var(--ink-3)">${escapeHTML(t.close_tweet||"")}</div></div></div>`;
   }).join("");
   const capsHtml = (s.ig_captions && s.ig_captions.length ? s.ig_captions : [null,null,null,null,null]).map((c,i) => {
-    if (loading && !c) return `<div class="card"><div class="top"><span class="ttl">Caption ${i+1}</span></div><div class="skel"></div><div class="skel w-9"></div></div>`;
+    if (loading && !c) return `<div class="card"><div class="top"><span class="ttl">Caption ${i+1}</span></div><div class="body"><div class="skel w9"></div><div class="skel w7"></div></div></div>`;
     if (!c) return "";
     return card("Caption "+(i+1), wc(c)+" words", escapeMulti(c));
   }).join("");
   const quotesHtml = (s.key_quotes ? s.key_quotes.map(q => `<div class="quote"><q>${escapeHTML(q)}</q></div>`).join("") : "");
   return [
-    rowHeader("LinkedIn carousels","3 carousels × ~5 slides each"),
-    `<div class="grid-3">${carouselsHtml}</div>`,
-    rowHeader("X threads","2 threads · hook + follow + close"),
-    `<div class="grid-2">${threadsHtml}</div>`,
-    rowHeader("Instagram captions","5 captions, 80-150 words each"),
-    `<div class="grid-2">${capsHtml}</div>`,
-    rowHeader("Cold-email pitch + key quotes","outbound + 3 tweet-ready"),
-    `<div class="grid-2">
-      ${loading && !s.cold_email_pitch ? skelCard("Cold-email pitch") : (s.cold_email_pitch ? card("Cold-email pitch", wc(s.cold_email_pitch.body)+" words", `<span class="subj">Subject:</span> ${escapeHTML(s.cold_email_pitch.subject||"")}<br><br>${escapeMulti(s.cold_email_pitch.body)}`) : "")}
-      <div class="card"><div class="top"><span class="ttl">Key quotes (tweet-ready)</span></div><div class="body">${quotesHtml || (loading ? '<div class="skel"></div><div class="skel w-9"></div>' : '<span class="empty">—</span>')}</div></div>
+    rowHeader("LinkedIn carousels","3 carousels · ~5 slides each","tbf"),
+    `<div class="g3">${carouselsHtml}</div>`,
+    rowHeader("X threads","2 threads · hook + follow + close","tbf"),
+    `<div class="g2">${threadsHtml}</div>`,
+    rowHeader("Instagram captions","5 captions · 80-150 words","tbf"),
+    `<div class="g2">${capsHtml}</div>`,
+    rowHeader("Cold-email pitch + pull quotes","outbound + 3 tweet-ready","tbf"),
+    `<div class="g2">
+      ${loading && !s.cold_email_pitch ? skelCard("Cold-email pitch") : (s.cold_email_pitch ? card("Cold-email pitch", wc(s.cold_email_pitch.body)+" words", `<span class="subj">Subject: ${escapeHTML(s.cold_email_pitch.subject||"")}</span>${escapeMulti(s.cold_email_pitch.body)}`) : "")}
+      <div class="card"><div class="top"><span class="ttl">Key quotes · tweet-ready</span></div><div class="body" style="display:grid;gap:var(--s-3)">${quotesHtml || (loading ? '<div class="skel w9"></div><div class="skel w8"></div>' : '<span class="empty">—</span>')}</div></div>
     </div>`
   ].join("");
 }
