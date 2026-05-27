@@ -1,5 +1,6 @@
 import Image from "next/image";
 import LiveDemo from "@/components/LiveDemo";
+import BrainExplorer from "@/components/BrainExplorer";
 
 // Shared body of the Nexus / Terpene Belt Farms Marketing Engineer pitch.
 // Used by both the portfolio case-study page (/work/nexus-marketing-engineer)
@@ -64,37 +65,22 @@ export default function NexusPitchBody() {
       </Section>
 
       <Section
-        eyebrow="03 · The Voice Manual"
-        title="Day-one deliverable: a 9-axis stylometric profile of the brand."
+        eyebrow="03 · The Brain"
+        title="Ten real files. Plain markdown. Versioned in git. The agent reads all of them on every task."
       >
         <p>
-          Before any automation gets wired, the agent needs to know what TBF
-          sounds like. I scraped the public web corpus (About page plus eight
-          long-form blog posts, roughly 6,000 words of brand prose) and ran a
-          9-axis stylometric analysis. The output is a versioned Voice Manual
-          that loads as a system-prompt prefix into every downstream draft.
+          This is not a slide describing a brain. This is the brain. Click any
+          file in the explorer below to see the actual content the agent loads
+          before generating anything. The Voice Manual is one of ten files.
+          The rest are the product catalog, formulator personas, the SEO
+          keyword universe, the AEO question library, the GEO snippet
+          templates, the harvest journal, the cited research corpus, the
+          brand canon, and the live automation roadmap.
         </p>
-        <div className="not-prose mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
-          {VOICE_AXES.map((row) => (
-            <div
-              key={row.n}
-              className="border border-[color:var(--line)] rounded-md p-4 bg-white/40"
-            >
-              <span className="text-[10px] tabular-nums text-[color:var(--muted)]">
-                AXIS {row.n.padStart(2, "0")}
-              </span>
-              <div className="font-display text-lg leading-tight mt-1">
-                {row.t}
-              </div>
-              <div className="text-sm text-[color:var(--ink-2)] mt-2 leading-snug">
-                {row.d}
-              </div>
-            </div>
-          ))}
-        </div>
+        <BrainExplorer />
         <p className="mt-6 text-sm text-[color:var(--muted)]">
-          The full Voice Manual sits in the brain and reloads before every
-          draft. Every agent gets a copy. Every output is checkable against it.
+          Every workflow loads these as a system prompt. Edit one file, every
+          downstream surface inherits the change.
         </p>
       </Section>
 
@@ -144,15 +130,20 @@ export default function NexusPitchBody() {
       </Section>
 
       <Section
-        eyebrow="05 · Live Demo"
-        title="Run the system right now. Pick an input, watch four surfaces generate against the Voice Manual."
+        eyebrow="05 · Live Demo · Test the System"
+        title="Two live n8n workflows. Pick a mode, pick a topic, watch the brain produce on-brand output."
       >
         <p>
-          This isn&apos;t a screenshot. The button below POSTs to a live n8n
-          webhook on production. The webhook loads the Voice Manual as a
-          system prompt, calls Claude Sonnet 4.6, and returns the four
-          surfaces as JSON. About 25-30 seconds end-to-end. Try one of the
-          presets or type your own news event.
+          Two production webhooks are wired up. The <em>Four Surfaces</em> mode
+          hits <code className="text-[12px] font-mono">/webhook/tbf-content-demo</code>{" "}
+          and returns a social drop (IG, LinkedIn, cold email, blog opener) in
+          about 30 seconds. The <em>Full Content Stack</em> mode hits{" "}
+          <code className="text-[12px] font-mono">/webhook/tbf-content-stack</code>{" "}
+          with an audience selector and returns the social drop plus a full SEO
+          package (meta, H1, JSON-LD schema, internal-link suggestions), an AEO
+          Q&amp;A pack (question + cited answer + FAQ schema), and three GEO
+          quote-ready snippets (definition, comparison, statistic). About 60
+          seconds for the full stack.
         </p>
         <LiveDemo />
       </Section>
@@ -292,18 +283,6 @@ function PhaseCard({
     </div>
   );
 }
-
-const VOICE_AXES = [
-  { n: "1", t: "Audience & register", d: "B2B formulator, second-person plural, college-educated technical" },
-  { n: "2", t: "Sentence architecture", d: "Claim → mechanism → strategic implication, 2-4 sentence grafs" },
-  { n: "3", t: "Vocabulary palette", d: "Fresh Never Frozen®, fragrance farming, vintage, terroir, sesquiterpene" },
-  { n: "4", t: "Rhetorical moves", d: "Eight recurring scaffolds (myth → mechanism, data drop, tiered matrix)" },
-  { n: "5", t: "Authority markers", d: "Specificity over hedging, proprietary data with humility, regulatory fluency" },
-  { n: "6", t: "Visual / structural defaults", d: "H2 + H3 only, comparison tables, FAQ close, soft sample-pack CTA" },
-  { n: "7", t: "Brand canon", d: "One-liners to preserve verbatim across surfaces" },
-  { n: "8", t: "Anti-patterns", d: "No consumer hype, no em-dashes, no first-person singular, no 'strain'" },
-  { n: "9", t: "Surface tuning", d: "Web vs. LinkedIn vs. IG vs. cold email — length, opener, CTA per surface" },
-];
 
 const ROADMAP = [
   {
