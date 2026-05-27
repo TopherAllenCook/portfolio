@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Nexus Agriscience · Marketing Engineer Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#f3efe7;--bg-elev:#ebe6dc;--bg-soft:rgba(255,255,255,.6);
+    --ink:#161512;--ink-2:#2a2722;--muted:#6b6760;
+    --line:rgba(22,21,18,.12);--line-strong:rgba(22,21,18,.22);
+    --accent-tbf:#4F7A3C;--accent-romanoff:#7C5B8C;--accent-warn:#b94a2c;
+    --radius:10px;
+    --font-sans:'Inter',system-ui,sans-serif;
+    --font-display:'Instrument Serif',Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+  body{min-height:100vh}
+  h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:-.02em;margin:0}
+  pre,code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  a{color:inherit}
+  button{font:inherit;cursor:pointer}
+  ::selection{background:var(--ink);color:var(--bg)}
+
+  /* layout */
+  .topbar{position:sticky;top:0;z-index:30;background:rgba(243,239,231,.92);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:1400px;margin:0 auto;padding:14px 24px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;gap:10px;align-items:baseline}
+  .brand h1{font-size:20px}
+  .brand .sub{color:var(--muted);font-size:13px}
+  .topbar .meta{color:var(--muted);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+
+  main{max-width:1400px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:340px 1fr;gap:28px}
+  @media (max-width:1000px){main{grid-template-columns:1fr}}
+
+  /* sidebar */
+  aside{position:sticky;top:84px;align-self:start}
+  @media (max-width:1000px){aside{position:static}}
+  aside .group{margin-bottom:18px}
+  aside .group-title{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+  aside .group-title h3{font-size:13px;font-family:var(--font-sans);font-weight:600;letter-spacing:.04em}
+  aside .group-title span{color:var(--muted);font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+  aside .group .swatch{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;transform:translateY(-1px)}
+  aside ul{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:var(--radius);background:#fff}
+  aside li+li{border-top:1px solid var(--line)}
+  aside li button{width:100%;text-align:left;background:transparent;border:none;padding:14px 16px;display:block;transition:background .12s}
+  aside li button:hover{background:var(--bg-elev)}
+  aside li button.active{background:var(--ink);color:var(--bg)}
+  aside li button.active .badge{color:rgba(243,239,231,.7)}
+  aside li button .label{font-size:14px;font-weight:500;line-height:1.25;display:flex;align-items:center;gap:6px}
+  aside li button .badge{margin-top:4px;display:block;color:var(--muted);font-size:11px;line-height:1.3}
+
+  /* main panel */
+  .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin-bottom:18px}
+  .panel h2{font-size:24px;line-height:1.1;margin-bottom:6px}
+  .panel .description{color:var(--ink-2);font-size:14px;line-height:1.55;margin-bottom:18px}
+  .panel .meta{display:flex;flex-wrap:wrap;gap:14px;color:var(--muted);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
+  .panel .meta span{display:inline-flex;align-items:center;gap:6px}
+  .panel .meta b{font-weight:500;color:var(--ink-2);letter-spacing:0;text-transform:none;font-size:12px}
+
+  .form-grid{display:grid;gap:12px}
+  label.field>span.lbl{display:block;font-size:11px;font-weight:600;letter-spacing:.05em;margin-bottom:4px;color:var(--ink-2)}
+  input[type=text],input[type=number],textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:#fff;font-family:var(--font-sans);font-size:13px;color:var(--ink-2);resize:vertical}
+  input[type=text]:focus,input[type=number]:focus,textarea:focus{outline:none;border-color:var(--ink-2);box-shadow:0 0 0 2px rgba(22,21,18,.06)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+  .chip{font-size:11px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;transition:all .12s}
+  .chip:hover{background:var(--bg-elev)}
+  .chip.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .audience .chip.active{background:var(--accent-tbf);border-color:var(--accent-tbf);color:#fff}
+  .audience-romanoff .chip.active{background:var(--accent-romanoff);border-color:var(--accent-romanoff);color:#fff}
+
+  .actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px}
+  button.run{background:var(--ink);color:var(--bg);border:none;border-radius:8px;padding:11px 18px;font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:opacity .12s}
+  button.run:hover{opacity:.92}
+  button.run:disabled{opacity:.45;cursor:not-allowed}
+  .status{color:var(--muted);font-size:11px;font-family:ui-monospace,monospace}
+
+  .error{margin-top:14px;border:1px solid #f2c4be;background:#fdeae6;color:#7c1f0d;padding:10px 12px;border-radius:8px;font-size:13px}
+
+  /* results */
+  .results{margin-top:20px;display:grid;gap:18px}
+  .result-row h3{font-size:18px;line-height:1.2;display:inline-block;margin-right:10px}
+  .result-row .row-badge{color:var(--muted);font-size:11px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr}}
+  .card{background:var(--bg-soft);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+  .card.accent{background:var(--bg-elev)}
+  .card .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
+  .card .top .ttl{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  .card .top .wc{font-size:10px;color:var(--muted);font-family:ui-monospace,monospace}
+  .card .body{font-size:13px;color:var(--ink-2);line-height:1.55;white-space:pre-wrap}
+  .card .body .subj{font-size:11px;color:var(--muted)}
+  .card .body .hd{font-family:var(--font-display);font-size:16px;line-height:1.2}
+  .card pre.body{white-space:pre-wrap;font-family:ui-monospace,monospace;font-size:12px}
+  .empty{font-style:italic;color:var(--muted);font-size:13px}
+  .placeholder{padding:22px;text-align:center;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-style:italic;font-size:13px}
+
+  /* skeleton */
+  @keyframes pulse{0%{opacity:.7}50%{opacity:.45}100%{opacity:.7}}
+  .skel{height:10px;background:var(--line);border-radius:4px;margin-top:6px;animation:pulse 1.2s ease-in-out infinite}
+  .skel.w-9{width:90%}.skel.w-8{width:80%}.skel.w-7{width:75%}
+
+  /* quote card variant */
+  .quote{background:var(--bg-elev);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+  .quote .angle{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .quote q{font-style:italic;font-size:14px;line-height:1.55;color:var(--ink-2)}
+
+  /* footer */
+  footer{max-width:1400px;margin:0 auto;padding:0 24px 40px;color:var(--muted);font-size:12px}
+  footer a{text-decoration:none;border-bottom:1px solid currentColor}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <h1>Nexus Agriscience</h1>
+      <span class="sub">/ Marketing Engineer Dashboard</span>
+    </div>
+    <span class="meta">7 live n8n workflows · Claude Sonnet 4.6 · brain-loaded</span>
+  </div>
+</header>
+
+<main>
+  <aside>
+    <div class="group">
+      <div class="group-title">
+        <h3><span class="swatch" style="background:var(--accent-tbf)"></span>Terpene Belt Farms</h3>
+        <span>4 workflows</span>
+      </div>
+      <ul id="tbf-list"></ul>
+    </div>
+    <div class="group">
+      <div class="group-title">
+        <h3><span class="swatch" style="background:var(--accent-romanoff)"></span>Showcase: Dr. Romanoff</h3>
+        <span>3 workflows</span>
+      </div>
+      <ul id="romanoff-list"></ul>
+    </div>
+  </aside>
+
+  <section id="workspace">
+    <div class="panel" id="header-panel">
+      <h2 id="wf-label">Pick a workflow</h2>
+      <p class="description" id="wf-description">Select any workflow from the sidebar. Inputs render automatically. Click Run to POST to the live n8n webhook and watch the agent generate on-brand output in seconds.</p>
+      <div class="meta">
+        <span><b id="wf-n8nname">—</b></span>
+        <span>POSTs to <b id="wf-webhook">—</b></span>
+        <span>Expected: <b id="wf-eta">—</b></span>
+      </div>
+
+      <div class="chips" id="wf-presets"></div>
+      <div class="form-grid" id="wf-inputs"></div>
+
+      <div class="actions">
+        <button class="run" id="run-btn" disabled>
+          Run the agent
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="status" id="status"></span>
+      </div>
+
+      <div class="error" id="error" style="display:none"></div>
+    </div>
+
+    <div id="results" class="results"></div>
+  </section>
+</main>
+
+<footer>
+  Dashboard for <a href="/pitch/nexus">/pitch/nexus</a> and <a href="/pitch/sabrina">/pitch/sabrina</a>. Single static file at /dashboard.html — open it anywhere, hit any workflow.
+</footer>
+
+<script>
+const N8N = "https://financiallyfitphotographe.app.n8n.cloud/webhook";
+
+const WORKFLOWS = [
+  // ---- TBF ----
+  {
+    id:"tbf_four_surfaces", group:"tbf",
+    label:"Four Surfaces", badge:"Social drop · ~30s",
+    n8nName:"Nexus Agriscience — TBF: Four Surfaces",
+    webhook:N8N+"/tbf-content-demo", eta:30, renderer:"tbf_four",
+    fields:[{name:"topic",label:"Topic",type:"textarea",placeholder:"News event, vintage update, technical hook..."}],
+    presets:[
+      {label:"UCLA research grant", values:{topic:"Nexus Agriscience selected for UCLA-led, California state-funded cannabis research grant. TBF terpene oils will be the input dataset."}},
+      {label:"Pine-129 vintage", values:{topic:"TBF just released the 2025 Pine-129 vintage at 8.2% caryophyllene by GC-MS, the highest concentration recorded for this cultivar."}},
+      {label:"Vape thermal stability", values:{topic:"New internal GC-MS data shows TBF Gas-707 holds flavor integrity at 230°C, where most monoterpene-dominant blends drop off above 180°C."}},
+    ],
+    description:"Single topic in, four polished social surfaces out (Instagram, LinkedIn, cold email, blog opener). Simplest demo of voice-manual-driven generation."
+  },
+  {
+    id:"tbf_full_stack", group:"tbf",
+    label:"Full Content Stack", badge:"Social + SEO + AEO + GEO · ~60s",
+    n8nName:"Nexus Agriscience — TBF: Full Content Stack",
+    webhook:N8N+"/tbf-content-stack", eta:60, renderer:"tbf_full",
+    fields:[
+      {name:"topic",label:"Topic",type:"textarea",placeholder:"News event, harvest update, technical claim..."},
+      {name:"audience",label:"Audience",type:"chips",default:"vape",options:[
+        {value:"vape",label:"Vape R&D"},{value:"beverage",label:"Beverage"},{value:"edible",label:"Edible"},{value:"distributor",label:"Distributor"}
+      ]},
+    ],
+    presets:[
+      {label:"UCLA grant", values:{topic:"Nexus Agriscience selected for UCLA-led, California state-funded cannabis research grant. TBF terpene oils will be the input dataset.", audience:"vape"}},
+      {label:"Pine-129 vintage", values:{topic:"TBF just released the 2025 Pine-129 vintage at 8.2% caryophyllene by GC-MS, the highest concentration recorded for this cultivar.", audience:"vape"}},
+      {label:"Beverage solubility", values:{topic:"New emulsification protocol allows TBF Citrus-78 to dose at 0.03% in carbonated beverages without phase separation across the 90-day shelf life.", audience:"beverage"}}
+    ],
+    description:"Flagship workflow. Topic + audience in. Returns six social surfaces plus a complete SEO bundle, AEO Q&A with FAQPage schema, and three GEO quote-ready snippets."
+  },
+  {
+    id:"tbf_sample_pack_triage", group:"tbf",
+    label:"Sample-Pack Triage Agent", badge:"Lead → classified + personalized · ~25s",
+    n8nName:"Nexus Agriscience — TBF: Sample-Pack Triage",
+    webhook:N8N+"/tbf-sample-pack-triage", eta:25, renderer:"triage",
+    fields:[
+      {name:"company_name",label:"Company name",type:"text",placeholder:"e.g. Stiiizy"},
+      {name:"website",label:"Website (domain)",type:"text",placeholder:"e.g. stiiizy.com"},
+      {name:"product_description",label:"Product line / description",type:"textarea",placeholder:"What they make, who they sell to, scale..."},
+      {name:"requester_title",label:"Requester title",type:"text",placeholder:"e.g. Director of R&D"}
+    ],
+    presets:[
+      {label:"Premium vape (Stiiizy)", values:{company_name:"Stiiizy", website:"stiiizy.com", product_description:"Premium 510-thread vape cartridges and proprietary battery system. Mass-market cannabis brand across CA and NV.", requester_title:"Director of Product Innovation"}},
+      {label:"RTD beverage startup", values:{company_name:"Cann", website:"drinkcann.com", product_description:"Low-dose CBD + THC sparkling social tonics. RTD beverages.", requester_title:"Beverage Formulation Lead"}},
+      {label:"Solventless extractor", values:{company_name:"710 Labs", website:"710labs.com", product_description:"Solventless concentrate brand. Live rosin badder, hash, infused pre-rolls. Premium positioning.", requester_title:"Head of R&D"}}
+    ],
+    description:"Every sample request is a pipeline event. Classifies the prospect, scores fit, picks the right sample pack, drafts a personalized technical follow-up email in TBF voice."
+  },
+  {
+    id:"tbf_blog_splinter", group:"tbf",
+    label:"Blog Splinter", badge:"1 blog → 14+ on-brand assets · ~75s",
+    n8nName:"Nexus Agriscience — TBF: Blog Splinter",
+    webhook:N8N+"/tbf-blog-splinter", eta:75, renderer:"splinter",
+    fields:[
+      {name:"title",label:"Blog title",type:"text",placeholder:"Long-form blog headline"},
+      {name:"content",label:"Blog content (paste body)",type:"textarea",placeholder:"Paste blog content..."}
+    ],
+    presets:[
+      {label:"Caryophyllene blog", values:{title:"Why Caryophyllene Concentration Is the Metric Your Sesquiterpene Supplier Has Been Avoiding", content:"The conventional wisdom in terpene formulation holds that a complex profile is automatically a better profile. More compounds, the thinking goes, means a richer entourage effect and a more defensible product story. That assumption deserves scrutiny, because complexity without concentration data is just noise on a GC-MS readout. Caryophyllene is the clearest counterexample. As a bicyclic sesquiterpene with a 15-carbon backbone, it occupies a chemically distinct tier from the linalools and myrcenes that dominate most commodity blends. Its molecular architecture resists oxidative degradation at elevated temperatures, it survives the viscosity and flash-point demands of distillate-carrier systems, and its concentration, measured in precise percentage points, is a direct predictor of how a profile will perform after 90 days of accelerated aging. The 2025 Pine-129 vintage from our fields in The California Terpene Belt registers 8.2% caryophyllene on GC×GC analysis."}},
+      {label:"Vintage primer", values:{title:"Seasonal Terpene Vintage Reports: How Harvest Month Changes Profile Chemistry", content:"In cannabis terpene production, timing is everything. Environmental variables like temperature, light intensity, and humidity during late flowering significantly impact terpene biosynthesis. Early-season harvests favor monoterpenes producing light, citrusy profiles ideal for vapes and beverages. Mid-season hits the optimal balance with the highest total terpene content. Late-season produces sesquiterpene-rich extracts with deeper, spicier characteristics suited for premium concentrates."}}
+    ],
+    description:"Paste a TBF long-form blog. The agent splinters it into a multi-platform pack: 3 LinkedIn carousels, 2 X threads, 5 IG captions, 3 pull-quote tweets, and a cold-email pitch."
+  },
+
+  // ---- ROMANOFF SHOWCASE ----
+  {
+    id:"romanoff_full_stack", group:"romanoff",
+    label:"Full Content Stack", badge:"Press + Social + SEO + AEO + GEO · ~60s",
+    n8nName:"Nexus Agriscience — Showcase (Dr. Romanoff): Full Content Stack",
+    webhook:N8N+"/romanoff-content-stack", eta:60, renderer:"romanoff_full",
+    fields:[
+      {name:"topic",label:"Topic",type:"textarea",placeholder:"News event, cultural moment, clinical concept..."},
+      {name:"audience",label:"Audience",type:"chips",default:"press",options:[
+        {value:"press",label:"Press / journalist"},{value:"social",label:"Social audience"},{value:"prospect",label:"Therapy prospect"},{value:"booker",label:"Podcast / TV booker"}
+      ]}
+    ],
+    presets:[
+      {label:"Doomscrolling + anxiety", values:{topic:"The connection between doomscrolling and rising anxiety levels in young adults. New research on threat-detection circuitry and compulsive news consumption.", audience:"press"}},
+      {label:"Loneliness epidemic", values:{topic:"The Surgeon General's 2023 advisory framed loneliness as a public health crisis. What clinicians are actually seeing in their practices in 2026.", audience:"press"}},
+      {label:"Reality TV breakup", values:{topic:"A high-profile reality TV couple just publicly split mid-season. Press wants a clinical read on their on-camera communication patterns.", audience:"press"}}
+    ],
+    description:"Cross-vertical showcase: same brain-agent-workflows architecture applied to a personal-brand client. Returns press quote, IG, TikTok script, podcast pitch, plus SEO/AEO/GEO."
+  },
+  {
+    id:"romanoff_press_quote", group:"romanoff",
+    label:"Press-Quote Generator", badge:"Outlet + topic → 3 quote variants · ~15s",
+    n8nName:"Nexus Agriscience — Showcase (Dr. Romanoff): Press-Quote Generator",
+    webhook:N8N+"/romanoff-press-quote", eta:15, renderer:"press_quotes",
+    fields:[
+      {name:"outlet",label:"Outlet",type:"text",placeholder:"e.g. Cosmopolitan, Today Show, BBC"},
+      {name:"topic",label:"Topic",type:"textarea",placeholder:"What the journalist is writing about..."},
+      {name:"word_count",label:"Word count per quote",type:"number",default:"60"}
+    ],
+    presets:[
+      {label:"Why stay too long", values:{outlet:"Cosmopolitan", topic:"Why people stay in relationships past their expiration date. Sunk cost bias, intermittent reinforcement, attachment activation.", word_count:"60"}},
+      {label:"Holiday family stress", values:{outlet:"Today Show", topic:"Managing holiday family stress. Boundaries with in-laws, sibling dynamics, when to skip the visit entirely.", word_count:"45"}},
+      {label:"Workplace burnout 2026", values:{outlet:"Forbes", topic:"The new face of workplace burnout in 2026. Post-pandemic shifts, the always-on culture, and what HR is missing.", word_count:"80"}}
+    ],
+    description:"Single-purpose workflow tuned for journalist deadlines. Three distinct quote variants (mechanism-led, reframe-led, three-signs), a pull-quote line, and the credentials block for attribution."
+  },
+  {
+    id:"romanoff_aeo_page", group:"romanoff",
+    label:"AEO Page Generator", badge:"Question → full /answers/ page · ~40s",
+    n8nName:"Nexus Agriscience — Showcase (Dr. Romanoff): AEO Page Generator",
+    webhook:N8N+"/romanoff-aeo-page", eta:40, renderer:"aeo_page",
+    fields:[{name:"question",label:"Question (search query)",type:"textarea",placeholder:"What are the 4 attachment styles in adult relationships?"}],
+    presets:[
+      {label:"4 attachment styles", values:{question:"What are the 4 attachment styles in adult relationships?"}},
+      {label:"Doomscrolling at night", values:{question:"Why does my anxiety get worse when I doomscroll at night?"}},
+      {label:"Communication death spiral", values:{question:"What is the communication death spiral in couples?"}}
+    ],
+    description:"Takes a search-style question, returns a complete answer page tuned for AI engines: SVO direct answer, full body, ethics caveat, Schema.org FAQPage + Person markup, and 4 GEO snippets."
+  }
+];
+
+// ----- State -----
+let activeId = null;
+let inputs = {};
+
+const $ = (s,r=document) => r.querySelector(s);
+const $$ = (s,r=document) => Array.from(r.querySelectorAll(s));
+
+// ----- Sidebar render -----
+function renderSidebar(){
+  const tbf = WORKFLOWS.filter(w=>w.group==="tbf");
+  const ro  = WORKFLOWS.filter(w=>w.group==="romanoff");
+  $("#tbf-list").innerHTML = tbf.map(w => listItem(w)).join("");
+  $("#romanoff-list").innerHTML = ro.map(w => listItem(w)).join("");
+  $$("aside button").forEach(b => b.addEventListener("click", () => activate(b.dataset.id)));
+}
+function listItem(w){
+  return `<li><button data-id="${w.id}" class="${w.id===activeId?'active':''}"><span class="label">${w.label}</span><span class="badge">${w.badge}</span></button></li>`;
+}
+
+// ----- Activate workflow -----
+function activate(id){
+  activeId = id;
+  const w = WORKFLOWS.find(x=>x.id===id);
+  if (!w) return;
+  $("#wf-label").textContent = w.label;
+  $("#wf-description").textContent = w.description;
+  $("#wf-n8nname").textContent = w.n8nName;
+  $("#wf-webhook").textContent = new URL(w.webhook).pathname;
+  $("#wf-eta").textContent = `~${w.eta}s`;
+
+  // Reset inputs to first preset if any, else defaults
+  inputs = {};
+  for (const f of w.fields){
+    if ("default" in f) inputs[f.name] = f.default;
+    else inputs[f.name] = "";
+  }
+  if (w.presets && w.presets.length){
+    Object.assign(inputs, w.presets[0].values);
+  }
+
+  renderSidebar();
+  renderPresets(w);
+  renderInputs(w);
+  $("#run-btn").disabled = false;
+  $("#status").textContent = "";
+  $("#error").style.display="none";
+  renderResults(w, null, false);
+}
+
+function renderPresets(w){
+  const el = $("#wf-presets");
+  if (!w.presets || !w.presets.length){ el.innerHTML=""; return; }
+  el.innerHTML = w.presets.map((p,i) => `<button class="chip" data-i="${i}">${p.label}</button>`).join("");
+  $$(".chip", el).forEach(b => b.addEventListener("click", () => {
+    const p = w.presets[+b.dataset.i];
+    Object.assign(inputs, p.values);
+    renderInputs(w);
+  }));
+}
+
+function renderInputs(w){
+  const root = $("#wf-inputs");
+  root.innerHTML = w.fields.map(f => {
+    if (f.type === "textarea"){
+      return `<label class="field"><span class="lbl">${f.label}</span><textarea name="${f.name}" rows="3" placeholder="${f.placeholder||''}">${escapeHTML(inputs[f.name]||"")}</textarea></label>`;
+    }
+    if (f.type === "text" || f.type === "number"){
+      return `<label class="field"><span class="lbl">${f.label}</span><input type="${f.type}" name="${f.name}" placeholder="${f.placeholder||''}" value="${escapeHTML(inputs[f.name]||"")}" /></label>`;
+    }
+    if (f.type === "chips"){
+      const audClass = w.group==="romanoff" ? "audience-romanoff" : "audience";
+      const opts = f.options.map(o => {
+        const active = (inputs[f.name] || f.default) === o.value;
+        return `<button class="chip ${active?'active':''}" data-name="${f.name}" data-value="${o.value}">${o.label}</button>`;
+      }).join("");
+      return `<label class="field"><span class="lbl">${f.label}</span><div class="chips ${audClass}">${opts}</div></label>`;
+    }
+    return "";
+  }).join("");
+
+  $$('#wf-inputs textarea, #wf-inputs input').forEach(el => {
+    el.addEventListener("input", () => { inputs[el.name] = el.value; });
+  });
+  $$('#wf-inputs .chip').forEach(b => {
+    b.addEventListener("click", () => {
+      inputs[b.dataset.name] = b.dataset.value;
+      renderInputs(w);
+    });
+  });
+}
+
+// ----- Run -----
+async function run(){
+  const w = WORKFLOWS.find(x=>x.id===activeId);
+  if (!w) return;
+  $("#run-btn").disabled = true;
+  $("#status").textContent = `Running… ~${w.eta}s expected.`;
+  $("#error").style.display="none";
+  renderResults(w, null, true);
+
+  const started = Date.now();
+  try{
+    const resp = await fetch(w.webhook, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(inputs)
+    });
+    if (!resp.ok) throw new Error(`Webhook returned ${resp.status}`);
+    const data = await resp.json();
+    const elapsed = ((Date.now()-started)/1000).toFixed(1);
+    $("#status").textContent = `Completed in ${elapsed}s · workflow: ${w.n8nName}`;
+    renderResults(w, data, false);
+  } catch(e){
+    $("#error").textContent = e.message || "Generation failed. Try again.";
+    $("#error").style.display="block";
+    $("#status").textContent = "";
+  } finally {
+    $("#run-btn").disabled = false;
+  }
+}
+
+$("#run-btn").addEventListener("click", run);
+
+// ----- Result renderers -----
+function renderResults(w, data, loading){
+  const el = $("#results");
+  if (!data && !loading){
+    el.innerHTML = `<div class="placeholder">Pick a preset above or type your own input, then hit Run the agent.</div>`;
+    return;
+  }
+  if (w.renderer === "tbf_four") el.innerHTML = renderTbfFour(data, loading);
+  else if (w.renderer === "tbf_full") el.innerHTML = renderTbfFull(data, loading);
+  else if (w.renderer === "romanoff_full") el.innerHTML = renderRomanoffFull(data, loading);
+  else if (w.renderer === "press_quotes") el.innerHTML = renderPressQuotes(data, loading);
+  else if (w.renderer === "aeo_page") el.innerHTML = renderAeoPage(data, loading);
+  else if (w.renderer === "triage") el.innerHTML = renderTriage(data, loading);
+  else if (w.renderer === "splinter") el.innerHTML = renderSplinter(data, loading);
+  else el.innerHTML = `<pre class="card body">${escapeHTML(JSON.stringify(data,null,2))}</pre>`;
+}
+
+function rowHeader(title, badge){
+  return `<div class="result-row"><h3>${title}</h3><span class="row-badge">${badge}</span></div>`;
+}
+function card(title, meta, body, accent){
+  return `<div class="card ${accent?'accent':''}"><div class="top"><span class="ttl">${title}</span><span class="wc">${meta||""}</span></div><div class="body">${body}</div></div>`;
+}
+function skelCard(title){
+  return `<div class="card"><div class="top"><span class="ttl">${title}</span></div><div class="skel"></div><div class="skel w-9"></div><div class="skel w-8"></div></div>`;
+}
+function fieldCard(label, value, opts={}){
+  if (opts.loading) return `<div class="card ${opts.accent?'accent':''}"><div class="top"><span class="ttl">${label}</span></div><div class="skel"></div><div class="skel w-9"></div></div>`;
+  if (!value) return `<div class="card"><div class="top"><span class="ttl">${label}</span></div><div class="body empty">—</div></div>`;
+  const body = opts.mono ? `<pre class="body">${escapeHTML(value)}</pre>` : `<div class="body">${escapeHTML(value).replace(/\n/g,"<br>")}</div>`;
+  return `<div class="card ${opts.accent?'accent':''}"><div class="top"><span class="ttl">${label}</span></div>${body}</div>`;
+}
+
+function renderTbfFour(d, loading){
+  const s = d?.surfaces || {};
+  return [
+    rowHeader("Four Surfaces","social drop"),
+    `<div class="grid-2">
+      ${loading && !s.instagram ? skelCard("Instagram") : card("Instagram", wc(s.instagram)+" words", escapeMulti(s.instagram))}
+      ${loading && !s.linkedin ? skelCard("LinkedIn") : card("LinkedIn", wc(s.linkedin)+" words", escapeMulti(s.linkedin))}
+      ${loading && !s.email_body ? skelCard("Cold email") : card("Cold email", wc(s.email_body)+" words", `<span class="subj">Subject:</span> ${escapeHTML(s.email_subject||"")}<br><br>${escapeMulti(s.email_body)}`)}
+      ${loading && !s.blog_lede ? skelCard("Blog opener") : card("Blog opener", wc(s.blog_lede)+" words", `<div class="hd">${escapeHTML(s.blog_headline||"")}</div><br>${escapeMulti(s.blog_lede)}`)}
+    </div>`
+  ].join("");
+}
+
+function renderTbfFull(d, loading){
+  const s = d?.stack || {};
+  return [
+    rowHeader("Social","6 surfaces"),
+    `<div class="grid-2">
+      ${loading && !s.social?.instagram ? skelCard("Instagram") : card("Instagram", wc(s.social?.instagram)+" words", escapeMulti(s.social?.instagram))}
+      ${loading && !s.social?.linkedin ? skelCard("LinkedIn") : card("LinkedIn", wc(s.social?.linkedin)+" words", escapeMulti(s.social?.linkedin))}
+      ${loading && !s.social?.email_body ? skelCard("Cold email") : card("Cold email", wc(s.social?.email_body)+" words", `<span class="subj">Subject:</span> ${escapeHTML(s.social?.email_subject||"")}<br><br>${escapeMulti(s.social?.email_body)}`)}
+      ${loading && !s.social?.blog_lede ? skelCard("Blog opener") : card("Blog opener", wc(s.social?.blog_lede)+" words", `<div class="hd">${escapeHTML(s.social?.blog_headline||"")}</div><br>${escapeMulti(s.social?.blog_lede)}`)}
+    </div>`,
+    rowHeader("SEO","meta + schema + links"),
+    `<div class="grid-3">
+      ${fieldCard("Meta title", s.seo?.meta_title, {mono:true,loading})}
+      ${fieldCard("H1", s.seo?.h1, {loading})}
+      ${fieldCard("Primary keyword", s.seo?.primary_keyword, {mono:true,loading})}
+    </div>
+    <div style="margin-top:14px">
+      ${fieldCard("Meta description", s.seo?.meta_description, {loading})}
+      ${fieldCard("Internal links", s.seo?.internal_link_suggestions ? s.seo.internal_link_suggestions.map(l=>'→ "'+l.anchor+'" → '+l.target_url).join("\n") : "", {mono:true,loading})}
+      ${fieldCard("Schema.org JSON-LD", safeJSON(s.seo?.schema_jsonld), {mono:true,loading})}
+    </div>`,
+    rowHeader("AEO","answer-engine-optimized"),
+    `<div class="grid-2">
+      ${fieldCard("Question", s.aeo?.question, {loading})}
+      ${fieldCard("Direct answer (the snippet AI engines lift)", s.aeo?.direct_answer, {accent:true,loading})}
+    </div>
+    <div style="margin-top:14px">
+      ${fieldCard("Full answer", s.aeo?.full_answer, {loading})}
+      ${fieldCard("FAQPage Schema", safeJSON(s.aeo?.schema_faq_markup), {mono:true,loading})}
+    </div>`,
+    rowHeader("GEO","3 snippet types"),
+    `<div class="grid-3">
+      ${fieldCard("Definition snippet", s.geo?.definition_snippet, {accent:true,loading})}
+      ${fieldCard("Comparison snippet", s.geo?.comparison_snippet, {accent:true,loading})}
+      ${fieldCard("Statistic snippet", s.geo?.statistic_snippet, {accent:true,loading})}
+    </div>`
+  ].join("");
+}
+
+function renderRomanoffFull(d, loading){
+  const s = d?.stack || {};
+  return [
+    rowHeader("Press + Social","4 surfaces"),
+    `<div class="grid-2">
+      ${loading && !s.press_quote ? skelCard("Press quote") : card("Press quote", wc(s.press_quote)+" words", escapeMulti(s.press_quote))}
+      ${loading && !s.instagram ? skelCard("Instagram") : card("Instagram", wc(s.instagram)+" words", escapeMulti(s.instagram))}
+      ${loading && !s.tiktok_script ? skelCard("TikTok / Reel") : card("TikTok / Reel script", wc(s.tiktok_script)+" words", escapeMulti(s.tiktok_script))}
+      ${loading && !s.podcast_pitch ? skelCard("Podcast pitch") : card("Podcast pitch", wc(s.podcast_pitch)+" words", escapeMulti(s.podcast_pitch))}
+    </div>`,
+    rowHeader("SEO","meta + schema + links"),
+    `<div class="grid-3">
+      ${fieldCard("Meta title", s.seo?.meta_title, {mono:true,loading})}
+      ${fieldCard("H1", s.seo?.h1, {loading})}
+      ${fieldCard("Primary keyword", s.seo?.primary_keyword, {mono:true,loading})}
+    </div>
+    <div style="margin-top:14px">
+      ${fieldCard("Meta description", s.seo?.meta_description, {loading})}
+      ${fieldCard("Internal links", s.seo?.internal_link_suggestions ? s.seo.internal_link_suggestions.map(l=>'→ "'+l.anchor+'" → '+l.target_url).join("\n") : "", {mono:true,loading})}
+      ${fieldCard("Schema.org JSON-LD", safeJSON(s.seo?.schema_jsonld), {mono:true,loading})}
+    </div>`,
+    rowHeader("AEO","answer-engine-optimized"),
+    `<div class="grid-2">
+      ${fieldCard("Question", s.aeo?.question, {loading})}
+      ${fieldCard("Direct answer (the snippet AI engines lift)", s.aeo?.direct_answer, {accent:true,loading})}
+    </div>
+    <div style="margin-top:14px">
+      ${fieldCard("Full answer", s.aeo?.full_answer, {loading})}
+      ${fieldCard("FAQPage Schema", safeJSON(s.aeo?.schema_faq_markup), {mono:true,loading})}
+    </div>`,
+    rowHeader("GEO","4 snippet types"),
+    `<div class="grid-2">
+      ${fieldCard("Definition", s.geo?.definition_snippet, {accent:true,loading})}
+      ${fieldCard("Three-signs", s.geo?.three_signs_snippet, {accent:true,loading})}
+      ${fieldCard("Clinical reframe", s.geo?.clinical_reframe_snippet, {accent:true,loading})}
+      ${fieldCard("Permission grant", s.geo?.permission_grant_snippet, {accent:true,loading})}
+    </div>`
+  ].join("");
+}
+
+function renderPressQuotes(d, loading){
+  const q = d?.quotes || {};
+  function quoteCard(v){
+    if (loading && !v) return `<div class="quote"><div class="angle">Variant</div><div class="skel"></div><div class="skel w-9"></div><div class="skel w-8"></div></div>`;
+    if (!v) return "";
+    return `<div class="quote"><div class="angle">Variant · ${escapeHTML(v.angle||"")}</div><q>${escapeHTML(v.quote||"")}</q></div>`;
+  }
+  return [
+    rowHeader("Three quote variants","journalist can pick the angle"),
+    `<div class="grid-3">${quoteCard(q.variant_a)}${quoteCard(q.variant_b)}${quoteCard(q.variant_c)}</div>`,
+    rowHeader("Pull-quote + cred block","for publication"),
+    `<div class="grid-2">
+      ${fieldCard("Suggested pull-quote (the callout)", q.suggested_pull_quote, {accent:true,loading})}
+      ${fieldCard("Credentials block (for attribution)", q.credentials, {loading})}
+    </div>`
+  ].join("");
+}
+
+function renderAeoPage(d, loading){
+  const p = d?.page || {};
+  return [
+    rowHeader("Page metadata","/answers/&lt;slug&gt;"),
+    `<div class="grid-3">
+      ${fieldCard("URL slug", p.url_slug, {mono:true,loading})}
+      ${fieldCard("Meta title", p.meta_title, {loading})}
+      ${fieldCard("H1 (declarative)", p.h1, {loading})}
+    </div>
+    <div style="margin-top:14px">
+      ${fieldCard("Meta description", p.meta_description, {loading})}
+    </div>`,
+    rowHeader("Answer body","what AI engines lift"),
+    `<div>
+      ${fieldCard("Direct answer (SVO, names her)", p.direct_answer, {accent:true,loading})}
+      <div style="margin-top:14px">${fieldCard("Full answer", p.full_answer, {loading})}</div>
+      <div style="margin-top:14px">${fieldCard("Ethics caveat", p.ethics_caveat, {loading})}</div>
+    </div>`,
+    rowHeader("Schema markup","paste into &lt;head&gt;"),
+    `<div class="grid-2">
+      ${fieldCard("FAQPage Schema", safeJSON(p.schema_faq_markup), {mono:true,loading})}
+      ${fieldCard("Person Schema (author)", safeJSON(p.schema_person_markup), {mono:true,loading})}
+    </div>`,
+    rowHeader("GEO snippets","quote-ready"),
+    `<div class="grid-2">
+      ${fieldCard("Definition", p.geo_snippets?.definition_snippet, {accent:true,loading})}
+      ${fieldCard("Three-signs", p.geo_snippets?.three_signs_snippet, {accent:true,loading})}
+      ${fieldCard("Clinical reframe", p.geo_snippets?.clinical_reframe_snippet, {accent:true,loading})}
+      ${fieldCard("Permission grant", p.geo_snippets?.permission_grant_snippet, {accent:true,loading})}
+    </div>`
+  ].join("");
+}
+
+function renderTriage(d, loading){
+  const t = d?.triage || {};
+  return [
+    rowHeader("Triage decision","agent classifies, scores, picks sample pack"),
+    `<div class="grid-3">
+      ${fieldCard("Primary category", t.classification ? `${t.classification.primary_category} (${Math.round(t.classification.confidence*100)}% confident)` : "", {accent:true,loading})}
+      ${fieldCard("Fit score (0-100)", t.fit_score!=null ? String(t.fit_score) : "", {accent:true,loading})}
+      ${fieldCard("Recommended sample pack", t.recommended_sample_pack, {accent:true,loading})}
+    </div>
+    <div style="margin-top:14px">
+      ${fieldCard("Classification reasoning", t.classification?.reasoning, {loading})}
+      ${fieldCard("Fit reasoning", t.fit_reasoning, {loading})}
+      ${fieldCard("Likely formulation problem TBF can solve", t.likely_formulation_problem, {loading})}
+    </div>`,
+    rowHeader("Personalized follow-up email","ready to send"),
+    `<div>${loading && !t.email ? skelCard("Email") : card("Email", wc(t.email?.body)+" words", `<span class="subj">Subject:</span> ${escapeHTML(t.email?.subject||"")}<br><br>${escapeMulti(t.email?.body)}`)}</div>`
+  ].join("");
+}
+
+function renderSplinter(d, loading){
+  const s = d?.splinter || {};
+  const carouselsHtml = (s.linkedin_carousels && s.linkedin_carousels.length ? s.linkedin_carousels : [null,null,null]).map((c,i) => {
+    if (loading && !c) return `<div class="card"><div class="top"><span class="ttl">Carousel ${i+1}</span></div><div class="skel"></div><div class="skel w-9"></div><div class="skel w-8"></div></div>`;
+    if (!c) return "";
+    const slides = c.slides.map((sl,j) => `<div style="border-top:1px solid var(--line);margin-top:6px;padding-top:6px"><div style="font-size:10px;color:var(--muted)">Slide ${j+1}</div><div style="font-weight:500">${escapeHTML(sl.headline||"")}</div><div>${escapeHTML(sl.body||"")}</div></div>`).join("");
+    return `<div class="card"><div class="top"><span class="ttl">Carousel ${i+1}</span></div><div class="body"><div style="font-weight:500">${escapeHTML(c.hook||"")}</div>${slides}<div style="font-style:italic;margin-top:6px">${escapeHTML(c.close||"")}</div></div></div>`;
+  }).join("");
+  const threadsHtml = (s.x_threads && s.x_threads.length ? s.x_threads : [null,null]).map((t,i) => {
+    if (loading && !t) return `<div class="card"><div class="top"><span class="ttl">Thread ${i+1}</span></div><div class="skel"></div><div class="skel w-9"></div></div>`;
+    if (!t) return "";
+    const fol = t.follow_tweets.map(tw => `<div style="border-left:1px solid var(--line);padding-left:8px;margin-top:4px">${escapeHTML(tw)}</div>`).join("");
+    return `<div class="card"><div class="top"><span class="ttl">Thread ${i+1}</span></div><div class="body"><div style="border-left:2px solid var(--ink);padding-left:8px;font-weight:500">${escapeHTML(t.hook_tweet||"")}</div>${fol}<div style="border-left:2px solid var(--muted);padding-left:8px;margin-top:4px;font-style:italic">${escapeHTML(t.close_tweet||"")}</div></div></div>`;
+  }).join("");
+  const capsHtml = (s.ig_captions && s.ig_captions.length ? s.ig_captions : [null,null,null,null,null]).map((c,i) => {
+    if (loading && !c) return `<div class="card"><div class="top"><span class="ttl">Caption ${i+1}</span></div><div class="skel"></div><div class="skel w-9"></div></div>`;
+    if (!c) return "";
+    return card("Caption "+(i+1), wc(c)+" words", escapeMulti(c));
+  }).join("");
+  const quotesHtml = (s.key_quotes ? s.key_quotes.map(q => `<div class="quote"><q>${escapeHTML(q)}</q></div>`).join("") : "");
+  return [
+    rowHeader("LinkedIn carousels","3 carousels × ~5 slides each"),
+    `<div class="grid-3">${carouselsHtml}</div>`,
+    rowHeader("X threads","2 threads · hook + follow + close"),
+    `<div class="grid-2">${threadsHtml}</div>`,
+    rowHeader("Instagram captions","5 captions, 80-150 words each"),
+    `<div class="grid-2">${capsHtml}</div>`,
+    rowHeader("Cold-email pitch + key quotes","outbound + 3 tweet-ready"),
+    `<div class="grid-2">
+      ${loading && !s.cold_email_pitch ? skelCard("Cold-email pitch") : (s.cold_email_pitch ? card("Cold-email pitch", wc(s.cold_email_pitch.body)+" words", `<span class="subj">Subject:</span> ${escapeHTML(s.cold_email_pitch.subject||"")}<br><br>${escapeMulti(s.cold_email_pitch.body)}`) : "")}
+      <div class="card"><div class="top"><span class="ttl">Key quotes (tweet-ready)</span></div><div class="body">${quotesHtml || (loading ? '<div class="skel"></div><div class="skel w-9"></div>' : '<span class="empty">—</span>')}</div></div>
+    </div>`
+  ].join("");
+}
+
+// ----- Utils -----
+function wc(s){ return s ? s.trim().split(/\s+/).filter(Boolean).length : 0; }
+function escapeHTML(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function escapeMulti(s){ return escapeHTML(s).replace(/\n/g,"<br>"); }
+function safeJSON(s){ if(!s) return ""; try{ return JSON.stringify(JSON.parse(s),null,2); } catch{ return s; } }
+
+// ----- Boot -----
+renderSidebar();
+activate(WORKFLOWS[0].id);
+</script>
+</body>
+</html>
