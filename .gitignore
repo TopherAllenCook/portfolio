@@ -43,6 +43,13 @@ next-env.d.ts
 # local screenshots from QA captures
 /portfolio-*.png
 /portfolio-*.jpeg
+/homepage-*.png
+/nexus-case-study-*.png
+
+# local scratch / scraping working dirs (not part of the portfolio)
+/.playwright-mcp/
+/.skool-scrape/
+/.tbf-voice/
 
 # vercel
 .vercel

@@ -15,6 +15,32 @@ export type Work = {
 
 export const works: Work[] = [
   {
+    slug: "nexus-marketing-engineer",
+    client: "Nexus Agriscience / Terpene Belt Farms",
+    role: "Marketing Engineer (Pitch)",
+    period: "2026 — Proposal",
+    category: "Marketing Engineering",
+    headline:
+      "A content operating system for a vertically integrated cannabis terpene processor, demonstrated on their own brand.",
+    summary:
+      "A live application of the Marketing Engineer toolkit, scoped specifically for Nexus / Terpene Belt Farms. Extracted the brand's voice from their public corpus into a structured Voice Manual, mapped a three-layer content architecture (Obsidian brain + Claude agent + n8n workflows), and prototyped four on-brand outputs from a single recent news event. The pitch: turn one harvest, one blog, and one press hit into eight pieces of formulator-targeted content per week, all on the first pass.",
+    highlights: [
+      "Scraped and stylometrically analyzed the TBF public web corpus (About + 8 long-form blogs) to produce a 9-axis Voice Manual",
+      "Designed the three-layer system: persistent Obsidian brand brain, Claude-based executor agent, n8n workflow plumbing",
+      "Mapped 8 concrete n8n automations ranked by ROI for B2B-formulator audience (sample-pack triage, vintage release engine, blog splintering, research watcher, formulator Q&A bot, founder digest, conference pipeline, newsletter)",
+      "Demonstrated the system end-to-end: one real news event (UCLA-led state research grant) generated four polished surfaces (IG, LinkedIn, cold email, blog opener) in the captured voice",
+    ],
+    metrics: [
+      { label: "Voice axes extracted", value: "9" },
+      { label: "n8n automations mapped", value: "8" },
+      { label: "Surfaces demoed", value: "4" },
+      { label: "Corpus scraped", value: "9 pages" },
+    ],
+    link: { label: "terpenebeltfarms.com", href: "https://terpenebeltfarms.com" },
+    accent: "#4F7A3C",
+    image: "/works/nexus-marketing-engineer.svg",
+  },
+  {
     slug: "lotus-company",
     client: "Lotus Company",
     role: "Brand Manager",

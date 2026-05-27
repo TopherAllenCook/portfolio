@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Three-layer marketing engineering architecture: Obsidian brain, Claude agent, n8n workflows">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3efe7"/>
+      <stop offset="100%" stop-color="#ebe6dc"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(22,21,18,0.04)" stroke-width="1"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4F7A3C"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)"/>
+
+  <!-- title strip -->
+  <text x="80" y="90" font-family="Georgia, serif" font-size="28" fill="#161512" letter-spacing="-0.5">Content Operating System — Brain · Agent · Workflows</text>
+  <text x="80" y="120" font-family="Inter, sans-serif" font-size="14" fill="#6b6760" letter-spacing="2.5" text-transform="uppercase">PROPOSED ARCHITECTURE FOR NEXUS / TERPENE BELT FARMS</text>
+
+  <!-- Layer 1: BRAIN (Obsidian) -->
+  <g transform="translate(80, 200)">
+    <rect width="420" height="560" rx="14" fill="#ffffff" stroke="#161512" stroke-width="1.5"/>
+    <rect x="0" y="0" width="420" height="48" rx="14" fill="#161512"/>
+    <rect x="0" y="34" width="420" height="14" fill="#161512"/>
+    <text x="24" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#f3efe7" letter-spacing="0.5">01 · BRAIN</text>
+    <text x="180" y="32" font-family="Inter, sans-serif" font-size="13" fill="#a8a39a">Obsidian / Markdown vault</text>
+
+    <!-- file list -->
+    <g font-family="Inter, sans-serif" font-size="14" fill="#2a2722">
+      <rect x="24" y="76" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="103">📄  voice-manual.md</text>
+      <text x="350" y="103" font-size="11" fill="#6b6760">v1</text>
+
+      <rect x="24" y="128" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="155">📦  product-catalog.md</text>
+      <text x="320" y="155" font-size="11" fill="#6b6760">~80 SKUs</text>
+
+      <rect x="24" y="180" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="207">🧪  coa-library.md</text>
+      <text x="330" y="207" font-size="11" fill="#6b6760">per-batch</text>
+
+      <rect x="24" y="232" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="259">👥  formulator-personas.md</text>
+
+      <rect x="24" y="284" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="311">📜  brand-canon.md</text>
+
+      <rect x="24" y="336" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="363">📰  press-mentions.md</text>
+
+      <rect x="24" y="388" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="415">🌱  harvest-journal.md</text>
+
+      <rect x="24" y="440" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="467">⚖️  competitor-briefs.md</text>
+
+      <rect x="24" y="492" width="372" height="44" rx="6" fill="#f3efe7"/>
+      <text x="40" y="519">📚  research-corpus.md</text>
+    </g>
+  </g>
+
+  <!-- Layer 2: AGENT (Claude / Hermes) -->
+  <g transform="translate(590, 200)">
+    <rect width="420" height="560" rx="14" fill="#ffffff" stroke="#161512" stroke-width="1.5"/>
+    <rect x="0" y="0" width="420" height="48" rx="14" fill="#4F7A3C"/>
+    <rect x="0" y="34" width="420" height="14" fill="#4F7A3C"/>
+    <text x="24" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#f3efe7" letter-spacing="0.5">02 · AGENT</text>
+    <text x="180" y="32" font-family="Inter, sans-serif" font-size="13" fill="#dfeed6">Claude Code · skills · MCP</text>
+
+    <!-- skills list -->
+    <g font-family="Inter, sans-serif" font-size="14" fill="#2a2722">
+      <text x="24" y="96" font-size="11" fill="#6b6760" letter-spacing="1.5">READS</text>
+      <rect x="24" y="106" width="372" height="36" rx="6" fill="#f3efe7"/>
+      <text x="40" y="129">Whole Obsidian vault, on every task</text>
+
+      <text x="24" y="180" font-size="11" fill="#6b6760" letter-spacing="1.5">SKILLS ENABLED</text>
+
+      <rect x="24" y="192" width="372" height="32" rx="6" fill="#eef5e7"/>
+      <text x="40" y="213">✉️  Gmail · outreach + replies</text>
+
+      <rect x="24" y="232" width="372" height="32" rx="6" fill="#eef5e7"/>
+      <text x="40" y="253">📅  Calendar · scheduling, briefings</text>
+
+      <rect x="24" y="272" width="372" height="32" rx="6" fill="#eef5e7"/>
+      <text x="40" y="293">📊  Airtable · COAs, leads, content DB</text>
+
+      <rect x="24" y="312" width="372" height="32" rx="6" fill="#eef5e7"/>
+      <text x="40" y="333">💬  Slack · founder digests + alerts</text>
+
+      <rect x="24" y="352" width="372" height="32" rx="6" fill="#eef5e7"/>
+      <text x="40" y="373">🔍  Firecrawl · competitor + press</text>
+
+      <rect x="24" y="392" width="372" height="32" rx="6" fill="#eef5e7"/>
+      <text x="40" y="413">📈  Analytics · GA4, LinkedIn, IG</text>
+
+      <text x="24" y="464" font-size="11" fill="#6b6760" letter-spacing="1.5">DRAFTS</text>
+      <rect x="24" y="476" width="372" height="52" rx="6" fill="#f3efe7"/>
+      <text x="40" y="498">Blog · LinkedIn · IG · email · PR</text>
+      <text x="40" y="518" font-size="12" fill="#6b6760">…all loaded with voice-manual.md first</text>
+    </g>
+  </g>
+
+  <!-- Layer 3: WORKFLOWS (n8n) -->
+  <g transform="translate(1100, 200)">
+    <rect width="420" height="560" rx="14" fill="#ffffff" stroke="#161512" stroke-width="1.5"/>
+    <rect x="0" y="0" width="420" height="48" rx="14" fill="#b94a2c"/>
+    <rect x="0" y="34" width="420" height="14" fill="#b94a2c"/>
+    <text x="24" y="32" font-family="Inter, sans-serif" font-weight="600" font-size="14" fill="#f3efe7" letter-spacing="0.5">03 · WORKFLOWS</text>
+    <text x="180" y="32" font-family="Inter, sans-serif" font-size="13" fill="#f5d9cd">n8n · triggers + plumbing</text>
+
+    <!-- workflows -->
+    <g font-family="Inter, sans-serif" font-size="13" fill="#2a2722">
+      <rect x="24" y="76" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="95" font-weight="600">🧲 Sample-pack triage</text>
+      <text x="40" y="111" font-size="11" fill="#6b6760">webhook → enrich → personalized follow-up</text>
+
+      <rect x="24" y="128" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="147" font-weight="600">🌱 Vintage release engine</text>
+      <text x="40" y="163" font-size="11" fill="#6b6760">new COA → email + LinkedIn + IG + broadcast</text>
+
+      <rect x="24" y="180" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="199" font-weight="600">📝 Blog splinter</text>
+      <text x="40" y="215" font-size="11" fill="#6b6760">1 blog → 7 carousels · 5 threads · 10 captions</text>
+
+      <rect x="24" y="232" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="251" font-weight="600">📚 Research watcher</text>
+      <text x="40" y="267" font-size="11" fill="#6b6760">PubMed + trade press → TBF technical commentary</text>
+
+      <rect x="24" y="284" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="303" font-weight="600">💬 Formulator Q&amp;A bot</text>
+      <text x="40" y="319" font-size="11" fill="#6b6760">DMs → RAG over the brain → cited reply</text>
+
+      <rect x="24" y="336" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="355" font-weight="600">📊 Founder digest</text>
+      <text x="40" y="371" font-size="11" fill="#6b6760">Fri cron → 1-page Monday-morning briefing</text>
+
+      <rect x="24" y="388" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="407" font-weight="600">🎤 Conference pipeline</text>
+      <text x="40" y="423" font-size="11" fill="#6b6760">CFP watcher → pitches + one-pagers</text>
+
+      <rect x="24" y="440" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="459" font-weight="600">📧 Newsletter automation</text>
+      <text x="40" y="475" font-size="11" fill="#6b6760">RSS + harvest + FAQ → Tuesday digest</text>
+
+      <rect x="24" y="492" width="372" height="44" rx="6" fill="#fdeee7"/>
+      <text x="40" y="511" font-weight="600">+ founder-defined surface</text>
+      <text x="40" y="527" font-size="11" fill="#6b6760">whatever the next quarter needs</text>
+    </g>
+  </g>
+
+  <!-- arrows -->
+  <line x1="500" y1="480" x2="590" y2="480" stroke="#161512" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="1010" y1="480" x2="1100" y2="480" stroke="#161512" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- bottom annotation -->
+  <text x="800" y="830" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="18" fill="#6b6760">One brain. One agent. One workflow engine. Everything on-brand on the first pass.</text>
+</svg>

@@ -5,8 +5,14 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { works } from "@/lib/works";
 
+// Exclude slugs that have their own dedicated page directory (static segments
+// take precedence over this catch-all dynamic route).
+const DEDICATED_PAGES = new Set(["nexus-marketing-engineer"]);
+
 export function generateStaticParams() {
-  return works.map((w) => ({ slug: w.slug }));
+  return works
+    .filter((w) => !DEDICATED_PAGES.has(w.slug))
+    .map((w) => ({ slug: w.slug }));
 }
 
 export async function generateMetadata({
