@@ -39,6 +39,8 @@ export type RendererKind =
 export type Workflow = {
   id: string;
   label: string;
+  /** The display name of the underlying n8n workflow (surfaced in the demo metadata). */
+  n8nName: string;
   badge: string;
   description: string;
   webhook: string;
@@ -84,6 +86,7 @@ export const BRANDS: Brand[] = [
     workflows: [
       {
         id: "tbf_four_surfaces",
+        n8nName: "Nexus Agriscience — TBF: Four Surfaces",
         label: "Four Surfaces",
         badge: "Social drop · ~30s",
         description: "Single topic in, four polished social surfaces out (Instagram, LinkedIn, cold email, blog opener). The simplest demonstration of voice-manual-driven generation.",
@@ -101,6 +104,7 @@ export const BRANDS: Brand[] = [
       },
       {
         id: "tbf_full_stack",
+        n8nName: "Nexus Agriscience — TBF: Full Content Stack",
         label: "Full Content Stack",
         badge: "Social + SEO + AEO + GEO · ~60s",
         description: "The flagship workflow. Topic + audience in, full multi-surface content stack out: 6 social surfaces plus a complete SEO bundle, AEO Q&A pack with FAQPage schema, and 3 GEO quote-ready snippets.",
@@ -130,6 +134,7 @@ export const BRANDS: Brand[] = [
       },
       {
         id: "tbf_sample_pack_triage",
+        n8nName: "Nexus Agriscience — TBF: Sample-Pack Triage",
         label: "Sample-Pack Triage Agent",
         badge: "Inbound lead → classified + personalized · ~25s",
         description: "Every sample-pack request is a pipeline event. This workflow takes the prospect's company info, classifies them into the right formulator category, scores fit, picks the right sample pack, and drafts a personalized technical follow-up email in TBF voice.",
@@ -150,6 +155,7 @@ export const BRANDS: Brand[] = [
       },
       {
         id: "tbf_blog_splinter",
+        n8nName: "Nexus Agriscience — TBF: Blog Splinter",
         label: "Blog Splinter",
         badge: "1 blog → 14+ on-brand assets · ~75s",
         description: "Paste a TBF long-form blog. The agent splinters it into a multi-platform pack: 3 LinkedIn carousels (slide-by-slide), 2 X threads (hook + follow tweets), 5 IG captions, 3 pull-quote tweets, and a cold-email pitch. All in TBF voice.",
@@ -201,6 +207,7 @@ export const BRANDS: Brand[] = [
     workflows: [
       {
         id: "romanoff_full_stack",
+        n8nName: "Nexus Agriscience — Showcase (Dr. Romanoff): Full Content Stack",
         label: "Full Content Stack",
         badge: "Press + Social + SEO + AEO + GEO · ~60s",
         description: "The flagship workflow. Topic + audience in, 7 on-brand surfaces out: press quote, Instagram, TikTok script, podcast pitch, plus a full SEO bundle, AEO Q&A pack with FAQPage schema, and 4 GEO quote-ready snippets.",
@@ -230,6 +237,7 @@ export const BRANDS: Brand[] = [
       },
       {
         id: "romanoff_press_quote",
+        n8nName: "Nexus Agriscience — Showcase (Dr. Romanoff): Press-Quote Generator",
         label: "Press-Quote Generator",
         badge: "Outlet + topic → 3 quote variants · ~15s",
         description: "Single-purpose workflow tuned for journalist deadlines. Takes outlet + topic + word count, returns three distinct quote variants (mechanism-led, reframe-led, three-signs), plus a suggested pull-quote line and the credentials block for attribution.",
@@ -249,6 +257,7 @@ export const BRANDS: Brand[] = [
       },
       {
         id: "romanoff_aeo_page",
+        n8nName: "Nexus Agriscience — Showcase (Dr. Romanoff): AEO Page Generator",
         label: "AEO Page Generator",
         badge: "Question → full /answers/ page · ~40s",
         description: "Takes one search-style question and generates a complete answer page tuned to be cited by AI engines (Perplexity, ChatGPT, Google AI Overview): SVO direct answer, full mechanism-driven answer, ethics caveat, Schema.org FAQPage + Person markup, and 4 GEO snippet types.",

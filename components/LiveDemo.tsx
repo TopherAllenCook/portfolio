@@ -120,9 +120,14 @@ export default function LiveDemo({ brandSlug }: { brandSlug: string }) {
       <div className="border border-[color:var(--line)] rounded-lg bg-white/60 p-5 md:p-6">
         <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
           <p className="eyebrow">Input</p>
-          <span className="text-[10px] tabular-nums text-[color:var(--muted)] uppercase tracking-widest">
-            POSTs to {path} · Claude Sonnet 4.6 · brain loaded
-          </span>
+          <div className="flex flex-col items-end text-right">
+            <span className="text-[10px] tabular-nums text-[color:var(--muted)] uppercase tracking-widest">
+              n8n workflow: {workflow.n8nName}
+            </span>
+            <span className="text-[10px] tabular-nums text-[color:var(--muted)]/70 uppercase tracking-widest">
+              POSTs to {path} · Claude Sonnet 4.6
+            </span>
+          </div>
         </div>
 
         {workflow.presets.length > 0 && (
