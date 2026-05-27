@@ -4,205 +4,260 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="robots" content="noindex,nofollow" />
-<title>Nexus Agriscience · Marketing Engineer Dashboard</title>
+<title>Nexus · Marketing Engineer Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg:#f3efe7; --bg-2:#ece7da; --bg-elev:#e6e0d0;
-    --paper:#ffffff; --paper-2:rgba(255,255,255,.62);
-    --ink:#111110; --ink-2:#36322c; --ink-3:#615b51; --muted:#8a8479;
-    --line:rgba(17,17,16,.10); --line-2:rgba(17,17,16,.06); --line-strong:rgba(17,17,16,.22);
-    --tbf:#3f6230; --tbf-soft:rgba(63,98,48,.10); --tbf-line:rgba(63,98,48,.22);
-    --romanoff:#6e4d80; --romanoff-soft:rgba(110,77,128,.10); --romanoff-line:rgba(110,77,128,.22);
-    --warn:#9b3a1c;
-    --font-sans:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;
-    --font-display:'Instrument Serif',Georgia,serif;
-    --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-    --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px;
-    --s-7:32px; --s-8:40px; --s-9:48px; --s-10:64px; --s-11:80px; --s-12:96px;
-    --r-1:6px; --r-2:10px; --r-3:14px; --r-pill:9999px;
-    --ease:cubic-bezier(.2,.7,.2,1);
-    --t-fast:120ms; --t:200ms; --t-slow:360ms;
+    --bg:#f8f7f4; --bg-2:#f1efea; --surface:#ffffff; --surface-2:#fafaf7;
+    --ink:#0c0b0a; --ink-2:#2b2925; --ink-3:#56524b; --muted:#86827b; --muted-2:#a8a39a;
+    --line:rgba(12,11,10,.09); --line-2:rgba(12,11,10,.05); --line-strong:rgba(12,11,10,.18);
+    --tbf:#3b6b2b; --tbf-bg:rgba(59,107,43,.08); --tbf-line:rgba(59,107,43,.22);
+    --romanoff:#6a4d80; --romanoff-bg:rgba(106,77,128,.08); --romanoff-line:rgba(106,77,128,.22);
+    --live:#16a34a; --live-bg:rgba(22,163,74,.10);
+    --warn:#b65a26; --error:#c53b1f;
+    --info:#2563eb;
+    --font:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-7:32px; --s-8:40px;
+    --r-1:6px; --r-2:8px; --r-3:10px; --r-pill:9999px;
+    --t:140ms cubic-bezier(.2,.7,.2,1);
+    --shadow-sm:0 1px 0 0 rgba(12,11,10,.04);
+    --shadow:0 1px 2px rgba(12,11,10,.04),0 2px 8px -2px rgba(12,11,10,.06);
+    --shadow-lg:0 1px 2px rgba(12,11,10,.04),0 16px 32px -8px rgba(12,11,10,.12);
   }
   *{box-sizing:border-box}
-  *::selection{background:var(--ink);color:var(--bg)}
-  html,body{margin:0;padding:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:"ss01","cv11";font-size:15px;line-height:1.55}
-  body{
-    background-image:
-      radial-gradient(at 0% 0%,rgba(255,255,255,.6) 0%,transparent 50%),
-      radial-gradient(at 100% 0%,rgba(63,98,48,.04) 0%,transparent 50%),
-      radial-gradient(at 100% 100%,rgba(110,77,128,.04) 0%,transparent 50%);
-    background-attachment:fixed;
-  }
-  h1,h2,h3,h4{font-family:var(--font-display);font-weight:400;margin:0;letter-spacing:-0.02em;color:var(--ink)}
-  h1{font-size:22px;line-height:1.1}
-  .display-1{font-size:clamp(38px,4.6vw,56px);line-height:1.02;letter-spacing:-0.028em}
-  .display-2{font-size:clamp(28px,3vw,36px);line-height:1.06;letter-spacing:-0.024em}
-  .display-3{font-size:22px;line-height:1.1;letter-spacing:-0.018em}
-  .display-i{font-style:italic}
+  *::selection{background:var(--ink);color:#fff}
+  html,body{margin:0;padding:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.5;font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   a{color:inherit;text-decoration:none}
-  button{font:inherit;cursor:pointer;background:none;border:none;color:inherit}
-  .eyebrow{font-family:var(--font-sans);font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-  .micro{font-family:var(--font-mono);font-size:11px;color:var(--muted);font-feature-settings:"tnum","cv11"}
+  button{font:inherit;cursor:pointer;background:none;border:none;color:inherit;padding:0}
+  h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-0.011em;color:var(--ink)}
+  .mono{font-family:var(--mono);font-feature-settings:"tnum","cv11"}
   .tnum{font-variant-numeric:tabular-nums}
-  .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:var(--r-pill);background:var(--bg-2);border:1px solid var(--line);font-size:11px;color:var(--ink-3);font-weight:450}
-  .dot{display:inline-block;width:6px;height:6px;border-radius:50%}
 
-  /* === TOPBAR ============================================== */
-  .topbar{position:sticky;top:0;z-index:30;background:rgba(243,239,231,.84);backdrop-filter:saturate(170%) blur(14px);-webkit-backdrop-filter:saturate(170%) blur(14px);border-bottom:1px solid var(--line)}
-  .topbar-inner{max-width:1480px;margin:0 auto;padding:var(--s-4) var(--s-6);display:flex;align-items:center;justify-content:space-between;gap:var(--s-5);flex-wrap:wrap}
-  .brand{display:flex;align-items:baseline;gap:var(--s-3)}
-  .brand .mark{font-family:var(--font-display);font-size:22px;line-height:1;color:var(--ink);letter-spacing:-0.02em}
-  .brand .div{width:1px;height:18px;background:var(--line);transform:translateY(2px);margin:0 var(--s-2)}
-  .brand .sub{color:var(--muted);font-size:13px;font-weight:450;letter-spacing:-0.01em}
-  .topbar .meta{display:flex;gap:var(--s-4);align-items:center;color:var(--muted);font-size:11px;font-family:var(--font-mono);font-feature-settings:"tnum"}
-  .topbar .meta .green{color:var(--tbf)}
-  @media (max-width:640px){.topbar .meta{display:none}}
+  /* === TOPBAR === */
+  .topbar{position:sticky;top:0;z-index:50;background:rgba(248,247,244,.94);backdrop-filter:saturate(170%) blur(10px);-webkit-backdrop-filter:saturate(170%) blur(10px);border-bottom:1px solid var(--line);height:52px}
+  .topbar-inner{max-width:1480px;margin:0 auto;height:100%;padding:0 var(--s-5);display:flex;align-items:center;gap:var(--s-4)}
+  .logo{display:flex;align-items:center;gap:var(--s-2);font-weight:600;letter-spacing:-0.012em;color:var(--ink)}
+  .logo .logo-dot{width:18px;height:18px;border-radius:5px;background:linear-gradient(135deg,var(--tbf),var(--romanoff));display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;letter-spacing:-0.02em}
+  .logo .name{font-size:14px}
+  .topbar .sep{height:18px;width:1px;background:var(--line-strong)}
+  .topbar .crumb{color:var(--muted);font-size:13px;font-weight:450}
+  .topbar .crumb b{color:var(--ink-2);font-weight:500}
+  .topbar .spacer{flex:1}
+  .cmd-hint{display:flex;align-items:center;gap:var(--s-2);padding:6px 12px;border:1px solid var(--line);border-radius:var(--r-2);background:var(--surface);color:var(--muted);font-size:12px;cursor:pointer;transition:border-color var(--t),background var(--t)}
+  .cmd-hint:hover{border-color:var(--line-strong);background:var(--surface-2)}
+  .cmd-hint kbd{font-family:var(--mono);font-size:10px;background:var(--bg-2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--ink-3)}
+  .topbar .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--r-pill);font-size:11px;font-weight:500;letter-spacing:-0.005em}
+  .pill-live{background:var(--live-bg);color:var(--live);border:1px solid rgba(22,163,74,.18)}
+  .pill-live .pulse{width:6px;height:6px;border-radius:50%;background:var(--live);box-shadow:0 0 0 0 rgba(22,163,74,.4);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.4)}70%{box-shadow:0 0 0 7px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+  .avatar{width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;letter-spacing:-.01em}
 
-  /* === LAYOUT ============================================== */
-  main{max-width:1480px;margin:0 auto;padding:var(--s-9) var(--s-6) var(--s-12);display:grid;grid-template-columns:300px 1fr;gap:var(--s-9)}
-  @media (max-width:1100px){main{grid-template-columns:1fr;gap:var(--s-6);padding-top:var(--s-7)}}
+  /* === STATS STRIP === */
+  .stats-strip{max-width:1480px;margin:0 auto;padding:var(--s-5) var(--s-5) 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s-3)}
+  @media (max-width:900px){.stats-strip{grid-template-columns:repeat(2,1fr)}}
+  .stat{padding:var(--s-4) var(--s-5);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);position:relative;overflow:hidden}
+  .stat .stat-label{display:flex;align-items:center;gap:var(--s-2);font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:var(--s-2)}
+  .stat .stat-value{font-size:24px;font-weight:600;letter-spacing:-0.018em;color:var(--ink);line-height:1;display:flex;align-items:baseline;gap:var(--s-2)}
+  .stat .stat-value .unit{font-size:13px;font-weight:500;color:var(--muted-2);letter-spacing:-0.005em}
+  .stat .stat-delta{font-size:11px;color:var(--ink-3);margin-top:var(--s-2);font-weight:450}
+  .stat .stat-delta .up{color:var(--live);font-weight:500}
 
-  /* === SIDEBAR ============================================== */
-  aside{position:sticky;top:84px;align-self:start}
+  /* === MAIN LAYOUT === */
+  main{max-width:1480px;margin:0 auto;padding:var(--s-5);display:grid;grid-template-columns:260px 1fr;gap:var(--s-5)}
+  @media (max-width:1100px){main{grid-template-columns:1fr}}
+
+  /* === SIDEBAR === */
+  aside{position:sticky;top:68px;align-self:start}
   @media (max-width:1100px){aside{position:static}}
-  .nav-group{margin-bottom:var(--s-6)}
-  .nav-group-head{display:flex;align-items:baseline;justify-content:space-between;padding:0 var(--s-2) var(--s-2);}
-  .nav-group-head .ttl{display:flex;align-items:baseline;gap:var(--s-2);font-weight:500;font-size:13px;color:var(--ink-2)}
-  .nav-group-head .count{font-family:var(--font-mono);font-size:10px;color:var(--muted);letter-spacing:.08em}
-  .nav-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-  .nav-list li{border-bottom:1px solid var(--line-2)}
-  .nav-item{width:100%;display:grid;grid-template-columns:auto 1fr;gap:var(--s-3);align-items:start;padding:var(--s-4) var(--s-2);text-align:left;transition:background var(--t-fast) var(--ease),color var(--t-fast) var(--ease)}
-  .nav-item .idx{font-family:var(--font-mono);font-size:10px;font-weight:500;color:var(--muted);min-width:18px;padding-top:3px;letter-spacing:.04em;font-variant-numeric:tabular-nums}
-  .nav-item .label{font-weight:500;font-size:14px;line-height:1.25;color:var(--ink)}
-  .nav-item .badge{display:block;margin-top:var(--s-1);font-size:11px;line-height:1.35;color:var(--muted)}
-  .nav-item:hover{background:var(--paper-2)}
-  .nav-item.active{background:var(--paper)}
-  .nav-item.active .idx{color:var(--ink)}
-  .nav-item.active .label{font-weight:600}
-  .nav-item.tbf.active{box-shadow:inset 3px 0 0 var(--tbf)}
-  .nav-item.romanoff.active{box-shadow:inset 3px 0 0 var(--romanoff)}
+  .nav-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);overflow:hidden}
+  .nav-section{padding:var(--s-3) var(--s-4) var(--s-2);}
+  .nav-section + .nav-section{border-top:1px solid var(--line-2)}
+  .nav-section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--s-1)}
+  .nav-section-head .ttl{display:flex;align-items:center;gap:var(--s-2);font-size:11px;font-weight:600;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
+  .nav-section-head .ttl .ico{width:10px;height:10px;border-radius:50%}
+  .nav-section-head .count{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .nav-list{list-style:none;margin:0;padding:0}
+  .nav-item{width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:var(--s-3);align-items:center;padding:var(--s-3) var(--s-2);border-radius:var(--r-2);text-align:left;transition:background var(--t)}
+  .nav-item:hover{background:var(--bg-2)}
+  .nav-item.active{background:var(--ink);color:#fff}
+  .nav-item.active .nav-label{color:#fff}
+  .nav-item.active .nav-sub{color:rgba(255,255,255,.55)}
+  .nav-item.active .status-dot{background:#7ee59a;box-shadow:0 0 0 2px rgba(126,229,154,.25)}
+  .nav-item .status-dot{width:6px;height:6px;border-radius:50%;background:var(--live);box-shadow:0 0 0 2px var(--live-bg)}
+  .nav-item .nav-text{min-width:0}
+  .nav-item .nav-label{font-size:13px;font-weight:500;line-height:1.3;color:var(--ink);letter-spacing:-0.005em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nav-item .nav-sub{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:1px;letter-spacing:.01em}
+  .nav-item .kbd{font-family:var(--mono);font-size:10px;background:var(--bg-2);border:1px solid var(--line);border-radius:4px;padding:1px 5px;color:var(--muted)}
+  .nav-item.active .kbd{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.65)}
 
-  /* === WORKSPACE ============================================ */
+  .nav-footer{padding:var(--s-3) var(--s-4);border-top:1px solid var(--line-2);background:var(--surface-2)}
+  .nav-footer-row{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted)}
+  .nav-footer-row + .nav-footer-row{margin-top:6px}
+  .nav-footer-row .v{font-family:var(--mono);color:var(--ink-2)}
+
+  /* === WORKSPACE === */
   #workspace{min-width:0}
-  .header-panel{padding:var(--s-8) var(--s-9);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-3);position:relative;overflow:hidden}
-  .header-panel.tbf{background:linear-gradient(180deg,var(--paper) 0%,var(--paper) 60%,var(--tbf-soft) 100%)}
-  .header-panel.romanoff{background:linear-gradient(180deg,var(--paper) 0%,var(--paper) 60%,var(--romanoff-soft) 100%)}
-  .header-top{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);margin-bottom:var(--s-3);flex-wrap:wrap}
-  .breadcrumb{display:flex;align-items:center;gap:var(--s-2);color:var(--muted);font-size:12px;font-weight:450}
-  .breadcrumb .chev{opacity:.5}
-  .breadcrumb .brand-chip{display:inline-flex;align-items:center;gap:var(--s-2);font-weight:500;color:var(--ink-2)}
-  .header-eta{font-family:var(--font-mono);font-size:11px;color:var(--muted)}
-  .wf-label{margin-top:var(--s-2)}
-  .wf-description{max-width:62ch;color:var(--ink-2);font-size:16px;line-height:1.55;margin:var(--s-4) 0 var(--s-6)}
-  .wf-meta{display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-5);align-items:center;border-top:1px solid var(--line-2);padding-top:var(--s-5)}
-  .wf-meta .item{display:inline-flex;align-items:baseline;gap:var(--s-2);font-size:12px}
-  .wf-meta .k{color:var(--muted);font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
-  .wf-meta .v{color:var(--ink-2);font-family:var(--font-mono);font-size:11.5px}
-  .wf-meta .v.serif{font-family:var(--font-display);font-size:14px;letter-spacing:-0.01em;color:var(--ink)}
 
-  /* === INPUT BLOCK ========================================== */
-  .input-panel{margin-top:var(--s-6);padding:var(--s-7) var(--s-8);background:var(--paper);border:1px solid var(--line);border-radius:var(--r-3)}
-  .panel-eyebrow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--s-5)}
-  .panel-eyebrow .tag{font-size:10px;color:var(--muted);font-family:var(--font-mono);letter-spacing:.06em}
+  /* workflow header */
+  .wf-header{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);padding:var(--s-5) var(--s-6);margin-bottom:var(--s-4);box-shadow:var(--shadow-sm)}
+  .wf-top{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);margin-bottom:var(--s-4);flex-wrap:wrap}
+  .wf-title-row{display:flex;align-items:center;gap:var(--s-3);min-width:0;flex:1}
+  .wf-brand-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:var(--r-pill);background:var(--bg-2);border:1px solid var(--line);font-size:11px;font-weight:500;color:var(--ink-2)}
+  .wf-brand-chip .dot{width:7px;height:7px;border-radius:50%}
+  .wf-name{font-size:18px;font-weight:600;letter-spacing:-0.012em;line-height:1.2;color:var(--ink);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wf-actions{display:flex;gap:var(--s-2);align-items:center}
+  .icon-btn{width:32px;height:32px;border-radius:var(--r-2);border:1px solid var(--line);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;color:var(--ink-2);transition:border-color var(--t),background var(--t),color var(--t)}
+  .icon-btn:hover{border-color:var(--line-strong);background:var(--surface-2);color:var(--ink)}
+  .wf-desc{color:var(--ink-3);font-size:13px;line-height:1.6;max-width:80ch}
+
+  .wf-meta-grid{margin-top:var(--s-4);padding-top:var(--s-4);border-top:1px solid var(--line-2);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s-3) var(--s-5)}
+  @media (max-width:900px){.wf-meta-grid{grid-template-columns:repeat(2,1fr)}}
+  .wf-meta-item .k{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+  .wf-meta-item .v{font-size:12.5px;color:var(--ink-2);font-family:var(--mono);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wf-meta-item .v.live-pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--font);background:var(--live-bg);color:var(--live);padding:2px 8px;border-radius:var(--r-pill);font-size:11px;font-weight:500;border:1px solid rgba(22,163,74,.18)}
+  .wf-meta-item .v.live-pill .pulse{width:5px;height:5px;border-radius:50%;background:var(--live)}
+
+  /* tabs */
+  .tabs{display:flex;align-items:center;gap:var(--s-1);padding:4px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-2);margin-bottom:var(--s-3)}
+  .tab{padding:5px 12px;border-radius:6px;font-size:12px;font-weight:500;color:var(--ink-3);transition:background var(--t),color var(--t)}
+  .tab:hover{color:var(--ink)}
+  .tab.active{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-sm)}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+
+  /* input panel */
+  .input-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);padding:var(--s-5) var(--s-6);box-shadow:var(--shadow-sm)}
+  .panel-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:var(--s-4)}
+  .panel-head .h{font-size:13px;font-weight:600;color:var(--ink)}
+  .panel-head .meta{font-family:var(--mono);font-size:11px;color:var(--muted)}
 
   /* preset chips */
   .chips{display:flex;flex-wrap:wrap;gap:var(--s-2);margin-bottom:var(--s-4)}
-  .chip{font-size:12px;padding:6px 12px;border-radius:var(--r-pill);background:transparent;border:1px solid var(--line);color:var(--ink-2);font-weight:450;transition:background var(--t-fast),border-color var(--t-fast),color var(--t-fast)}
-  .chip:hover{background:var(--bg-2);border-color:var(--line-strong)}
-  .chip.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-  .chips.audience .chip.active{background:var(--tbf);border-color:var(--tbf);color:#fff}
-  .chips.audience-romanoff .chip.active{background:var(--romanoff);border-color:var(--romanoff);color:#fff}
+  .chip{font-size:12px;font-weight:500;padding:5px 11px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);color:var(--ink-2);transition:all var(--t)}
+  .chip:hover{background:var(--bg-2);border-color:var(--line-strong);color:var(--ink)}
+  .chip.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .chips.audience-tbf .chip.active{background:var(--tbf);border-color:var(--tbf)}
+  .chips.audience-romanoff .chip.active{background:var(--romanoff);border-color:var(--romanoff)}
 
   /* fields */
-  .form{display:grid;gap:var(--s-5)}
-  .field{display:block}
-  .field .lbl{display:block;font-size:11px;font-weight:500;color:var(--ink-3);letter-spacing:.04em;margin-bottom:var(--s-2)}
-  .field textarea,.field input[type=text],.field input[type=number]{
-    width:100%;font-family:var(--font-sans);font-size:15px;font-weight:450;color:var(--ink);
-    background:transparent;border:none;border-bottom:1px solid var(--line);
-    padding:var(--s-2) 0 var(--s-3);transition:border-color var(--t-fast),box-shadow var(--t-fast);
-    resize:vertical;line-height:1.5
+  .form{display:grid;gap:var(--s-4)}
+  .field-grp{display:block}
+  .field-grp .lbl{display:block;font-size:11px;font-weight:600;color:var(--ink-3);letter-spacing:.02em;margin-bottom:6px}
+  .field-grp textarea, .field-grp input[type=text], .field-grp input[type=number]{
+    width:100%;font-family:var(--font);font-size:14px;font-weight:450;color:var(--ink);
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r-2);
+    padding:9px 12px;transition:border-color var(--t),box-shadow var(--t);
+    resize:vertical;line-height:1.55
   }
-  .field textarea{min-height:88px}
-  .field textarea:focus,.field input:focus{outline:none;border-color:var(--ink);box-shadow:0 1px 0 0 var(--ink)}
-  .field input[type=number]{max-width:140px}
-  .field textarea::placeholder,.field input::placeholder{color:var(--muted);font-weight:400}
+  .field-grp textarea{min-height:80px;font-size:13.5px}
+  .field-grp textarea:focus,.field-grp input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(12,11,10,.06)}
+  .field-grp input[type=number]{max-width:140px}
+  .field-grp textarea::placeholder,.field-grp input::placeholder{color:var(--muted-2)}
 
   /* actions */
-  .actions{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);flex-wrap:wrap;margin-top:var(--s-6);padding-top:var(--s-5);border-top:1px solid var(--line-2)}
+  .actions{display:flex;align-items:center;justify-content:space-between;gap:var(--s-3);flex-wrap:wrap;margin-top:var(--s-5);padding-top:var(--s-4);border-top:1px solid var(--line-2)}
   .run-btn{
-    display:inline-flex;align-items:center;gap:var(--s-2);
-    background:var(--ink);color:var(--bg);
-    font-weight:500;font-size:14px;letter-spacing:-0.005em;
-    padding:12px 22px 12px 22px;border-radius:var(--r-pill);
-    box-shadow:0 8px 24px -10px rgba(17,17,16,.45),0 1px 0 0 rgba(255,255,255,.04) inset,0 0 0 1px var(--ink);
-    transition:transform var(--t-fast),box-shadow var(--t-fast),opacity var(--t-fast)
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--ink);color:#fff;
+    font-weight:500;font-size:13px;letter-spacing:-0.005em;
+    padding:9px 16px;border-radius:var(--r-2);
+    box-shadow:var(--shadow);
+    transition:transform var(--t),box-shadow var(--t),opacity var(--t)
   }
-  .run-btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px -10px rgba(17,17,16,.55),0 1px 0 0 rgba(255,255,255,.04) inset,0 0 0 1px var(--ink)}
+  .run-btn:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px)}
   .run-btn:active{transform:translateY(0)}
-  .run-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
-  .run-btn svg{transition:transform var(--t-fast)}
-  .run-btn:hover svg{transform:translate(2px,-2px)}
-  .spinner{display:inline-block;width:11px;height:11px;border:1.6px solid rgba(243,239,231,.4);border-top-color:var(--bg);border-radius:50%;animation:spin .8s linear infinite}
+  .run-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .run-btn .arrow{transition:transform var(--t)}
+  .run-btn:hover .arrow{transform:translate(2px,0)}
+  .run-btn kbd{font-family:var(--mono);font-size:10px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:0 5px;color:rgba(255,255,255,.85);font-weight:500}
+  .spinner{width:11px;height:11px;border:1.6px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
-  .status{display:inline-flex;align-items:center;gap:var(--s-2);font-family:var(--font-mono);font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
-  .status .led{width:6px;height:6px;border-radius:50%;background:var(--tbf);box-shadow:0 0 0 3px rgba(63,98,48,.12)}
-  .status.error .led{background:var(--warn);box-shadow:0 0 0 3px rgba(155,58,28,.12)}
-  .err{margin-top:var(--s-4);background:#fbe9e3;border:1px solid #ecc4b8;color:#6f1f0c;padding:var(--s-3) var(--s-4);border-radius:var(--r-2);font-size:13px}
+  .status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .status .led{width:6px;height:6px;border-radius:50%;background:var(--live);box-shadow:0 0 0 2px var(--live-bg)}
+  .status.warn .led{background:var(--warn);box-shadow:0 0 0 2px rgba(182,90,38,.15)}
+  .status.err .led{background:var(--error);box-shadow:0 0 0 2px rgba(197,59,31,.15)}
+  .err-msg{margin-top:var(--s-3);background:rgba(197,59,31,.06);border:1px solid rgba(197,59,31,.22);color:#7a2412;padding:10px 12px;border-radius:var(--r-2);font-size:13px}
 
-  /* === RESULTS ============================================== */
-  .results{margin-top:var(--s-7);display:grid;gap:var(--s-7)}
-  .row-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-3);margin-bottom:var(--s-4);padding-bottom:var(--s-3);border-bottom:1px solid var(--line-2)}
-  .row-head h3{font-size:24px;line-height:1.1;letter-spacing:-0.018em}
-  .row-head .tag{font-family:var(--font-mono);font-size:11px;color:var(--muted);text-transform:lowercase}
-  .row-head .accent{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:var(--s-2);transform:translateY(-2px)}
-  .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4)}
-  .g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-4)}
+  /* === RESULTS === */
+  .results{margin-top:var(--s-4);display:grid;gap:var(--s-4)}
+  .result-section{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);overflow:hidden;box-shadow:var(--shadow-sm)}
+  .result-section-head{padding:var(--s-4) var(--s-5);display:flex;align-items:center;justify-content:space-between;gap:var(--s-3);border-bottom:1px solid var(--line-2);background:var(--surface-2)}
+  .result-section-head h3{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:var(--s-2)}
+  .result-section-head h3 .accent{width:6px;height:6px;border-radius:50%}
+  .result-section-head .meta{font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .result-section-body{padding:var(--s-4) var(--s-5)}
+  .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-3)}
+  .g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-3)}
   @media (max-width:900px){.g2,.g3{grid-template-columns:1fr}}
 
-  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-2);padding:var(--s-5) var(--s-5);transition:border-color var(--t-fast),box-shadow var(--t-fast);min-height:180px;display:flex;flex-direction:column;gap:var(--s-3)}
-  .card.accent{background:var(--bg-elev);border-color:transparent}
-  .card.accent.tbf{background:var(--tbf-soft);border:1px solid var(--tbf-line)}
-  .card.accent.romanoff{background:var(--romanoff-soft);border:1px solid var(--romanoff-line)}
-  .card:hover{box-shadow:0 2px 0 rgba(17,17,16,.04)}
-  .card .top{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-3)}
-  .card .ttl{font-size:10px;font-weight:600;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
-  .card .wc{font-family:var(--font-mono);font-size:10px;color:var(--muted)}
-  .card .body{font-size:14px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap;word-wrap:break-word}
-  .card .body .subj{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);display:block;margin-bottom:var(--s-3)}
-  .card .body .hd{font-family:var(--font-display);font-size:20px;line-height:1.15;color:var(--ink);display:block;margin-bottom:var(--s-3);letter-spacing:-0.018em}
-  .card pre.body{white-space:pre-wrap;font-family:var(--font-mono);font-size:12px;line-height:1.5;color:var(--ink-2);max-height:200px;overflow-y:auto}
+  .card{background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r-2);padding:var(--s-4);display:flex;flex-direction:column;gap:var(--s-2);min-height:160px;transition:border-color var(--t)}
+  .card:hover{border-color:var(--line)}
+  .card.accent.tbf{background:var(--tbf-bg);border-color:var(--tbf-line)}
+  .card.accent.romanoff{background:var(--romanoff-bg);border-color:var(--romanoff-line)}
+  .card .top{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-2)}
+  .card .ttl{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--ink-3);text-transform:uppercase}
+  .card .wc{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .card .body{font-size:13px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap;word-wrap:break-word}
+  .card .body .subj{font-family:var(--mono);font-size:11px;color:var(--muted);display:block;margin-bottom:8px;padding:6px 8px;background:rgba(12,11,10,.04);border-radius:4px}
+  .card .body .hd{font-size:14.5px;font-weight:600;color:var(--ink);display:block;margin-bottom:8px;line-height:1.3;letter-spacing:-0.008em}
+  .card pre.body{white-space:pre-wrap;font-family:var(--mono);font-size:11.5px;line-height:1.5;color:var(--ink-2);max-height:200px;overflow-y:auto;background:rgba(12,11,10,.025);border-radius:6px;padding:10px;margin:0}
   .card.empty .body,.card .empty{font-style:italic;color:var(--muted);font-size:13px}
 
   /* skeleton */
-  @keyframes pulse{0%,100%{opacity:.55}50%{opacity:.32}}
-  .skel{height:11px;background:var(--line);border-radius:4px;animation:pulse 1.4s var(--ease) infinite}
-  .skel+.skel{margin-top:var(--s-2)}
+  @keyframes pulse-skel{0%,100%{opacity:.55}50%{opacity:.32}}
+  .skel{height:10px;background:var(--line);border-radius:3px;animation:pulse-skel 1.4s cubic-bezier(.2,.7,.2,1) infinite}
+  .skel+.skel{margin-top:6px}
   .skel.w9{width:90%}.skel.w8{width:78%}.skel.w7{width:64%}.skel.w6{width:48%}
 
   /* quote card */
-  .quote{background:var(--bg-elev);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:var(--r-2);padding:var(--s-5)}
+  .quote{background:var(--bg-2);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:var(--r-2);padding:var(--s-4)}
   .quote.romanoff{border-left-color:var(--romanoff)}
-  .quote .angle{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--s-3)}
-  .quote q{font-family:var(--font-display);font-style:italic;font-size:18px;line-height:1.4;color:var(--ink);quotes:"\201C""\201D""\2018""\2019"}
+  .quote .angle{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted);margin-bottom:8px;text-transform:uppercase}
+  .quote q{font-size:14px;font-style:italic;line-height:1.55;color:var(--ink-2);quotes:'"' '"'}
 
-  /* empty result placeholder */
-  .placeholder{padding:var(--s-9) var(--s-8);text-align:center;background:var(--paper);border:1px dashed var(--line-strong);border-radius:var(--r-3);color:var(--muted)}
-  .placeholder .hd{font-family:var(--font-display);font-size:26px;line-height:1.15;color:var(--ink-2);margin-bottom:var(--s-3);letter-spacing:-0.018em}
-  .placeholder .sub{font-size:14px;max-width:42ch;margin:0 auto;line-height:1.55}
+  /* placeholder empty */
+  .placeholder{padding:var(--s-7) var(--s-6);text-align:center;background:var(--surface);border:1px dashed var(--line-strong);border-radius:var(--r-3);color:var(--muted)}
+  .placeholder .hd{font-size:15px;font-weight:600;color:var(--ink-2);margin-bottom:6px;letter-spacing:-0.008em}
+  .placeholder .sub{font-size:13px;max-width:54ch;margin:0 auto;line-height:1.55}
+  .placeholder .icon{width:32px;height:32px;margin:0 auto var(--s-3);border-radius:8px;background:var(--bg-2);display:flex;align-items:center;justify-content:center;color:var(--muted-2)}
 
-  /* === FOOTER =============================================== */
-  footer{max-width:1480px;margin:0 auto;padding:0 var(--s-6) var(--s-9);color:var(--muted);font-size:12px;display:flex;gap:var(--s-5);align-items:center;flex-wrap:wrap}
-  footer a{border-bottom:1px solid var(--line);padding-bottom:1px;transition:color var(--t-fast),border-color var(--t-fast)}
-  footer a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+  /* raw JSON view */
+  .raw-json{background:#0c0b0a;color:#f3f0e9;padding:var(--s-4);border-radius:var(--r-2);font-family:var(--mono);font-size:11.5px;line-height:1.55;overflow:auto;max-height:600px;white-space:pre-wrap;word-wrap:break-word}
+  .raw-json::selection{background:rgba(255,255,255,.18);color:#fff}
 
-  /* === MOTION =============================================== */
+  /* curl tab */
+  .curl-block{background:#0c0b0a;color:#f3f0e9;padding:var(--s-4);border-radius:var(--r-2);font-family:var(--mono);font-size:11.5px;line-height:1.7;overflow-x:auto;white-space:pre;position:relative}
+  .copy-btn{position:absolute;top:var(--s-3);right:var(--s-3);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#f3f0e9;font-family:var(--font);font-size:11px;font-weight:500;padding:4px 10px;border-radius:var(--r-pill);transition:background var(--t)}
+  .copy-btn:hover{background:rgba(255,255,255,.16)}
+  .copy-btn.copied{background:var(--live);border-color:var(--live);color:#fff}
+
+  /* footer */
+  footer{max-width:1480px;margin:0 auto;padding:var(--s-5);display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);flex-wrap:wrap;color:var(--muted);font-size:12px;border-top:1px solid var(--line);margin-top:var(--s-6)}
+  footer a{color:var(--ink-3);transition:color var(--t)}
+  footer a:hover{color:var(--ink)}
+  footer .right{display:flex;align-items:center;gap:var(--s-4)}
+  footer .live-pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--live);font-weight:500}
+  footer .live-pill .pulse{width:5px;height:5px;border-radius:50%;background:var(--live)}
+
+  /* command palette */
+  .cmdk{position:fixed;inset:0;background:rgba(12,11,10,.4);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:100;display:none;align-items:flex-start;justify-content:center;padding-top:15vh}
+  .cmdk.open{display:flex}
+  .cmdk-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);box-shadow:0 24px 64px -16px rgba(0,0,0,.32);width:min(560px,92vw);overflow:hidden}
+  .cmdk-input{width:100%;border:none;padding:var(--s-4) var(--s-5);font-family:var(--font);font-size:14px;font-weight:450;color:var(--ink);background:transparent;border-bottom:1px solid var(--line-2)}
+  .cmdk-input:focus{outline:none}
+  .cmdk-list{max-height:50vh;overflow-y:auto;padding:var(--s-2)}
+  .cmdk-item{width:100%;display:flex;align-items:center;gap:var(--s-3);padding:9px 12px;border-radius:var(--r-2);font-size:13px;color:var(--ink-2);text-align:left;transition:background var(--t)}
+  .cmdk-item:hover,.cmdk-item.cmdk-active{background:var(--bg-2);color:var(--ink)}
+  .cmdk-item .label{flex:1;font-weight:500;font-size:13px}
+  .cmdk-item .grp{font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+
+  /* reveal */
   @media (prefers-reduced-motion:no-preference){
-    .reveal{animation:reveal 380ms var(--ease) both}
-    @keyframes reveal{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    .reveal{animation:reveal 280ms cubic-bezier(.2,.7,.2,1) both}
+    @keyframes reveal{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
   }
 </style>
 </head>
@@ -210,100 +265,173 @@
 
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="brand">
-      <span class="mark">Nexus Agriscience</span>
-      <span class="div" aria-hidden="true"></span>
-      <span class="sub">Marketing Engineer Dashboard</span>
+    <div class="logo">
+      <span class="logo-dot">N</span>
+      <span class="name">Nexus</span>
     </div>
-    <div class="meta">
-      <span><span class="dot" style="background:var(--tbf);display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;transform:translateY(-1px)"></span>7 LIVE WORKFLOWS</span>
-      <span>·</span>
-      <span>CLAUDE SONNET 4.6</span>
-      <span>·</span>
-      <span>BRAIN-LOADED</span>
-    </div>
+    <span class="sep"></span>
+    <span class="crumb"><b>Marketing Engineer</b></span>
+    <span class="pill pill-live"><span class="pulse"></span>Live</span>
+    <div class="spacer"></div>
+    <button class="cmd-hint" id="cmdk-open">Search workflows… <kbd>⌘K</kbd></button>
+    <div class="avatar" title="Chris Cook">CC</div>
   </div>
 </header>
 
+<div class="stats-strip">
+  <div class="stat">
+    <div class="stat-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 12h4l2-8 4 16 2-8h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Live workflows</div>
+    <div class="stat-value">7<span class="unit">/ 7</span></div>
+    <div class="stat-delta"><span class="up">All systems operational</span></div>
+  </div>
+  <div class="stat">
+    <div class="stat-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 10h18" stroke="currentColor" stroke-width="2"/></svg>Brands</div>
+    <div class="stat-value">2<span class="unit">clients</span></div>
+    <div class="stat-delta">TBF · Dr. Romanoff (showcase)</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Avg latency</div>
+    <div class="stat-value">~42<span class="unit">s</span></div>
+    <div class="stat-delta">15s (press quote) → 75s (blog splinter)</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 19V5l16 7-16 7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Engine</div>
+    <div class="stat-value mono" style="font-size:14px;font-weight:500">claude-sonnet-4-6</div>
+    <div class="stat-delta">Voice-Manual-loaded · 10 brain files</div>
+  </div>
+</div>
+
 <main>
   <aside>
-    <div class="nav-group">
-      <div class="nav-group-head">
-        <span class="ttl"><span class="dot" style="background:var(--tbf)"></span>Terpene Belt Farms</span>
-        <span class="count">4 / 4</span>
+    <div class="nav-card">
+      <div class="nav-section">
+        <div class="nav-section-head">
+          <span class="ttl"><span class="ico" style="background:var(--tbf)"></span>Terpene Belt Farms</span>
+          <span class="count">4</span>
+        </div>
+        <ul class="nav-list" id="tbf-list"></ul>
       </div>
-      <ul class="nav-list" id="tbf-list"></ul>
-    </div>
-    <div class="nav-group">
-      <div class="nav-group-head">
-        <span class="ttl"><span class="dot" style="background:var(--romanoff)"></span>Showcase · Dr. Romanoff</span>
-        <span class="count">3 / 3</span>
+      <div class="nav-section">
+        <div class="nav-section-head">
+          <span class="ttl"><span class="ico" style="background:var(--romanoff)"></span>Showcase · Dr. Romanoff</span>
+          <span class="count">3</span>
+        </div>
+        <ul class="nav-list" id="romanoff-list"></ul>
       </div>
-      <ul class="nav-list" id="romanoff-list"></ul>
+      <div class="nav-footer">
+        <div class="nav-footer-row"><span>n8n cloud</span><span class="v">7 active</span></div>
+        <div class="nav-footer-row"><span>brain</span><span class="v">10 files · git-versioned</span></div>
+        <div class="nav-footer-row"><span>region</span><span class="v">us-east-1</span></div>
+      </div>
     </div>
   </aside>
 
   <section id="workspace">
-    <article class="header-panel" id="header-panel">
-      <header class="header-top">
-        <div class="breadcrumb" id="breadcrumb">
-          <span>Workflows</span>
-          <span class="chev">›</span>
-          <span class="brand-chip" id="brand-chip"><span class="dot" id="brand-dot" style="background:var(--tbf);display:inline-block;width:6px;height:6px;border-radius:50%"></span><span id="brand-name">TBF</span></span>
+    <article class="wf-header">
+      <div class="wf-top">
+        <div class="wf-title-row">
+          <span class="wf-brand-chip" id="brand-chip"><span class="dot" id="brand-dot" style="background:var(--tbf)"></span><span id="brand-name">TBF</span></span>
+          <span class="wf-name" id="wf-label">Four Surfaces</span>
         </div>
-        <span class="header-eta">Expected · <span id="wf-eta">—</span></span>
-      </header>
-
-      <h2 class="display-1 wf-label" id="wf-label">Four Surfaces</h2>
-      <p class="wf-description" id="wf-description">Single topic in, four polished social surfaces out. The simplest demonstration of voice-manual-driven generation.</p>
-
-      <div class="wf-meta">
-        <span class="item"><span class="k">n8n workflow</span><span class="v serif" id="wf-n8nname">—</span></span>
-        <span class="item"><span class="k">POST</span><span class="v" id="wf-webhook">—</span></span>
-        <span class="item"><span class="k">model</span><span class="v">claude-sonnet-4-6</span></span>
+        <div class="wf-actions">
+          <button class="icon-btn" title="View logs (coming soon)" aria-label="Logs"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <button class="icon-btn" id="open-n8n" title="Open in n8n" aria-label="Open in n8n"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M21 3l-9 9M10 14v7H3v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="icon-btn" id="copy-webhook" title="Copy webhook URL" aria-label="Copy webhook"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M16 8V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="2"/></svg></button>
+        </div>
+      </div>
+      <p class="wf-desc" id="wf-description">Single topic in, four polished social surfaces out.</p>
+      <div class="wf-meta-grid">
+        <div class="wf-meta-item"><div class="k">Status</div><div class="v live-pill"><span class="pulse"></span>Active</div></div>
+        <div class="wf-meta-item"><div class="k">Webhook</div><div class="v" id="wf-webhook" title="">—</div></div>
+        <div class="wf-meta-item"><div class="k">n8n workflow</div><div class="v" id="wf-n8nname" title="">—</div></div>
+        <div class="wf-meta-item"><div class="k">Expected latency</div><div class="v" id="wf-eta">—</div></div>
       </div>
     </article>
 
-    <section class="input-panel" id="input-panel">
-      <div class="panel-eyebrow">
-        <span class="eyebrow">Input</span>
-        <span class="tag">brain loaded · 10 markdown files</span>
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="run">Run</button>
+      <button class="tab" data-tab="output">Output</button>
+      <button class="tab" data-tab="json">Raw JSON</button>
+      <button class="tab" data-tab="curl">cURL</button>
+    </div>
+
+    <div class="tab-content active" data-tab="run">
+      <div class="input-panel">
+        <div class="panel-head">
+          <span class="h">Input</span>
+          <span class="meta">brain loaded · 10 markdown files</span>
+        </div>
+        <div class="chips" id="wf-presets"></div>
+        <div class="form" id="wf-inputs"></div>
+        <div class="actions">
+          <button class="run-btn" id="run-btn" disabled>
+            Run the agent
+            <kbd>⌘↵</kbd>
+            <svg class="arrow" width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 6h6m-3-3 3 3-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span class="status" id="status"></span>
+        </div>
+        <div class="err-msg" id="error" style="display:none"></div>
       </div>
+    </div>
 
-      <div class="chips" id="wf-presets"></div>
-      <div class="form" id="wf-inputs"></div>
+    <div class="tab-content" data-tab="output">
+      <div id="results" class="results"></div>
+    </div>
 
-      <div class="actions">
-        <button class="run-btn" id="run-btn" disabled>
-          Run the agent
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <span class="status" id="status"></span>
+    <div class="tab-content" data-tab="json">
+      <div class="result-section">
+        <div class="result-section-head">
+          <h3><span class="accent" style="background:var(--info)"></span>Raw JSON response</h3>
+          <span class="meta" id="json-meta">no run yet</span>
+        </div>
+        <div class="result-section-body">
+          <pre class="raw-json" id="raw-json">{
+  "status": "no run yet",
+  "hint": "Hit Run on the Run tab to populate."
+}</pre>
+        </div>
       </div>
+    </div>
 
-      <div class="err" id="error" style="display:none"></div>
-    </section>
-
-    <div id="results" class="results"></div>
+    <div class="tab-content" data-tab="curl">
+      <div class="result-section">
+        <div class="result-section-head">
+          <h3><span class="accent" style="background:var(--info)"></span>cURL command</h3>
+          <span class="meta">paste into your terminal</span>
+        </div>
+        <div class="result-section-body">
+          <div class="curl-block" id="curl-block"><button class="copy-btn" id="copy-curl">Copy</button><span id="curl-text">—</span></div>
+        </div>
+      </div>
+    </div>
   </section>
 </main>
 
 <footer>
-  <span>Dashboard for <a href="/pitch/nexus">/pitch/nexus</a> · <a href="/pitch/sabrina">/pitch/sabrina</a></span>
-  <span>·</span>
-  <span>Single static file at <span class="micro">/dashboard.html</span></span>
-  <span>·</span>
-  <span>Open anywhere, trigger any workflow.</span>
+  <div>
+    <a href="/pitch/nexus">/pitch/nexus</a> · <a href="/pitch/sabrina">/pitch/sabrina</a>
+  </div>
+  <div class="right">
+    <span>Single static file · <span class="mono">/dashboard.html</span></span>
+    <span class="live-pill"><span class="pulse"></span>All systems operational</span>
+  </div>
 </footer>
+
+<div class="cmdk" id="cmdk">
+  <div class="cmdk-box">
+    <input class="cmdk-input" id="cmdk-input" placeholder="Jump to a workflow…" autocomplete="off" />
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
 
 <script>
 const N8N = "https://financiallyfitphotographe.app.n8n.cloud/webhook";
 
 const WORKFLOWS = [
-  // ---- TBF ----
   {
     id:"tbf_four_surfaces", group:"tbf",
-    label:"Four Surfaces", badge:"Social drop · ~30s",
+    label:"Four Surfaces", badge:"~30s",
     n8nName:"Nexus Agriscience — TBF: Four Surfaces",
     webhook:N8N+"/tbf-content-demo", eta:30, renderer:"tbf_four",
     fields:[{name:"topic",label:"Topic",type:"textarea",placeholder:"News event, vintage update, technical hook..."}],
@@ -312,11 +440,11 @@ const WORKFLOWS = [
       {label:"Pine-129 vintage", values:{topic:"TBF just released the 2025 Pine-129 vintage at 8.2% caryophyllene by GC-MS, the highest concentration recorded for this cultivar."}},
       {label:"Vape thermal stability", values:{topic:"New internal GC-MS data shows TBF Gas-707 holds flavor integrity at 230°C, where most monoterpene-dominant blends drop off above 180°C."}},
     ],
-    description:"Single topic in, four polished social surfaces out. Instagram caption, LinkedIn post, cold email, and blog opener — all in TBF voice. The simplest demonstration of voice-manual-driven generation."
+    description:"Single topic in, four polished social surfaces out. Instagram caption, LinkedIn post, cold email, and blog opener — all in TBF voice."
   },
   {
     id:"tbf_full_stack", group:"tbf",
-    label:"Full Content Stack", badge:"Social + SEO + AEO + GEO · ~60s",
+    label:"Full Content Stack", badge:"~60s",
     n8nName:"Nexus Agriscience — TBF: Full Content Stack",
     webhook:N8N+"/tbf-content-stack", eta:60, renderer:"tbf_full",
     fields:[
@@ -330,11 +458,11 @@ const WORKFLOWS = [
       {label:"Pine-129 vintage", values:{topic:"TBF just released the 2025 Pine-129 vintage at 8.2% caryophyllene by GC-MS, the highest concentration recorded for this cultivar.", audience:"vape"}},
       {label:"Beverage solubility", values:{topic:"New emulsification protocol allows TBF Citrus-78 to dose at 0.03% in carbonated beverages without phase separation across the 90-day shelf life.", audience:"beverage"}}
     ],
-    description:"Flagship workflow. Topic plus audience in. Returns six social surfaces plus a complete SEO bundle, AEO Q&A with FAQPage schema, and three GEO quote-ready snippets."
+    description:"Flagship workflow. Returns 6 social surfaces, full SEO bundle, AEO Q&A with FAQPage schema, and 3 GEO quote-ready snippets."
   },
   {
     id:"tbf_sample_pack_triage", group:"tbf",
-    label:"Sample-Pack Triage Agent", badge:"Lead → classified + personalized · ~25s",
+    label:"Sample-Pack Triage", badge:"~25s",
     n8nName:"Nexus Agriscience — TBF: Sample-Pack Triage",
     webhook:N8N+"/tbf-sample-pack-triage", eta:25, renderer:"triage",
     fields:[
@@ -348,11 +476,11 @@ const WORKFLOWS = [
       {label:"RTD beverage startup", values:{company_name:"Cann", website:"drinkcann.com", product_description:"Low-dose CBD + THC sparkling social tonics. RTD beverages.", requester_title:"Beverage Formulation Lead"}},
       {label:"Solventless extractor", values:{company_name:"710 Labs", website:"710labs.com", product_description:"Solventless concentrate brand. Live rosin badder, hash, infused pre-rolls. Premium positioning.", requester_title:"Head of R&D"}}
     ],
-    description:"Every sample-pack request is a pipeline event. Classifies the prospect, scores fit, picks the right sample pack, and drafts a personalized technical follow-up email in TBF voice."
+    description:"Inbound sample-pack request comes in. Agent classifies prospect, scores fit, picks the right sample pack, drafts a personalized technical follow-up email."
   },
   {
     id:"tbf_blog_splinter", group:"tbf",
-    label:"Blog Splinter", badge:"1 blog → 14+ on-brand assets · ~75s",
+    label:"Blog Splinter", badge:"~75s",
     n8nName:"Nexus Agriscience — TBF: Blog Splinter",
     webhook:N8N+"/tbf-blog-splinter", eta:75, renderer:"splinter",
     fields:[
@@ -361,15 +489,13 @@ const WORKFLOWS = [
     ],
     presets:[
       {label:"Caryophyllene blog", values:{title:"Why Caryophyllene Concentration Is the Metric Your Sesquiterpene Supplier Has Been Avoiding", content:"The conventional wisdom in terpene formulation holds that a complex profile is automatically a better profile. More compounds, the thinking goes, means a richer entourage effect and a more defensible product story. That assumption deserves scrutiny, because complexity without concentration data is just noise on a GC-MS readout. Caryophyllene is the clearest counterexample. As a bicyclic sesquiterpene with a 15-carbon backbone, it occupies a chemically distinct tier from the linalools and myrcenes that dominate most commodity blends. Its molecular architecture resists oxidative degradation at elevated temperatures, it survives the viscosity and flash-point demands of distillate-carrier systems, and its concentration, measured in precise percentage points, is a direct predictor of how a profile will perform after 90 days of accelerated aging. The 2025 Pine-129 vintage from our fields in The California Terpene Belt registers 8.2% caryophyllene on GC×GC analysis."}},
-      {label:"Vintage primer", values:{title:"Seasonal Terpene Vintage Reports: How Harvest Month Changes Profile Chemistry", content:"In cannabis terpene production, timing is everything. Environmental variables like temperature, light intensity, and humidity during late flowering significantly impact terpene biosynthesis. Early-season harvests favor monoterpenes producing light, citrusy profiles ideal for vapes and beverages. Mid-season hits the optimal balance with the highest total terpene content. Late-season produces sesquiterpene-rich extracts with deeper, spicier characteristics suited for premium concentrates."}}
+      {label:"Vintage primer", values:{title:"Seasonal Terpene Vintage Reports: How Harvest Month Changes Profile Chemistry", content:"In cannabis terpene production, timing is everything. Environmental variables like temperature, light intensity, and humidity during late flowering significantly impact terpene biosynthesis."}}
     ],
-    description:"Paste a TBF long-form blog. The agent splinters it into a multi-platform pack — three LinkedIn carousels, two X threads, five Instagram captions, three pull-quote tweets, and a cold-email pitch."
+    description:"Paste a TBF long-form blog. Splinters into 3 LinkedIn carousels, 2 X threads, 5 IG captions, 3 pull-quote tweets, and a cold-email pitch."
   },
-
-  // ---- ROMANOFF SHOWCASE ----
   {
     id:"romanoff_full_stack", group:"romanoff",
-    label:"Full Content Stack", badge:"Press + Social + SEO + AEO + GEO · ~60s",
+    label:"Full Content Stack", badge:"~60s",
     n8nName:"Nexus Agriscience — Showcase (Dr. Romanoff): Full Content Stack",
     webhook:N8N+"/romanoff-content-stack", eta:60, renderer:"romanoff_full",
     fields:[
@@ -379,15 +505,15 @@ const WORKFLOWS = [
       ]}
     ],
     presets:[
-      {label:"Doomscrolling + anxiety", values:{topic:"The connection between doomscrolling and rising anxiety levels in young adults. New research on threat-detection circuitry and compulsive news consumption.", audience:"press"}},
-      {label:"Loneliness epidemic", values:{topic:"The Surgeon General's 2023 advisory framed loneliness as a public health crisis. What clinicians are actually seeing in their practices in 2026.", audience:"press"}},
+      {label:"Doomscrolling + anxiety", values:{topic:"The connection between doomscrolling and rising anxiety levels in young adults. New research on threat-detection circuitry.", audience:"press"}},
+      {label:"Loneliness epidemic", values:{topic:"The Surgeon General's 2023 advisory framed loneliness as a public health crisis. What clinicians are actually seeing in 2026.", audience:"press"}},
       {label:"Reality TV breakup", values:{topic:"A high-profile reality TV couple just publicly split mid-season. Press wants a clinical read on their on-camera communication patterns.", audience:"press"}}
     ],
-    description:"Cross-vertical showcase: same brain-agent-workflows architecture applied to a personal-brand client. Returns a press quote, Instagram caption, TikTok script, podcast pitch, plus SEO, AEO, and GEO output."
+    description:"Cross-vertical showcase: same architecture on a personal-brand client. Returns press quote + IG + TikTok + podcast pitch + SEO/AEO/GEO."
   },
   {
     id:"romanoff_press_quote", group:"romanoff",
-    label:"Press-Quote Generator", badge:"Outlet + topic → 3 quote variants · ~15s",
+    label:"Press-Quote Generator", badge:"~15s",
     n8nName:"Nexus Agriscience — Showcase (Dr. Romanoff): Press-Quote Generator",
     webhook:N8N+"/romanoff-press-quote", eta:15, renderer:"press_quotes",
     fields:[
@@ -400,11 +526,11 @@ const WORKFLOWS = [
       {label:"Holiday family stress", values:{outlet:"Today Show", topic:"Managing holiday family stress. Boundaries with in-laws, sibling dynamics, when to skip the visit entirely.", word_count:"45"}},
       {label:"Workplace burnout 2026", values:{outlet:"Forbes", topic:"The new face of workplace burnout in 2026. Post-pandemic shifts, the always-on culture, and what HR is missing.", word_count:"80"}}
     ],
-    description:"Single-purpose workflow tuned for journalist deadlines. Returns three distinct quote variants (mechanism-led, reframe-led, three-signs), a pull-quote line, and the credentials block for attribution."
+    description:"Tuned for journalist deadlines. Returns 3 distinct quote variants (mechanism-led, reframe-led, three-signs), a pull-quote line, and the credentials block."
   },
   {
     id:"romanoff_aeo_page", group:"romanoff",
-    label:"AEO Page Generator", badge:"Question → full /answers/ page · ~40s",
+    label:"AEO Page Generator", badge:"~40s",
     n8nName:"Nexus Agriscience — Showcase (Dr. Romanoff): AEO Page Generator",
     webhook:N8N+"/romanoff-aeo-page", eta:40, renderer:"aeo_page",
     fields:[{name:"question",label:"Question (search query)",type:"textarea",placeholder:"What are the 4 attachment styles in adult relationships?"}],
@@ -413,32 +539,40 @@ const WORKFLOWS = [
       {label:"Doomscrolling at night", values:{question:"Why does my anxiety get worse when I doomscroll at night?"}},
       {label:"Communication death spiral", values:{question:"What is the communication death spiral in couples?"}}
     ],
-    description:"Takes a search-style question, returns a complete answer page tuned to be cited by AI engines: SVO direct answer, full body, ethics caveat, Schema.org FAQPage and Person markup, plus four GEO snippets."
+    description:"Search-style question → complete /answers/ page tuned to be cited by Perplexity / ChatGPT Search / Google AI Overview. Includes Schema.org FAQPage + Person markup."
   }
 ];
 
 // ----- State -----
 let activeId = null;
 let inputs = {};
+let lastResult = null;
 
 const $ = (s,r=document) => r.querySelector(s);
 const $$ = (s,r=document) => Array.from(r.querySelectorAll(s));
 
-// ----- Sidebar render -----
+// ----- Sidebar -----
 function renderSidebar(){
   const tbf = WORKFLOWS.filter(w=>w.group==="tbf");
   const ro  = WORKFLOWS.filter(w=>w.group==="romanoff");
-  $("#tbf-list").innerHTML = tbf.map((w,i) => listItem(w,i)).join("");
-  $("#romanoff-list").innerHTML = ro.map((w,i) => listItem(w,i)).join("");
+  $("#tbf-list").innerHTML = tbf.map((w,i) => listItem(w,i+1)).join("");
+  $("#romanoff-list").innerHTML = ro.map((w,i) => listItem(w,i+5)).join("");
   $$("aside .nav-item").forEach(b => b.addEventListener("click", () => activate(b.dataset.id)));
 }
-function listItem(w,i){
-  const idx = String(i+1).padStart(2,"0");
+function listItem(w,n){
   const active = w.id===activeId ? "active" : "";
-  return `<li><button class="nav-item ${w.group} ${active}" data-id="${w.id}"><span class="idx">${idx}</span><span><span class="label">${w.label}</span><span class="badge">${w.badge}</span></span></button></li>`;
+  const kbd = n <= 9 ? `<kbd class="kbd">${n}</kbd>` : "";
+  return `<li><button class="nav-item ${active}" data-id="${w.id}">
+    <span class="status-dot" title="Active"></span>
+    <span class="nav-text">
+      <span class="nav-label">${w.label}</span>
+      <span class="nav-sub">${w.badge}</span>
+    </span>
+    ${kbd}
+  </button></li>`;
 }
 
-// ----- Activate workflow -----
+// ----- Activate -----
 function activate(id){
   activeId = id;
   const w = WORKFLOWS.find(x=>x.id===id);
@@ -447,21 +581,17 @@ function activate(id){
   $("#wf-label").textContent = w.label;
   $("#wf-description").textContent = w.description;
   $("#wf-n8nname").textContent = w.n8nName;
-  $("#wf-webhook").textContent = new URL(w.webhook).pathname;
+  $("#wf-n8nname").title = w.n8nName;
+  const pathname = new URL(w.webhook).pathname;
+  $("#wf-webhook").textContent = pathname;
+  $("#wf-webhook").title = w.webhook;
   $("#wf-eta").textContent = `~${w.eta}s`;
-
-  // brand theming on header
-  const hp = $("#header-panel");
-  hp.classList.remove("tbf","romanoff");
-  hp.classList.add(w.group);
+  $("#brand-name").textContent = w.group === "tbf" ? "Terpene Belt Farms" : "Dr. Romanoff (Showcase)";
   $("#brand-dot").style.background = w.group === "tbf" ? "var(--tbf)" : "var(--romanoff)";
-  $("#brand-name").textContent = w.group === "tbf" ? "Terpene Belt Farms" : "Showcase · Dr. Romanoff";
 
-  // Reset inputs
   inputs = {};
   for (const f of w.fields){
-    if ("default" in f) inputs[f.name] = f.default;
-    else inputs[f.name] = "";
+    inputs[f.name] = "default" in f ? f.default : "";
   }
   if (w.presets && w.presets.length){
     Object.assign(inputs, w.presets[0].values);
@@ -471,10 +601,13 @@ function activate(id){
   renderPresets(w);
   renderInputs(w);
   $("#run-btn").disabled = false;
-  $("#status").textContent = "";
-  $("#status").classList.remove("error");
+  $("#status").innerHTML = "";
+  $("#status").classList.remove("warn","err");
   $("#error").style.display="none";
   renderResults(w, null, false);
+  updateCurl(w);
+  updateJson(null);
+  switchTab("run");
 }
 
 function renderPresets(w){
@@ -485,6 +618,7 @@ function renderPresets(w){
     const p = w.presets[+b.dataset.i];
     Object.assign(inputs, p.values);
     renderInputs(w);
+    updateCurl(w);
   }));
 }
 
@@ -492,29 +626,30 @@ function renderInputs(w){
   const root = $("#wf-inputs");
   root.innerHTML = w.fields.map(f => {
     if (f.type === "textarea"){
-      return `<label class="field"><span class="lbl">${f.label}</span><textarea name="${f.name}" rows="3" placeholder="${f.placeholder||''}">${escapeHTML(inputs[f.name]||"")}</textarea></label>`;
+      return `<label class="field-grp"><span class="lbl">${f.label}</span><textarea name="${f.name}" rows="3" placeholder="${f.placeholder||''}">${escapeHTML(inputs[f.name]||"")}</textarea></label>`;
     }
     if (f.type === "text" || f.type === "number"){
-      return `<label class="field"><span class="lbl">${f.label}</span><input type="${f.type}" name="${f.name}" placeholder="${f.placeholder||''}" value="${escapeHTML(inputs[f.name]||"")}" /></label>`;
+      return `<label class="field-grp"><span class="lbl">${f.label}</span><input type="${f.type}" name="${f.name}" placeholder="${f.placeholder||''}" value="${escapeHTML(inputs[f.name]||"")}" /></label>`;
     }
     if (f.type === "chips"){
-      const audClass = w.group==="romanoff" ? "audience-romanoff" : "audience";
+      const audClass = w.group==="romanoff" ? "audience-romanoff" : "audience-tbf";
       const opts = f.options.map(o => {
         const active = (inputs[f.name] || f.default) === o.value;
         return `<button class="chip ${active?'active':''}" data-name="${f.name}" data-value="${o.value}">${o.label}</button>`;
       }).join("");
-      return `<label class="field"><span class="lbl">${f.label}</span><div class="chips ${audClass}">${opts}</div></label>`;
+      return `<label class="field-grp"><span class="lbl">${f.label}</span><div class="chips ${audClass}">${opts}</div></label>`;
     }
     return "";
   }).join("");
 
   $$('#wf-inputs textarea, #wf-inputs input').forEach(el => {
-    el.addEventListener("input", () => { inputs[el.name] = el.value; });
+    el.addEventListener("input", () => { inputs[el.name] = el.value; updateCurl(w); });
   });
   $$('#wf-inputs .chip').forEach(b => {
     b.addEventListener("click", () => {
       inputs[b.dataset.name] = b.dataset.value;
       renderInputs(w);
+      updateCurl(w);
     });
   });
 }
@@ -524,11 +659,12 @@ async function run(){
   const w = WORKFLOWS.find(x=>x.id===activeId);
   if (!w) return;
   $("#run-btn").disabled = true;
-  $("#run-btn").innerHTML = `<span class="spinner" aria-hidden="true"></span>Running…`;
+  $("#run-btn").innerHTML = `<span class="spinner"></span>Running…`;
   $("#status").innerHTML = `<span class="led"></span><span>~${w.eta}s expected · brain loading</span>`;
-  $("#status").classList.remove("error");
+  $("#status").classList.remove("warn","err");
   $("#error").style.display="none";
   renderResults(w, null, true);
+  switchTab("output");
 
   const started = Date.now();
   try{
@@ -539,29 +675,123 @@ async function run(){
     });
     if (!resp.ok) throw new Error(`Webhook returned ${resp.status}`);
     const data = await resp.json();
+    lastResult = data;
     const elapsed = ((Date.now()-started)/1000).toFixed(1);
-    $("#status").innerHTML = `<span class="led"></span><span>Completed in ${elapsed}s · ${w.n8nName}</span>`;
+    $("#status").innerHTML = `<span class="led"></span><span>200 · ${elapsed}s · ${w.id}</span>`;
     renderResults(w, data, false);
+    updateJson(data);
   } catch(e){
     $("#error").textContent = e.message || "Generation failed. Try again.";
     $("#error").style.display="block";
-    $("#status").innerHTML = `<span class="led"></span><span>failed</span>`;
-    $("#status").classList.add("error");
+    $("#status").innerHTML = `<span class="led"></span><span>error</span>`;
+    $("#status").classList.add("err");
+    switchTab("run");
   } finally {
     $("#run-btn").disabled = false;
-    $("#run-btn").innerHTML = `Run the agent <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 10L10 2M10 2H4M10 2v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    $("#run-btn").innerHTML = `Run the agent <kbd>⌘↵</kbd> <svg class="arrow" width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3 6h6m-3-3 3 3-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   }
 }
 
 $("#run-btn").addEventListener("click", run);
 
-// ----- Result renderers -----
+// Cmd+Enter to run
+document.addEventListener("keydown", (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "Enter"){
+    if (!$("#run-btn").disabled) run();
+  }
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k"){
+    e.preventDefault();
+    openCmdK();
+  }
+  if (e.key === "Escape"){ closeCmdK(); }
+  // 1-7 to switch workflow
+  if (!e.metaKey && !e.ctrlKey && !e.altKey && !$("#cmdk").classList.contains("open")){
+    const n = parseInt(e.key,10);
+    if (n >= 1 && n <= 7 && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA"){
+      activate(WORKFLOWS[n-1].id);
+    }
+  }
+});
+
+// ----- Tabs -----
+function switchTab(name){
+  $$(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === name));
+  $$(".tab-content").forEach(c => c.classList.toggle("active", c.dataset.tab === name));
+}
+$$(".tab").forEach(t => t.addEventListener("click", () => switchTab(t.dataset.tab)));
+
+// ----- Action buttons -----
+$("#open-n8n").addEventListener("click", () => {
+  // Linking to n8n cloud dashboard would require workflow ID lookup; just open instance for now
+  window.open("https://financiallyfitphotographe.app.n8n.cloud/workflows", "_blank");
+});
+$("#copy-webhook").addEventListener("click", async () => {
+  const w = WORKFLOWS.find(x=>x.id===activeId);
+  if (!w) return;
+  try { await navigator.clipboard.writeText(w.webhook); flash("#copy-webhook"); } catch {}
+});
+$("#copy-curl").addEventListener("click", async () => {
+  const btn = $("#copy-curl");
+  try { await navigator.clipboard.writeText($("#curl-text").textContent); btn.textContent = "Copied"; btn.classList.add("copied"); setTimeout(()=>{btn.textContent="Copy"; btn.classList.remove("copied");}, 1400); } catch {}
+});
+
+function flash(sel){
+  const el = $(sel); if (!el) return;
+  el.style.color = "var(--live)";
+  setTimeout(()=>{ el.style.color = ""; }, 800);
+}
+
+// ----- cURL gen -----
+function updateCurl(w){
+  if (!w) return;
+  const body = JSON.stringify(inputs, null, 2);
+  const text = `curl -X POST ${w.webhook} \\
+  -H "Content-Type: application/json" \\
+  -d '${body.replace(/'/g, "'\\''")}'`;
+  $("#curl-text").textContent = text;
+}
+
+// ----- JSON view -----
+function updateJson(data){
+  $("#raw-json").textContent = data ? JSON.stringify(data, null, 2) : '{\n  "status": "no run yet",\n  "hint": "Hit Run on the Run tab to populate."\n}';
+  $("#json-meta").textContent = data ? `${JSON.stringify(data).length.toLocaleString()} chars` : "no run yet";
+}
+
+// ----- Command palette -----
+function openCmdK(){
+  $("#cmdk").classList.add("open");
+  $("#cmdk-input").value = "";
+  $("#cmdk-input").focus();
+  renderCmdList("");
+}
+function closeCmdK(){ $("#cmdk").classList.remove("open"); }
+$("#cmdk-open").addEventListener("click", openCmdK);
+$("#cmdk").addEventListener("click", (e) => { if (e.target === $("#cmdk")) closeCmdK(); });
+$("#cmdk-input").addEventListener("input", (e) => renderCmdList(e.target.value));
+$("#cmdk-input").addEventListener("keydown", (e) => {
+  const items = $$(".cmdk-item");
+  const cur = items.findIndex(i => i.classList.contains("cmdk-active"));
+  if (e.key === "ArrowDown"){ e.preventDefault(); items[cur]?.classList.remove("cmdk-active"); (items[cur+1] || items[0])?.classList.add("cmdk-active"); }
+  if (e.key === "ArrowUp"){ e.preventDefault(); items[cur]?.classList.remove("cmdk-active"); (items[cur-1] || items[items.length-1])?.classList.add("cmdk-active"); }
+  if (e.key === "Enter"){ const sel = $$(".cmdk-item.cmdk-active")[0] || items[0]; if (sel){ activate(sel.dataset.id); closeCmdK(); } }
+});
+function renderCmdList(q){
+  const ql = (q||"").toLowerCase().trim();
+  const list = WORKFLOWS.filter(w => !ql || w.label.toLowerCase().includes(ql) || w.n8nName.toLowerCase().includes(ql) || w.description.toLowerCase().includes(ql));
+  $("#cmdk-list").innerHTML = list.map((w,i) => `<button class="cmdk-item ${i===0?'cmdk-active':''}" data-id="${w.id}"><span class="status-dot" style="background:${w.group==='tbf'?'var(--tbf)':'var(--romanoff)'};box-shadow:none"></span><span class="label">${w.label}</span><span class="grp">${w.group}</span></button>`).join("");
+  $$(".cmdk-item").forEach(it => it.addEventListener("click", () => { activate(it.dataset.id); closeCmdK(); }));
+}
+
+// ----- Result renderers (same as before, polished) -----
 function renderResults(w, data, loading){
   const el = $("#results");
   if (!data && !loading){
     el.innerHTML = `<div class="placeholder reveal">
-      <div class="hd">Pick a preset, hit Run.</div>
-      <div class="sub">The agent loads ${w?.group==='romanoff' ? '10' : '10'} brain files, calls Claude Sonnet 4.6, and returns structured JSON. Results render below.</div>
+      <div class="icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="hd">Ready to run</div>
+      <div class="sub">Pick a preset above or type your own input, then hit <b>Run the agent</b>. The agent loads 10 brain files, calls Claude, and returns structured output here.</div>
     </div>`;
     return;
   }
@@ -573,13 +803,12 @@ function renderResults(w, data, loading){
   else if (w.renderer === "aeo_page") html = renderAeoPage(data, loading, w);
   else if (w.renderer === "triage") html = renderTriage(data, loading, w);
   else if (w.renderer === "splinter") html = renderSplinter(data, loading, w);
-  else html = `<pre class="card"><pre class="body">${escapeHTML(JSON.stringify(data,null,2))}</pre></pre>`;
+  else html = `<pre class="card body">${escapeHTML(JSON.stringify(data,null,2))}</pre>`;
   el.innerHTML = `<div class="reveal">${html}</div>`;
 }
 
-function rowHeader(title, badge, group){
-  const accentColor = group==="romanoff" ? "var(--romanoff)" : "var(--tbf)";
-  return `<div class="row-head"><h3><span class="accent" style="background:${accentColor}"></span>${title}</h3><span class="tag">${badge}</span></div>`;
+function section(title, meta, accentColor, body){
+  return `<div class="result-section"><div class="result-section-head"><h3><span class="accent" style="background:${accentColor}"></span>${title}</h3><span class="meta">${meta}</span></div><div class="result-section-body">${body}</div></div>`;
 }
 function card(title, meta, body, opts={}){
   const cls = (opts.accent ? "accent " : "") + (opts.group || "");
@@ -596,179 +825,154 @@ function fieldCard(label, value, opts={}){
   return `<div class="${cls}"><div class="top"><span class="ttl">${label}</span></div>${body}</div>`;
 }
 
-function renderTbfFour(d, loading, w){
+function renderTbfFour(d, loading){
   const s = d?.surfaces || {};
-  return [
-    rowHeader("Four Surfaces","social drop","tbf"),
-    `<div class="g2">
-      ${loading && !s.instagram ? skelCard("Instagram") : card("Instagram", wc(s.instagram)+" words", escapeMulti(s.instagram))}
-      ${loading && !s.linkedin ? skelCard("LinkedIn") : card("LinkedIn", wc(s.linkedin)+" words", escapeMulti(s.linkedin))}
-      ${loading && !s.email_body ? skelCard("Cold email") : card("Cold email", wc(s.email_body)+" words", `<span class="subj">Subject: ${escapeHTML(s.email_subject||"")}</span>${escapeMulti(s.email_body)}`)}
-      ${loading && !s.blog_lede ? skelCard("Blog opener") : card("Blog opener", wc(s.blog_lede)+" words", `<span class="hd">${escapeHTML(s.blog_headline||"")}</span>${escapeMulti(s.blog_lede)}`)}
-    </div>`
-  ].join("");
+  return section("Four social surfaces","6 fields · " + (loading ? "generating" : "complete"),"var(--tbf)",`<div class="g2">
+    ${loading && !s.instagram ? skelCard("Instagram") : card("Instagram", wc(s.instagram)+" words", escapeMulti(s.instagram))}
+    ${loading && !s.linkedin ? skelCard("LinkedIn") : card("LinkedIn", wc(s.linkedin)+" words", escapeMulti(s.linkedin))}
+    ${loading && !s.email_body ? skelCard("Cold email") : card("Cold email", wc(s.email_body)+" words", `<span class="subj">${escapeHTML(s.email_subject||"")}</span>${escapeMulti(s.email_body)}`)}
+    ${loading && !s.blog_lede ? skelCard("Blog opener") : card("Blog opener", wc(s.blog_lede)+" words", `<span class="hd">${escapeHTML(s.blog_headline||"")}</span>${escapeMulti(s.blog_lede)}`)}
+  </div>`);
 }
 
-function renderTbfFull(d, loading, w){
+function renderTbfFull(d, loading){
   const s = d?.stack || {};
   return [
-    rowHeader("Social","6 surfaces","tbf"),
-    `<div class="g2">
+    section("Social","6 surfaces","var(--tbf)",`<div class="g2">
       ${loading && !s.social?.instagram ? skelCard("Instagram") : card("Instagram", wc(s.social?.instagram)+" words", escapeMulti(s.social?.instagram))}
       ${loading && !s.social?.linkedin ? skelCard("LinkedIn") : card("LinkedIn", wc(s.social?.linkedin)+" words", escapeMulti(s.social?.linkedin))}
-      ${loading && !s.social?.email_body ? skelCard("Cold email") : card("Cold email", wc(s.social?.email_body)+" words", `<span class="subj">Subject: ${escapeHTML(s.social?.email_subject||"")}</span>${escapeMulti(s.social?.email_body)}`)}
+      ${loading && !s.social?.email_body ? skelCard("Cold email") : card("Cold email", wc(s.social?.email_body)+" words", `<span class="subj">${escapeHTML(s.social?.email_subject||"")}</span>${escapeMulti(s.social?.email_body)}`)}
       ${loading && !s.social?.blog_lede ? skelCard("Blog opener") : card("Blog opener", wc(s.social?.blog_lede)+" words", `<span class="hd">${escapeHTML(s.social?.blog_headline||"")}</span>${escapeMulti(s.social?.blog_lede)}`)}
-    </div>`,
-    rowHeader("SEO","meta · schema · internal links","tbf"),
-    `<div class="g3">
+    </div>`),
+    section("SEO","meta · schema · internal links","var(--tbf)",`<div class="g3">
       ${fieldCard("Meta title", s.seo?.meta_title, {mono:true,loading})}
       ${fieldCard("H1", s.seo?.h1, {loading})}
       ${fieldCard("Primary keyword", s.seo?.primary_keyword, {mono:true,loading})}
-    </div>
-    <div style="margin-top:var(--s-4);display:grid;gap:var(--s-4)">
+    </div><div style="margin-top:var(--s-3);display:grid;gap:var(--s-3)">
       ${fieldCard("Meta description", s.seo?.meta_description, {loading})}
       ${fieldCard("Internal link suggestions", s.seo?.internal_link_suggestions ? s.seo.internal_link_suggestions.map(l=>'→ "'+l.anchor+'" → '+l.target_url).join("\n") : "", {mono:true,loading})}
-      ${fieldCard("Schema.org JSON-LD (paste into <head>)", safeJSON(s.seo?.schema_jsonld), {mono:true,loading})}
-    </div>`,
-    rowHeader("AEO","answer-engine-optimized","tbf"),
-    `<div class="g2">
+      ${fieldCard("Schema.org JSON-LD", safeJSON(s.seo?.schema_jsonld), {mono:true,loading})}
+    </div>`),
+    section("AEO","answer-engine-optimized","var(--tbf)",`<div class="g2">
       ${fieldCard("Question (search query)", s.aeo?.question, {loading})}
-      ${fieldCard("Direct answer · the snippet AI engines lift", s.aeo?.direct_answer, {accent:true,group:"tbf",loading})}
-    </div>
-    <div style="margin-top:var(--s-4);display:grid;gap:var(--s-4)">
+      ${fieldCard("Direct answer · the snippet AI lifts", s.aeo?.direct_answer, {accent:true,group:"tbf",loading})}
+    </div><div style="margin-top:var(--s-3);display:grid;gap:var(--s-3)">
       ${fieldCard("Full answer", s.aeo?.full_answer, {loading})}
       ${fieldCard("FAQPage schema markup", safeJSON(s.aeo?.schema_faq_markup), {mono:true,loading})}
-    </div>`,
-    rowHeader("GEO","3 quote-ready snippet types","tbf"),
-    `<div class="g3">
+    </div>`),
+    section("GEO","3 quote-ready snippets","var(--tbf)",`<div class="g3">
       ${fieldCard("Definition", s.geo?.definition_snippet, {accent:true,group:"tbf",loading})}
       ${fieldCard("Comparison", s.geo?.comparison_snippet, {accent:true,group:"tbf",loading})}
       ${fieldCard("Statistic", s.geo?.statistic_snippet, {accent:true,group:"tbf",loading})}
-    </div>`
+    </div>`)
   ].join("");
 }
 
-function renderRomanoffFull(d, loading, w){
+function renderRomanoffFull(d, loading){
   const s = d?.stack || {};
   return [
-    rowHeader("Press + Social","4 surfaces","romanoff"),
-    `<div class="g2">
+    section("Press + Social","4 surfaces","var(--romanoff)",`<div class="g2">
       ${loading && !s.press_quote ? skelCard("Press quote") : card("Press quote", wc(s.press_quote)+" words", escapeMulti(s.press_quote))}
       ${loading && !s.instagram ? skelCard("Instagram") : card("Instagram", wc(s.instagram)+" words", escapeMulti(s.instagram))}
       ${loading && !s.tiktok_script ? skelCard("TikTok / Reel") : card("TikTok / Reel script", wc(s.tiktok_script)+" words", escapeMulti(s.tiktok_script))}
       ${loading && !s.podcast_pitch ? skelCard("Podcast pitch") : card("Podcast pitch", wc(s.podcast_pitch)+" words", escapeMulti(s.podcast_pitch))}
-    </div>`,
-    rowHeader("SEO","meta · schema · internal links","romanoff"),
-    `<div class="g3">
+    </div>`),
+    section("SEO","meta · schema · internal links","var(--romanoff)",`<div class="g3">
       ${fieldCard("Meta title", s.seo?.meta_title, {mono:true,loading})}
       ${fieldCard("H1", s.seo?.h1, {loading})}
       ${fieldCard("Primary keyword", s.seo?.primary_keyword, {mono:true,loading})}
-    </div>
-    <div style="margin-top:var(--s-4);display:grid;gap:var(--s-4)">
+    </div><div style="margin-top:var(--s-3);display:grid;gap:var(--s-3)">
       ${fieldCard("Meta description", s.seo?.meta_description, {loading})}
       ${fieldCard("Internal link suggestions", s.seo?.internal_link_suggestions ? s.seo.internal_link_suggestions.map(l=>'→ "'+l.anchor+'" → '+l.target_url).join("\n") : "", {mono:true,loading})}
       ${fieldCard("Schema.org JSON-LD", safeJSON(s.seo?.schema_jsonld), {mono:true,loading})}
-    </div>`,
-    rowHeader("AEO","answer-engine-optimized","romanoff"),
-    `<div class="g2">
-      ${fieldCard("Question (search query)", s.aeo?.question, {loading})}
+    </div>`),
+    section("AEO","answer-engine-optimized","var(--romanoff)",`<div class="g2">
+      ${fieldCard("Question", s.aeo?.question, {loading})}
       ${fieldCard("Direct answer · names her by name", s.aeo?.direct_answer, {accent:true,group:"romanoff",loading})}
-    </div>
-    <div style="margin-top:var(--s-4);display:grid;gap:var(--s-4)">
+    </div><div style="margin-top:var(--s-3);display:grid;gap:var(--s-3)">
       ${fieldCard("Full answer", s.aeo?.full_answer, {loading})}
       ${fieldCard("FAQPage schema markup", safeJSON(s.aeo?.schema_faq_markup), {mono:true,loading})}
-    </div>`,
-    rowHeader("GEO","4 quote-ready snippet types","romanoff"),
-    `<div class="g2">
+    </div>`),
+    section("GEO","4 quote-ready snippets","var(--romanoff)",`<div class="g2">
       ${fieldCard("Definition", s.geo?.definition_snippet, {accent:true,group:"romanoff",loading})}
       ${fieldCard("Three-signs", s.geo?.three_signs_snippet, {accent:true,group:"romanoff",loading})}
       ${fieldCard("Clinical reframe", s.geo?.clinical_reframe_snippet, {accent:true,group:"romanoff",loading})}
       ${fieldCard("Permission grant", s.geo?.permission_grant_snippet, {accent:true,group:"romanoff",loading})}
-    </div>`
+    </div>`)
   ].join("");
 }
 
-function renderPressQuotes(d, loading, w){
+function renderPressQuotes(d, loading){
   const q = d?.quotes || {};
   function quoteCard(v){
-    if (loading && !v) return `<div class="quote romanoff"><div class="angle">Variant</div><div class="skel w9"></div><div class="skel w8"></div><div class="skel w7"></div></div>`;
+    if (loading && !v) return `<div class="quote romanoff"><div class="angle">Variant</div><div class="skel w9"></div><div class="skel w8"></div></div>`;
     if (!v) return "";
     return `<div class="quote romanoff"><div class="angle">Variant · ${escapeHTML(v.angle||"")}</div><q>${escapeHTML(v.quote||"")}</q></div>`;
   }
   return [
-    rowHeader("Three quote variants","journalist picks the angle","romanoff"),
-    `<div class="g3">${quoteCard(q.variant_a)}${quoteCard(q.variant_b)}${quoteCard(q.variant_c)}</div>`,
-    rowHeader("Pull-quote + cred block","for the publication","romanoff"),
-    `<div class="g2">
-      ${fieldCard("Suggested pull-quote · the callout line", q.suggested_pull_quote, {accent:true,group:"romanoff",loading})}
-      ${fieldCard("Credentials block · for attribution", q.credentials, {loading})}
-    </div>`
+    section("Three quote variants","journalist picks the angle","var(--romanoff)",`<div class="g3">${quoteCard(q.variant_a)}${quoteCard(q.variant_b)}${quoteCard(q.variant_c)}</div>`),
+    section("Pull-quote + cred block","for the publication","var(--ink)",`<div class="g2">
+      ${fieldCard("Suggested pull-quote", q.suggested_pull_quote, {accent:true,group:"romanoff",loading})}
+      ${fieldCard("Credentials block", q.credentials, {loading})}
+    </div>`)
   ].join("");
 }
 
-function renderAeoPage(d, loading, w){
+function renderAeoPage(d, loading){
   const p = d?.page || {};
   return [
-    rowHeader("Page metadata","/answers/<slug>","romanoff"),
-    `<div class="g3">
+    section("Page metadata","/answers/<slug>","var(--romanoff)",`<div class="g3">
       ${fieldCard("URL slug", p.url_slug, {mono:true,loading})}
       ${fieldCard("Meta title", p.meta_title, {loading})}
-      ${fieldCard("H1 (declarative)", p.h1, {loading})}
-    </div>
-    <div style="margin-top:var(--s-4)">${fieldCard("Meta description", p.meta_description, {loading})}</div>`,
-    rowHeader("Answer body","what AI engines lift","romanoff"),
-    `<div>
-      ${fieldCard("Direct answer · SVO, names her", p.direct_answer, {accent:true,group:"romanoff",loading})}
-      <div style="margin-top:var(--s-4)">${fieldCard("Full answer", p.full_answer, {loading})}</div>
-      <div style="margin-top:var(--s-4)">${fieldCard("Ethics caveat", p.ethics_caveat, {loading})}</div>
-    </div>`,
-    rowHeader("Schema markup","paste into <head>","romanoff"),
-    `<div class="g2">
+      ${fieldCard("H1", p.h1, {loading})}
+    </div><div style="margin-top:var(--s-3)">${fieldCard("Meta description", p.meta_description, {loading})}</div>`),
+    section("Answer body","what AI engines lift","var(--romanoff)",`<div style="display:grid;gap:var(--s-3)">
+      ${fieldCard("Direct answer", p.direct_answer, {accent:true,group:"romanoff",loading})}
+      ${fieldCard("Full answer", p.full_answer, {loading})}
+      ${fieldCard("Ethics caveat", p.ethics_caveat, {loading})}
+    </div>`),
+    section("Schema markup","paste into <head>","var(--ink)",`<div class="g2">
       ${fieldCard("FAQPage schema", safeJSON(p.schema_faq_markup), {mono:true,loading})}
-      ${fieldCard("Person schema · author", safeJSON(p.schema_person_markup), {mono:true,loading})}
-    </div>`,
-    rowHeader("GEO snippets","quote-ready","romanoff"),
-    `<div class="g2">
+      ${fieldCard("Person schema", safeJSON(p.schema_person_markup), {mono:true,loading})}
+    </div>`),
+    section("GEO snippets","quote-ready","var(--romanoff)",`<div class="g2">
       ${fieldCard("Definition", p.geo_snippets?.definition_snippet, {accent:true,group:"romanoff",loading})}
       ${fieldCard("Three-signs", p.geo_snippets?.three_signs_snippet, {accent:true,group:"romanoff",loading})}
       ${fieldCard("Clinical reframe", p.geo_snippets?.clinical_reframe_snippet, {accent:true,group:"romanoff",loading})}
       ${fieldCard("Permission grant", p.geo_snippets?.permission_grant_snippet, {accent:true,group:"romanoff",loading})}
-    </div>`
+    </div>`)
   ].join("");
 }
 
-function renderTriage(d, loading, w){
+function renderTriage(d, loading){
   const t = d?.triage || {};
   return [
-    rowHeader("Triage decision","agent classifies, scores, picks pack","tbf"),
-    `<div class="g3">
-      ${fieldCard("Primary category", t.classification ? `${t.classification.primary_category} (${Math.round(t.classification.confidence*100)}% confident)` : "", {accent:true,group:"tbf",loading})}
+    section("Triage decision","classification · score · sample pack","var(--tbf)",`<div class="g3">
+      ${fieldCard("Primary category", t.classification ? `${t.classification.primary_category} (${Math.round(t.classification.confidence*100)}%)` : "", {accent:true,group:"tbf",loading})}
       ${fieldCard("Fit score · 0-100", t.fit_score!=null ? String(t.fit_score) : "", {accent:true,group:"tbf",loading})}
-      ${fieldCard("Recommended sample pack", t.recommended_sample_pack, {accent:true,group:"tbf",loading})}
-    </div>
-    <div style="margin-top:var(--s-4);display:grid;gap:var(--s-4)">
+      ${fieldCard("Sample pack", t.recommended_sample_pack, {accent:true,group:"tbf",loading})}
+    </div><div style="margin-top:var(--s-3);display:grid;gap:var(--s-3)">
       ${fieldCard("Classification reasoning", t.classification?.reasoning, {loading})}
       ${fieldCard("Fit reasoning", t.fit_reasoning, {loading})}
       ${fieldCard("Likely formulation problem TBF can solve", t.likely_formulation_problem, {loading})}
-    </div>`,
-    rowHeader("Personalized follow-up email","ready to send","tbf"),
-    loading && !t.email ? skelCard("Email") : card("Email", wc(t.email?.body)+" words", `<span class="subj">Subject: ${escapeHTML(t.email?.subject||"")}</span>${escapeMulti(t.email?.body)}`)
+    </div>`),
+    section("Personalized follow-up email","ready for human review","var(--tbf)",loading && !t.email ? skelCard("Email") : card("Email", wc(t.email?.body)+" words", `<span class="subj">${escapeHTML(t.email?.subject||"")}</span>${escapeMulti(t.email?.body)}`))
   ].join("");
 }
 
-function renderSplinter(d, loading, w){
+function renderSplinter(d, loading){
   const s = d?.splinter || {};
   const carouselsHtml = (s.linkedin_carousels && s.linkedin_carousels.length ? s.linkedin_carousels : [null,null,null]).map((c,i) => {
-    if (loading && !c) return `<div class="card"><div class="top"><span class="ttl">Carousel ${i+1}</span></div><div class="body"><div class="skel w9"></div><div class="skel w8"></div><div class="skel w7"></div></div></div>`;
+    if (loading && !c) return `<div class="card"><div class="top"><span class="ttl">Carousel ${i+1}</span></div><div class="body"><div class="skel w9"></div><div class="skel w8"></div></div></div>`;
     if (!c) return "";
-    const slides = c.slides.map((sl,j) => `<div style="border-top:1px solid var(--line);margin-top:var(--s-3);padding-top:var(--s-3)"><div class="micro" style="margin-bottom:4px">Slide ${j+1}</div><div style="font-weight:500;color:var(--ink);margin-bottom:2px">${escapeHTML(sl.headline||"")}</div><div>${escapeHTML(sl.body||"")}</div></div>`).join("");
-    return `<div class="card"><div class="top"><span class="ttl">Carousel ${i+1}</span></div><div class="body"><div style="font-weight:500;color:var(--ink)">${escapeHTML(c.hook||"")}</div>${slides}<div style="font-style:italic;margin-top:var(--s-3);color:var(--ink-3)">${escapeHTML(c.close||"")}</div></div></div>`;
+    const slides = c.slides.map((sl,j) => `<div style="border-top:1px solid var(--line-2);margin-top:8px;padding-top:8px"><div class="mono" style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px">Slide ${j+1}</div><div style="font-weight:600;color:var(--ink);font-size:13px;margin-bottom:2px">${escapeHTML(sl.headline||"")}</div><div>${escapeHTML(sl.body||"")}</div></div>`).join("");
+    return `<div class="card"><div class="top"><span class="ttl">Carousel ${i+1}</span></div><div class="body"><div style="font-weight:500;color:var(--ink);font-size:13px">${escapeHTML(c.hook||"")}</div>${slides}<div style="font-style:italic;margin-top:8px;color:var(--ink-3);font-size:12px">${escapeHTML(c.close||"")}</div></div></div>`;
   }).join("");
   const threadsHtml = (s.x_threads && s.x_threads.length ? s.x_threads : [null,null]).map((t,i) => {
     if (loading && !t) return `<div class="card"><div class="top"><span class="ttl">Thread ${i+1}</span></div><div class="body"><div class="skel w9"></div><div class="skel w8"></div></div></div>`;
     if (!t) return "";
-    const fol = t.follow_tweets.map(tw => `<div style="border-left:1px solid var(--line);padding-left:var(--s-3);margin-top:var(--s-2)">${escapeHTML(tw)}</div>`).join("");
-    return `<div class="card"><div class="top"><span class="ttl">Thread ${i+1}</span></div><div class="body"><div style="border-left:3px solid var(--ink);padding-left:var(--s-3);font-weight:500;color:var(--ink)">${escapeHTML(t.hook_tweet||"")}</div>${fol}<div style="border-left:3px solid var(--muted);padding-left:var(--s-3);margin-top:var(--s-2);font-style:italic;color:var(--ink-3)">${escapeHTML(t.close_tweet||"")}</div></div></div>`;
+    const fol = t.follow_tweets.map(tw => `<div style="border-left:1px solid var(--line);padding-left:10px;margin-top:6px;font-size:13px">${escapeHTML(tw)}</div>`).join("");
+    return `<div class="card"><div class="top"><span class="ttl">Thread ${i+1}</span></div><div class="body"><div style="border-left:3px solid var(--ink);padding-left:10px;font-weight:500;color:var(--ink);font-size:13px">${escapeHTML(t.hook_tweet||"")}</div>${fol}<div style="border-left:3px solid var(--muted);padding-left:10px;margin-top:6px;font-style:italic;color:var(--ink-3);font-size:12.5px">${escapeHTML(t.close_tweet||"")}</div></div></div>`;
   }).join("");
   const capsHtml = (s.ig_captions && s.ig_captions.length ? s.ig_captions : [null,null,null,null,null]).map((c,i) => {
     if (loading && !c) return `<div class="card"><div class="top"><span class="ttl">Caption ${i+1}</span></div><div class="body"><div class="skel w9"></div><div class="skel w7"></div></div></div>`;
@@ -777,17 +981,13 @@ function renderSplinter(d, loading, w){
   }).join("");
   const quotesHtml = (s.key_quotes ? s.key_quotes.map(q => `<div class="quote"><q>${escapeHTML(q)}</q></div>`).join("") : "");
   return [
-    rowHeader("LinkedIn carousels","3 carousels · ~5 slides each","tbf"),
-    `<div class="g3">${carouselsHtml}</div>`,
-    rowHeader("X threads","2 threads · hook + follow + close","tbf"),
-    `<div class="g2">${threadsHtml}</div>`,
-    rowHeader("Instagram captions","5 captions · 80-150 words","tbf"),
-    `<div class="g2">${capsHtml}</div>`,
-    rowHeader("Cold-email pitch + pull quotes","outbound + 3 tweet-ready","tbf"),
-    `<div class="g2">
-      ${loading && !s.cold_email_pitch ? skelCard("Cold-email pitch") : (s.cold_email_pitch ? card("Cold-email pitch", wc(s.cold_email_pitch.body)+" words", `<span class="subj">Subject: ${escapeHTML(s.cold_email_pitch.subject||"")}</span>${escapeMulti(s.cold_email_pitch.body)}`) : "")}
-      <div class="card"><div class="top"><span class="ttl">Key quotes · tweet-ready</span></div><div class="body" style="display:grid;gap:var(--s-3)">${quotesHtml || (loading ? '<div class="skel w9"></div><div class="skel w8"></div>' : '<span class="empty">—</span>')}</div></div>
-    </div>`
+    section("LinkedIn carousels","3 carousels · ~5 slides each","var(--tbf)",`<div class="g3">${carouselsHtml}</div>`),
+    section("X threads","2 threads · hook + follow + close","var(--tbf)",`<div class="g2">${threadsHtml}</div>`),
+    section("Instagram captions","5 captions · 80-150 words","var(--tbf)",`<div class="g2">${capsHtml}</div>`),
+    section("Cold-email pitch + pull quotes","outbound + 3 tweet-ready","var(--tbf)",`<div class="g2">
+      ${loading && !s.cold_email_pitch ? skelCard("Cold-email pitch") : (s.cold_email_pitch ? card("Cold-email pitch", wc(s.cold_email_pitch.body)+" words", `<span class="subj">${escapeHTML(s.cold_email_pitch.subject||"")}</span>${escapeMulti(s.cold_email_pitch.body)}`) : "")}
+      <div class="card"><div class="top"><span class="ttl">Key quotes · tweet-ready</span></div><div class="body" style="display:grid;gap:8px">${quotesHtml || (loading ? '<div class="skel w9"></div><div class="skel w8"></div>' : '<span class="empty">—</span>')}</div></div>
+    </div>`)
   ].join("");
 }
 
