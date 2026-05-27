@@ -1,4 +1,5 @@
 import Image from "next/image";
+import LiveDemo from "@/components/LiveDemo";
 
 // Shared body of the Nexus / Terpene Belt Farms Marketing Engineer pitch.
 // Used by both the portfolio case-study page (/work/nexus-marketing-engineer)
@@ -143,115 +144,17 @@ export default function NexusPitchBody() {
       </Section>
 
       <Section
-        eyebrow="05 · The Demo"
-        title="One real news event. Four polished surfaces. Generated against the Voice Manual."
+        eyebrow="05 · Live Demo"
+        title="Run the system right now. Pick an input, watch four surfaces generate against the Voice Manual."
       >
         <p>
-          In February 2026, Nexus Agriscience was selected for a UCLA-led,
-          California state-funded cannabis research grant, with TBF supplying
-          the native-terpene input dataset. Below: the four drafts the system
-          would produce from that single news input. None of these were
-          hand-tuned for tone. The Voice Manual carries the brand voice.
+          This isn&apos;t a screenshot. The button below POSTs to a live n8n
+          webhook on production. The webhook loads the Voice Manual as a
+          system prompt, calls Claude Sonnet 4.6, and returns the four
+          surfaces as JSON. About 25-30 seconds end-to-end. Try one of the
+          presets or type your own news event.
         </p>
-        <div className="not-prose mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
-          <DemoCard
-            surface="Instagram caption"
-            meta="~120 words · IG feed"
-            body={
-              <>
-                <p>
-                  A peer-reviewed cannabis study, run on Fresh Never Frozen®
-                  terpenes, with a UCLA lab on the masthead.
-                </p>
-                <p className="mt-2">
-                  This month, our parent (Nexus Agriscience) was selected for a
-                  California state-funded research grant led by UCLA. Our oils
-                  are the input. The work will look at how solventless,
-                  cannabis-derived terpene profiles behave when they leave the
-                  lab and enter real product matrices.
-                </p>
-                <p className="mt-2">
-                  Sample packs and technical conversations: link in bio.
-                </p>
-              </>
-            }
-          />
-          <DemoCard
-            surface="LinkedIn post"
-            meta="~270 words · founder voice"
-            body={
-              <>
-                <p>
-                  A short note on the UCLA cannabis research grant our parent
-                  company received last week.
-                </p>
-                <p className="mt-2">
-                  Most published research on cannabis terpenes runs on
-                  standards, isolates, or reconstituted profiles. That is the
-                  right starting point for science at scale. But it leaves a
-                  gap: full-spectrum native cannabis terpenes, captured fresh
-                  and never frozen, behave differently than the sum of their
-                  isolates.
-                </p>
-                <p className="mt-2">
-                  The work UCLA is leading, supported by Nexus, will use our
-                  2023-2025 vintages as one input dataset. That changes what
-                  formulators will be able to cite in 12-18 months.
-                </p>
-              </>
-            }
-          />
-          <DemoCard
-            surface="Cold email"
-            meta="~140 words · to R&D directors"
-            body={
-              <>
-                <p className="text-sm">
-                  <span className="text-[color:var(--muted)]">Subject:</span> A
-                  new dataset on full-spectrum terpene behavior in vape carts
-                </p>
-                <p className="mt-3">Hi [First name],</p>
-                <p className="mt-2">
-                  Short note from Terpene Belt Farms. Our parent (Nexus
-                  Agriscience) was selected this month for a California
-                  state-funded research grant led by UCLA. Our 2023-2025
-                  harvest oils are one of the input datasets.
-                </p>
-                <p className="mt-2">
-                  Happy to send a sample pack of the 2024 harvest (5 profiles,
-                  low minimums) or do a 15-minute technical call on what we are
-                  seeing in real cart matrices.
-                </p>
-              </>
-            }
-          />
-          <DemoCard
-            surface="Blog opener"
-            meta="lede only · for terpenebeltfarms.com/blogs"
-            body={
-              <>
-                <p className="font-display text-base leading-snug">
-                  Cannabis Terpene Research Joins UCLA: What a State-Funded
-                  Grant Means for Formulators
-                </p>
-                <p className="mt-3">
-                  The peer-reviewed cannabis terpene literature has a known
-                  gap: most published work uses isolate standards or
-                  reconstituted profiles, not the full-spectrum native cannabis
-                  oils that B2B formulators actually buy and put into product.
-                  The gap is structural, not malicious.
-                </p>
-                <p className="mt-2">
-                  In February 2026, our parent company at Nexus Agriscience was
-                  selected for a California state-funded research grant led by
-                  UCLA. Below: why the gap exists, what the work will cover,
-                  and what product developers should expect to cite in 12-18
-                  months.
-                </p>
-              </>
-            }
-          />
-        </div>
+        <LiveDemo />
       </Section>
 
       <Section
@@ -353,28 +256,6 @@ function ArchCard({
         {subtitle}
       </div>
       <p className="text-sm text-[color:var(--ink-2)] leading-relaxed">{body}</p>
-    </div>
-  );
-}
-
-function DemoCard({
-  surface,
-  meta,
-  body,
-}: {
-  surface: string;
-  meta: string;
-  body: React.ReactNode;
-}) {
-  return (
-    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-white/60">
-      <div className="flex items-baseline justify-between gap-2">
-        <p className="eyebrow">{surface}</p>
-        <span className="text-[10px] text-[color:var(--muted)]">{meta}</span>
-      </div>
-      <div className="mt-4 text-sm text-[color:var(--ink-2)] leading-relaxed">
-        {body}
-      </div>
     </div>
   );
 }
