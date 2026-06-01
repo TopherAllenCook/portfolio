@@ -281,7 +281,7 @@
 <div class="stats-strip">
   <div class="stat">
     <div class="stat-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 12h4l2-8 4 16 2-8h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Live workflows</div>
-    <div class="stat-value">7<span class="unit">/ 7</span></div>
+    <div class="stat-value">9<span class="unit">/ 9</span></div>
     <div class="stat-delta"><span class="up">All systems operational</span></div>
   </div>
   <div class="stat">
@@ -307,7 +307,7 @@
       <div class="nav-section">
         <div class="nav-section-head">
           <span class="ttl"><span class="ico" style="background:var(--tbf)"></span>Terpene Belt Farms</span>
-          <span class="count">4</span>
+          <span class="count">6</span>
         </div>
         <ul class="nav-list" id="tbf-list"></ul>
       </div>
@@ -319,7 +319,7 @@
         <ul class="nav-list" id="romanoff-list"></ul>
       </div>
       <div class="nav-footer">
-        <div class="nav-footer-row"><span>n8n cloud</span><span class="v">7 active</span></div>
+        <div class="nav-footer-row"><span>n8n cloud</span><span class="v">9 active</span></div>
         <div class="nav-footer-row"><span>brain</span><span class="v">10 files · git-versioned</span></div>
         <div class="nav-footer-row"><span>region</span><span class="v">us-east-1</span></div>
       </div>
@@ -494,6 +494,42 @@ const WORKFLOWS = [
     description:"Paste a TBF long-form blog. Splinters into 3 LinkedIn carousels, 2 X threads, 5 IG captions, 3 pull-quote tweets, and a cold-email pitch."
   },
   {
+    id:"tbf_competitor_ad", group:"tbf",
+    label:"Competitor Ad Watcher", badge:"~45s",
+    n8nName:"Nexus Agriscience — TBF: Competitor Ad Watcher",
+    webhook:N8N+"/tbf-competitor-ad-watch", eta:45, renderer:"competitor",
+    fields:[
+      {name:"competitor_brand",label:"Competitor brand",type:"text",placeholder:"e.g. Abstrax, True Terpenes"},
+      {name:"ad_observations",label:"Ad observations (paste hooks, captions, visual notes)",type:"textarea",placeholder:"Ad 1 — Hook: ... Caption: ... Visual: ...\nAd 2 — Hook: ..."}
+    ],
+    presets:[
+      {label:"Abstrax teardown", values:{competitor_brand:"Abstrax", ad_observations:"Ad 1 — Hook: 'The terpene company NASA would use.' Caption: heavy on proprietary tech, THCa convergence. Visual: sci-fi lab, blue light, no farm.\nAd 2 — Hook: 'Strain-specific, every time.' Caption: consistency claim. Visual: rows of identical vials.\nAd 3 — Hook: 'Flavor that hits different.' Caption: consumer-y, vague. Visual: vape cloud slow-mo."}},
+      {label:"True Terpenes", values:{competitor_brand:"True Terpenes", ad_observations:"Ad 1 — Hook: 'Precision terpene blends for formulators.' Caption: B2B, technical, ISO talk. Visual: white lab, gloved hands.\nAd 2 — Hook: 'Build your own profile.' Caption: customization. Visual: UI of a blend builder."}}
+    ],
+    description:"Competitor brand + pasted ad observations in. Ranks each ad by hook, retention, and claim defensibility, names the recurring pattern, and drafts 3 counter-positioned ad concepts in TBF voice."
+  },
+  {
+    id:"tbf_ugc_ad", group:"tbf",
+    label:"UGC Ad Generator", badge:"~40s",
+    n8nName:"Nexus Agriscience — TBF: UGC Ad Generator",
+    webhook:N8N+"/tbf-ugc-ad", eta:40, renderer:"ugc",
+    fields:[
+      {name:"product",label:"Product / cultivar",type:"text",placeholder:"e.g. Gas-707, Pine-129, Exclusive Oils Sampler"},
+      {name:"hook_angle",label:"Hook angle",type:"chips",default:"didactic",options:[
+        {value:"didactic",label:"Didactic"},{value:"contrarian",label:"Contrarian"},{value:"demo",label:"Demo"},{value:"founder",label:"Founder POV"}
+      ]},
+      {name:"platform",label:"Primary platform",type:"chips",default:"tiktok",options:[
+        {value:"tiktok",label:"TikTok"},{value:"instagram",label:"Instagram"},{value:"meta_paid",label:"Meta paid"}
+      ]},
+      {name:"tone_note",label:"Tone note",type:"text",placeholder:"e.g. lab credibility, no consumer hype"}
+    ],
+    presets:[
+      {label:"Gas-707 thermal stability", values:{product:"Gas-707 native cannabis terpenes", hook_angle:"contrarian", platform:"tiktok", tone_note:"lab credibility, formulator audience"}},
+      {label:"Fresh Never Frozen® process", values:{product:"Native Cannabis Terpenes — the Fresh Never Frozen® process", hook_angle:"demo", platform:"instagram", tone_note:"90-minute field-to-oil, show the farm"}}
+    ],
+    description:"A product angle in, a ready-to-shoot UGC ad out: a Seedance text-to-video prompt, a timed voiceover script, platform-tuned captions, and a hook breakdown."
+  },
+  {
     id:"romanoff_full_stack", group:"romanoff",
     label:"Full Content Stack", badge:"~60s",
     n8nName:"Nexus Agriscience — Showcase (Dr. Romanoff): Full Content Stack",
@@ -543,6 +579,20 @@ const WORKFLOWS = [
   }
 ];
 
+// Map each workflow to its real n8n cloud workflow ID (for "Open in n8n")
+const N8N_IDS = {
+  tbf_four_surfaces:"Q18KG1AOdwNEn1B6",
+  tbf_full_stack:"YLHnkohCbTtnkFb8",
+  tbf_sample_pack_triage:"4hiW0evbJPYprAwI",
+  tbf_blog_splinter:"TjvE1l1aUD84f3Lw",
+  tbf_competitor_ad:"tSDgGhe3eUInwv1E",
+  tbf_ugc_ad:"Oz66uaE2qDT8jL44",
+  romanoff_full_stack:"u1aljxNJ0TXSlqje",
+  romanoff_press_quote:"rI0KACNcXVRrpc2J",
+  romanoff_aeo_page:"twSoIP12rTkXVTu7"
+};
+WORKFLOWS.forEach(w => { w.n8nId = N8N_IDS[w.id]; });
+
 // ----- State -----
 let activeId = null;
 let inputs = {};
@@ -556,7 +606,7 @@ function renderSidebar(){
   const tbf = WORKFLOWS.filter(w=>w.group==="tbf");
   const ro  = WORKFLOWS.filter(w=>w.group==="romanoff");
   $("#tbf-list").innerHTML = tbf.map((w,i) => listItem(w,i+1)).join("");
-  $("#romanoff-list").innerHTML = ro.map((w,i) => listItem(w,i+5)).join("");
+  $("#romanoff-list").innerHTML = ro.map((w,i) => listItem(w,i+tbf.length+1)).join("");
   $$("aside .nav-item").forEach(b => b.addEventListener("click", () => activate(b.dataset.id)));
 }
 function listItem(w,n){
@@ -707,7 +757,7 @@ document.addEventListener("keydown", (e) => {
   // 1-7 to switch workflow
   if (!e.metaKey && !e.ctrlKey && !e.altKey && !$("#cmdk").classList.contains("open")){
     const n = parseInt(e.key,10);
-    if (n >= 1 && n <= 7 && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA"){
+    if (n >= 1 && n <= WORKFLOWS.length && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA"){
       activate(WORKFLOWS[n-1].id);
     }
   }
@@ -722,8 +772,9 @@ $$(".tab").forEach(t => t.addEventListener("click", () => switchTab(t.dataset.ta
 
 // ----- Action buttons -----
 $("#open-n8n").addEventListener("click", () => {
-  // Linking to n8n cloud dashboard would require workflow ID lookup; just open instance for now
-  window.open("https://financiallyfitphotographe.app.n8n.cloud/workflows", "_blank");
+  const w = WORKFLOWS.find(x=>x.id===activeId);
+  const base = "https://financiallyfitphotographe.app.n8n.cloud";
+  window.open(w && w.n8nId ? `${base}/workflow/${w.n8nId}` : `${base}/home/workflows`, "_blank");
 });
 $("#copy-webhook").addEventListener("click", async () => {
   const w = WORKFLOWS.find(x=>x.id===activeId);
@@ -803,6 +854,8 @@ function renderResults(w, data, loading){
   else if (w.renderer === "aeo_page") html = renderAeoPage(data, loading, w);
   else if (w.renderer === "triage") html = renderTriage(data, loading, w);
   else if (w.renderer === "splinter") html = renderSplinter(data, loading, w);
+  else if (w.renderer === "competitor") html = renderCompetitor(data, loading, w);
+  else if (w.renderer === "ugc") html = renderUgc(data, loading, w);
   else html = `<pre class="card body">${escapeHTML(JSON.stringify(data,null,2))}</pre>`;
   el.innerHTML = `<div class="reveal">${html}</div>`;
 }
@@ -991,6 +1044,52 @@ function renderSplinter(d, loading){
   ].join("");
 }
 
+function renderCompetitor(d, loading){
+  const t = d?.intel || {};
+  const ranked = t.ranked_ads || [];
+  const rankedHtml = (ranked.length ? ranked : [null,null]).map((a,i) => {
+    if (loading && !a) return skelCard("Ad "+(i+1));
+    if (!a) return "";
+    const scores = `<div class="mono" style="font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.04em">HOOK ${a.hook_score} · RET ${a.retention_score} · CLAIM ${a.claim_defensibility} · TOTAL ${a.total_score}</div>`;
+    return `<div class="card"><div class="top"><span class="ttl">#${i+1} · ${a.total_score ?? ""}</span></div><div class="body"><div style="font-weight:600;color:var(--ink);margin-bottom:5px">${escapeHTML(a.original_hook||"")}</div>${escapeMulti(a.why_it_works)}${scores}<div style="margin-top:8px;color:var(--warn)"><b>Vulnerability:</b> ${escapeHTML(a.vulnerability||"")}</div></div></div>`;
+  }).join("");
+  const concepts = t.counter_ad_concepts || [];
+  const conceptsHtml = (concepts.length ? concepts : [null,null,null]).map((c,i) => {
+    if (loading && !c) return skelCard("Concept "+(i+1));
+    if (!c) return "";
+    const beats = (c.structure||[]).map(b => `<div style="border-left:1px solid var(--line);padding-left:9px;margin-top:5px;font-size:12.5px">${escapeHTML(b)}</div>`).join("");
+    return `<div class="card accent tbf"><div class="top"><span class="ttl">Concept ${i+1}</span><span class="wc">${escapeHTML(c.platform_recommendation||"")}</span></div><div class="body"><div style="font-weight:600;color:var(--ink)">${escapeHTML(c.hook||"")}</div>${beats}<div style="margin-top:9px;font-style:italic;color:var(--ink-3);font-size:12px">${escapeHTML(c.seedance_visual_brief||"")}</div></div></div>`;
+  }).join("");
+  const vulns = (t.vulnerabilities_to_exploit||[]).map(v => `<div class="quote"><q>${escapeHTML(v)}</q></div>`).join("");
+  return [
+    section("Ranked competitor ads","hook · retention · claim defensibility","var(--tbf)",`<div class="g2">${rankedHtml}</div>`),
+    section("Pattern + where to attack","the recurring move · 3 vulnerabilities","var(--tbf)",`<div style="display:grid;gap:var(--s-3)">${fieldCard("Competitor pattern", t.competitor_pattern_summary, {accent:true,group:"tbf",loading})}<div style="display:grid;gap:8px">${vulns || (loading ? '<div class="skel w9"></div><div class="skel w8"></div>' : '')}</div></div>`),
+    section("Counter-ad concepts","3 in TBF voice, ready to shoot","var(--tbf)",`<div class="g3">${conceptsHtml}</div>`)
+  ].join("");
+}
+
+function renderUgc(d, loading){
+  const a = d?.ad || {};
+  const cap = a.captions || {};
+  const hb = a.hook_breakdown || {};
+  return [
+    section("Seedance prompt + voiceover","text-to-video brief + timed VO","var(--tbf)",`<div class="g2">
+      ${fieldCard("Seedance prompt", a.seedance_prompt, {mono:true,accent:true,group:"tbf",loading})}
+      ${fieldCard("Voiceover script", a.voiceover_script, {loading})}
+    </div>`),
+    section("Platform captions","tuned per surface","var(--tbf)",`<div class="g3">
+      ${fieldCard("TikTok", cap.tiktok, {loading})}
+      ${fieldCard("Instagram", cap.instagram, {loading})}
+      ${fieldCard("Meta paid", cap.meta_paid, {loading})}
+    </div>`),
+    section("Hook breakdown","why it stops the scroll","var(--tbf)",`<div class="g3">
+      ${fieldCard("First seconds", hb.hook_first_seconds, {accent:true,group:"tbf",loading})}
+      ${fieldCard("Why it stops scroll", hb.why_it_stops_scroll, {loading})}
+      ${fieldCard("Retention mechanism", hb.retention_mechanism, {loading})}
+    </div>`)
+  ].join("");
+}
+
 // ----- Utils -----
 function wc(s){ return s ? s.trim().split(/\s+/).filter(Boolean).length : 0; }
 function escapeHTML(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
@@ -999,7 +1098,9 @@ function safeJSON(s){ if(!s) return ""; try{ return JSON.stringify(JSON.parse(s)
 
 // ----- Boot -----
 renderSidebar();
-activate(WORKFLOWS[0].id);
+const _wfParam = new URLSearchParams(location.search).get("wf");
+const _initial = (_wfParam && WORKFLOWS.find(w=>w.id===_wfParam)) ? _wfParam : WORKFLOWS[0].id;
+activate(_initial);
 </script>
 </body>
 </html>

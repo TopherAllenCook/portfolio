@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Implementation Plan · Terpene Belt Farms · Marketing Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Roboto+Condensed:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --paper: #F3F1EA;
+    --ink: #20292B;
+    --teal: #1D5069;
+    --muted: #5C6B66;
+    --accent: #6B9E90;
+    --accent-deep: #2C5A4C;
+    --line: #E6E4DC;
+
+    --fz-hero: clamp(44px, 6.0vw, 116px);
+    --fz-title: clamp(30px, 3.6vw, 68px);
+    --fz-sub: clamp(20px, 1.85vw, 34px);
+    --fz-body: clamp(16px, 1.35vw, 26px);
+    --fz-cap: clamp(13px, 0.95vw, 18px);
+    --fz-foot: clamp(11px, 0.78vw, 14px);
+
+    --pad: clamp(40px, 5.2vw, 100px);
+    --gap: clamp(16px, 1.6vw, 32px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+  body {
+    font-family: "Roboto Condensed", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .slide {
+    position: relative;
+    min-height: 100vh;
+    padding: var(--pad);
+    padding-bottom: clamp(64px, 7vw, 132px);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .slide + .slide { border-top: 1px solid var(--line); }
+
+  /* ---- shared type ---- */
+  .eyebrow {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: var(--fz-cap);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+  }
+  .tick {
+    width: clamp(40px, 4vw, 72px);
+    height: 5px;
+    background: var(--accent);
+    border-radius: 3px;
+    margin-bottom: clamp(20px, 2vw, 32px);
+  }
+  h1.title, h2.title {
+    font-family: "Archivo", sans-serif;
+    font-weight: 800;
+    font-size: var(--fz-title);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 22ch;
+  }
+  .sub {
+    font-size: var(--fz-sub);
+    line-height: 1.25;
+    color: var(--teal);
+    font-weight: 500;
+    max-width: 34ch;
+  }
+  .body {
+    font-size: var(--fz-body);
+    line-height: 1.5;
+    color: var(--ink);
+    max-width: 56ch;
+  }
+  .head-block > * + * { margin-top: clamp(14px, 1.4vw, 22px); }
+  .accent { color: var(--accent-deep); }
+
+  /* ---- footer (logo every slide, bottom-left) ---- */
+  .foot {
+    position: absolute;
+    left: var(--pad);
+    right: var(--pad);
+    bottom: clamp(28px, 3vw, 52px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brandmark { height: clamp(16px, 1.5vw, 22px); width: auto; opacity: 0.82; }
+  .pageno {
+    font-family: "Archivo", sans-serif;
+    font-size: var(--fz-foot);
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  /* ---- cards ---- */
+  .cards { display: grid; gap: var(--gap); margin-top: clamp(28px, 3vw, 52px); }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards-2 { grid-template-columns: repeat(2, 1fr); }
+  .cards-4 { grid-template-columns: repeat(4, 1fr); }
+  .flowimg { width: 100%; max-height: 38vh; object-fit: contain; object-position: center; border: 1px solid var(--line); border-radius: 6px; background: #fff; display: block; margin-top: clamp(20px, 2.2vw, 38px); }
+  .caption-flow { font-size: var(--fz-cap); color: var(--muted); margin-top: clamp(14px, 1.4vw, 22px); line-height: 1.45; max-width: 78ch; }
+  .cards.compact { margin-top: clamp(16px, 1.6vw, 24px); }
+  .cards.compact .card { padding: clamp(12px, 1.2vw, 20px); gap: 4px; }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: clamp(20px, 2vw, 36px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 0.8vw, 14px);
+  }
+  .card .lbl {
+    font-family: "Archivo", sans-serif;
+    font-size: var(--fz-foot);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .card .name {
+    font-family: "Archivo", sans-serif;
+    font-weight: 800;
+    font-size: clamp(20px, 1.7vw, 30px);
+    line-height: 1.08;
+    color: var(--ink);
+  }
+  .card .meta { font-size: var(--fz-cap); color: var(--accent-deep); font-weight: 600; }
+  .card .desc { font-size: var(--fz-body); line-height: 1.45; color: var(--ink); }
+  .card.feature { background: #EAF1ED; border-color: #CBDED4; }
+  .card.feature .lbl { color: var(--accent-deep); }
+
+  /* ---- numbered roadmap list ---- */
+  .roadmap {
+    margin-top: clamp(24px, 2.4vw, 40px);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(10px, 1vw, 16px) clamp(32px, 4vw, 80px);
+  }
+  .ritem { display: flex; gap: clamp(14px, 1.2vw, 22px); align-items: baseline; padding: clamp(8px,0.8vw,12px) 0; border-top: 1px solid var(--line); }
+  .ritem .rno { font-family: "Archivo", sans-serif; font-weight: 800; font-size: var(--fz-sub); color: var(--accent); width: 1.6em; flex: none; }
+  .ritem .rname { font-family: "Archivo", sans-serif; font-weight: 700; font-size: var(--fz-body); color: var(--ink); line-height: 1.12; }
+  .ritem .rimpact { font-size: var(--fz-cap); color: var(--muted); margin-top: 3px; }
+  .ritem.lead .rno { color: var(--accent-deep); }
+  .ritem.lead .rname { color: var(--accent-deep); }
+
+  /* ---- phase cards ---- */
+  .phase .ph { font-family:"Archivo",sans-serif; font-weight:700; font-size: var(--fz-cap); letter-spacing:0.1em; text-transform:uppercase; color: var(--accent-deep); }
+  .phase ul { list-style: none; display: flex; flex-direction: column; gap: clamp(6px,0.6vw,10px); margin-top: 6px; }
+  .phase li { font-size: var(--fz-cap); color: var(--ink); line-height: 1.35; padding-left: 16px; position: relative; }
+  .phase li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+  /* ---- hero ---- */
+  .hero h1 { font-family: "Archivo", sans-serif; font-weight: 900; font-size: var(--fz-hero); line-height: 0.98; letter-spacing: -0.03em; max-width: 17ch; }
+  .hero .sub { margin-top: clamp(20px,2vw,32px); }
+  .hero .meta { margin-top: clamp(28px,3vw,48px); font-size: var(--fz-cap); color: var(--muted); letter-spacing: 0.04em; line-height: 1.6; }
+  .hero .meta b { color: var(--ink); font-weight: 700; }
+
+  /* ---- close ---- */
+  .close h1 { font-family:"Archivo",sans-serif; font-weight:900; font-size: var(--fz-hero); line-height: 0.98; letter-spacing:-0.03em; max-width: 14ch; }
+  .close .contact { margin-top: clamp(28px,3vw,48px); font-size: var(--fz-body); color: var(--ink); line-height: 1.7; }
+  .close .contact b { color: var(--accent-deep); }
+
+  /* ---- presentation mode ---- */
+  .progress { position: fixed; top: 0; left: 0; height: 4px; width: 0; background: var(--accent); z-index: 100; transition: width 320ms cubic-bezier(.2,.7,.2,1); }
+  .pmhint { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 100; font-family: "Archivo", sans-serif; font-size: 12.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: rgba(255,255,255,0.92); border: 1px solid var(--line); border-radius: 9999px; padding: 8px 16px; opacity: 1; transition: opacity 600ms ease; }
+  .pmhint.hide { opacity: 0; pointer-events: none; }
+  @media print { .progress, .pmhint { display: none !important; } }
+
+  @media (max-width: 860px) {
+    .cards-2, .cards-3, .cards-4, .roadmap { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    html { scroll-snap-type: none; }
+    @page { size: 1280px 720px; margin: 0; }
+    .slide { min-height: 720px; height: 720px; page-break-after: always; border: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- inline logo sprite (Terpene Belt Farms wordmark) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="tbf-logo" viewBox="0 0 296.18 39.34">
+    <path fill="#221F1F" d="M0 .05h26.39v6.61h-9.88V20h-6.6V6.66H0zM28.38.05h22.06V5.6H35v1.77h14.48v5.32H35v1.79h15.44V20H28.38zM52.75.05h15.77A13.08 13.08 0 0170 .27a9.82 9.82 0 011.68.42 7.68 7.68 0 011.6.83 5.66 5.66 0 011.44 1.31 6.38 6.38 0 011 1.92A8.35 8.35 0 0176 7.4q0 4.72-3.67 6.74l4.1 5.9L68.8 20l-3.41-4.7h-6V20h-6.64zm14.06 9.42c1.65 0 2.48-.62 2.48-1.87s-.87-1.71-2.59-1.71h-7.32v3.58zM77.88.05h15.08a13.08 13.08 0 011.44.19 8.08 8.08 0 011.68.45 8.92 8.92 0 011.61.87 5.76 5.76 0 011.43 1.35 6.55 6.55 0 011 2 9.2 9.2 0 01.39 2.76 10.06 10.06 0 01-.36 2.78 7.64 7.64 0 01-.92 2.09 6.87 6.87 0 01-1.37 1.48 7.47 7.47 0 01-1.57 1 9.6 9.6 0 01-1.61.57 12.2 12.2 0 01-1.43.28 8.93 8.93 0 01-1.11.07h-7.62v4h-6.64zm13.84 10c1.75 0 2.62-.72 2.62-2.16a2.26 2.26 0 00-.13-.83 1.21 1.21 0 00-.38-.55 3.25 3.25 0 00-.52-.36A1.56 1.56 0 0092.7 6l-.58-.08h-7.6v4.18zM102.2.05h22.06V5.6h-15.43v1.77h14.46v5.32h-14.46v1.79h15.43V20H102.2zM151.42 20h-9.06l-9.79-12v12h-6.63V.05h9.25l9.62 11.84V.05h6.61zM153.72.05h22.06V5.6h-15.43v1.77h14.46v5.32h-14.46v1.79h15.43V20h-22.06zM212.81 14.43a8.26 8.26 0 01-.3 2.4 4.12 4.12 0 01-1 1.74 4.59 4.59 0 01-2.12 1.11A13.53 13.53 0 01206 20h-16.56V.05h14.23a16.6 16.6 0 013.43.31 5.44 5.44 0 012.25 1 3.77 3.77 0 011.21 1.56 5.59 5.59 0 01.37 2.15A4.93 4.93 0 01209.57 9a4 4 0 011.12.53 5.15 5.15 0 011 1 4.28 4.28 0 01.8 1.63 8.78 8.78 0 01.32 2.27zM196.1 5.6v1.91h7.49a.89.89 0 00.67-.28 1 1 0 00.27-.69.92.92 0 00-.94-.94zm9.74 8.91a1 1 0 00.71-.28.94.94 0 00.28-.7 1 1 0 00-1-1h-9.73v2zM214.8.05h22.07V5.6h-15.43v1.77h14.46v5.32h-14.46v1.79h15.43V20H214.8zM245.8 13.4h14.49V20h-21.12V.05h6.63z"/>
+    <path fill="#221F1F" d="M253.26.05h26.39v6.61h-9.88V20h-6.6V6.66h-9.91zM76.82 27.23h13v3.69h-9v1.17h7v3.55h-7v3.7h-4zM111.42 27.28l5.43 12.06h-4.65l-.92-2h-6l-.92 2h-4.58l5.41-12.06zm-4.68 6.55h3.11l-1.56-3.17zM129.47 27.25H139c.2 0 .49 0 .87.12a5.51 5.51 0 011 .26 4.21 4.21 0 011 .49 3.56 3.56 0 01.88.8 3.81 3.81 0 01.58 1.16 5 5 0 01.23 1.6 4.28 4.28 0 01-2.22 4.08l2.48 3.57h-4.63l-2.07-2.84h-3.63v2.86h-4zM138 33q1.5 0 1.5-1.14c0-.69-.52-1-1.57-1h-4.42V33zM167.11 39.34h-3.31l-3-5.31v5.31h-4V27.25h4.79l3.91 6.7 3.91-6.7h4.8v12.09h-4V34zM194.63 27.28c1.08 0 2 0 2.78.08a13.93 13.93 0 012.05.28 5.8 5.8 0 011.44.51 2.59 2.59 0 01.89.82 3.11 3.11 0 01.49 1.15 7.36 7.36 0 01.14 1.54h-4.27a.74.74 0 00-.1-.43.81.81 0 00-.42-.3 3.32 3.32 0 00-1-.21q-.71-.06-1.86-.06c-1 0-1.77 0-2.24.07a2.82 2.82 0 00-.9.17.39.39 0 00-.19.36c0 .15.17.25.48.3s1.22.14 2.74.27a.08.08 0 01.06 0 52.29 52.29 0 015.77.65 2.86 2.86 0 012.06 1.29 4.08 4.08 0 01.31 1.79 6.52 6.52 0 01-.11 1.37 2.36 2.36 0 01-.45 1 2.13 2.13 0 01-.87.69 6.06 6.06 0 01-1.48.43 17.69 17.69 0 01-2.16.23c-.81 0-1.82.06-3 .06h-2.15c-.61 0-1.16-.07-1.68-.13a8.07 8.07 0 01-1.3-.22 3.55 3.55 0 01-.93-.38 2.21 2.21 0 01-.65-.52 2.45 2.45 0 01-.39-.74 4 4 0 01-.2-.94 10.24 10.24 0 01-.06-1.19h4.15a.94.94 0 00.1.45.72.72 0 00.46.25 4.41 4.41 0 001 .14h2.25c1.31 0 2.11 0 2.39-.07s.42-.2.42-.45-.1-.25-.29-.29a14 14 0 00-1.62-.16l-1.66-.09-1.55-.14-1.35-.14c-.53-.07-.94-.13-1.21-.19l-1-.24a2.88 2.88 0 01-.86-.34c-.19-.13-.39-.27-.62-.45a1.54 1.54 0 01-.48-.58 5.44 5.44 0 01-.26-.75 3.8 3.8 0 01-.11-.92 5.93 5.93 0 01.09-1.09 4.63 4.63 0 01.24-.86 2 2 0 01.43-.67 3.13 3.13 0 01.59-.51 2.85 2.85 0 01.8-.36 6.64 6.64 0 011-.23 10.18 10.18 0 011.21-.14c.48 0 1-.06 1.42-.07z"/>
+    <path d="M289.35.84h-1.15V0h3.25v.84h-1.14v4.51h-1zM295.26 3.36V.8c-.19 1-.48 2.82-.83 4.55h-.87c-.26-1.62-.57-3.54-.74-4.57 0 .62.06 1.75.06 2.67v1.9H292V0h1.43c.28 1.48.53 3 .64 3.75.1-.73.44-2.34.72-3.75h1.4v5.35h-.92z"/>
+  </symbol>
+</svg>
+
+<div class="progress" id="progress"></div>
+<div class="pmhint" id="pmhint">Arrows to move &nbsp;·&nbsp; F for fullscreen</div>
+
+<main class="deck">
+
+  <!-- 01 · TITLE -->
+  <section class="slide hero">
+    <div class="head-block">
+      <p class="eyebrow">Implementation Plan · Marketing Engineer</p>
+      <div class="tick"></div>
+      <h1>The system I'm building for Terpene Belt Farms.</h1>
+      <p class="sub">An implementation roadmap for the role, mapped straight to your posting.</p>
+      <p class="meta">Christopher Cook &nbsp;·&nbsp; for <b>Cole Leachman</b>, Nexus Agriscience<br/>Terpene Belt Farms + Duty Free Terpenes</p>
+    </div>
+    <div class="foot">
+      <svg class="brandmark"><use href="#tbf-logo"/></svg>
+      <span class="pageno">01 / 09</span>
+    </div>
+  </section>
+
+  <!-- 02 · THE THREE MANDATES -->
+  <section class="slide">
+    <div class="head-block">
+      <p class="eyebrow">01 · What This Role Owns</p>
+      <div class="tick"></div>
+      <h2 class="title">Your three mandates, straight from the posting.</h2>
+      <p class="sub">Everything I build maps to one of these.</p>
+    </div>
+    <div class="cards cards-3">
+      <div class="card">
+        <span class="lbl">Mandate 01</span>
+        <span class="name">Content &amp; AEO</span>
+        <span class="desc">A content pipeline that wins SEO and AI search across ChatGPT, Perplexity, and Gemini.</span>
+      </div>
+      <div class="card">
+        <span class="lbl">Mandate 02</span>
+        <span class="name">Lifecycle, CRM &amp; Storefront</span>
+        <span class="desc">HubSpot, WooCommerce, email and SMS, running as one connected platform.</span>
+      </div>
+      <div class="card">
+        <span class="lbl">Mandate 03</span>
+        <span class="name">Data &amp; Measurement</span>
+        <span class="desc">Instrument every KPI, and make a lean team operate like a much larger one.</span>
+      </div>
+    </div>
+    <div class="foot">
+      <svg class="brandmark"><use href="#tbf-logo"/></svg>
+      <span class="pageno">02 / 09</span>
+    </div>
+  </section>
+
+  <!-- 03 · THE HEAD START -->
+  <section class="slide">
+    <div class="head-block">
+      <p class="eyebrow">02 · The Head Start</p>
+      <div class="tick"></div>
+      <h2 class="title">I started before the interview.</h2>
+      <p class="sub">Nine agents are already live on your stack, reading from one shared brain.</p>
+    </div>
+    <img class="flowimg" src="/works/flow/02-content-pipeline.png" alt="One topic flowing through the brain into many on-brand content surfaces" />
+    <p class="caption-flow">Content, lead-ops, paid, and competitive agents run for Terpene Belt Farms today on n8n, with a second brand proving the system ports. Each reads a ten-file brain in your voice before it writes a word. I can fire any of them on the call.</p>
+    <a href="/tbf-mission-control.html" style="display:inline-block;margin-top:clamp(16px,1.6vw,24px);font-family:'Archivo',sans-serif;font-weight:700;font-size:var(--fz-cap);letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-deep);border-bottom:2px solid var(--accent);padding-bottom:2px;">Open the live system &rarr;</a>
+    <div class="foot">
+      <svg class="brandmark"><use href="#tbf-logo"/></svg>
+      <span class="pageno">03 / 09</span>
+    </div>
+  </section>
+
+  <!-- 04 · YOUR SYSTEM -->
+  <section class="slide">
+    <div class="head-block">
+      <p class="eyebrow">03 · Your System</p>
+      <div class="tick"></div>
+      <h2 class="title">Brain. Agent. Workflows. Data.</h2>
+      <p class="sub">Built on your stack, not a generic template.</p>
+    </div>
+    <img class="flowimg" src="/works/flow/01-architecture-stack.png" alt="Four-layer stack: brain on top, agent, workflows, and a data warehouse at the base" />
+    <div class="cards cards-4 compact">
+      <div class="card"><span class="lbl">Layer 01</span><span class="name">Brain</span><span class="meta">voice · catalog · COAs · personas</span></div>
+      <div class="card"><span class="lbl">Layer 02</span><span class="name">Agent</span><span class="meta">Claude · n8n cloud</span></div>
+      <div class="card"><span class="lbl">Layer 03</span><span class="name">Workflows</span><span class="meta">WooCommerce · webhooks · cron</span></div>
+      <div class="card feature"><span class="lbl">Layer 04</span><span class="name">Data</span><span class="meta">BigQuery · HubSpot</span></div>
+    </div>
+    <div class="foot">
+      <svg class="brandmark"><use href="#tbf-logo"/></svg>
+      <span class="pageno">04 / 09</span>
+    </div>
+  </section>
+
+  <!-- 05 · MANDATE 1 · CONTENT & AEO -->
+  <section class="slide">
+    <div class="head-block">
+      <p class="eyebrow">04 · Mandate 01 · Content &amp; AEO</p>
+      <div class="tick"></div>
+      <h2 class="title">Win SEO and AI search, at content-team speed.</h2>
+    </div>
+    <div class="cards cards-2">
+      <div class="card feature">
+        <span class="lbl">Live now</span>
+        <span class="name">Five content agents</span>
+        <span class="desc">Full Content Stack, Four Surfaces, and Blog Splinter, plus AEO answer pages with FAQPage schema and GEO snippets, all in TBF voice.</span>
+      </div>
+      <div class="card">
+        <span class="lbl">Building next</span>
+        <span class="name">Reach + visibility</span>
+        <span class="desc">Programmatic SKU pages at catalog scale, and an AEO visibility tracker for your share-of-voice inside ChatGPT, Perplexity, and Gemini.</span>
+      </div>
+    </div>
+    <div class="foot">
+      <svg class="brandmark"><use href="#tbf-logo"/></svg>
+      <span class="pageno">05 / 09</span>
+    </div>
+  </section>
+
+  <!-- 06 · MANDATE 2 · LIFECYCLE, CRM & STOREFRONT -->
+  <section class="slide">
+    <div class="head-block">
+      <p class="eyebrow">05 · Mandate 02 · Lifecycle, CRM &amp; Storefront</p>
+      <div class="tick"></div>
+      <h2 class="title">Your store and CRM, running as one system.</h2>
+    </div>
+    <div class="cards cards-2">
+      <div class="card feature">
+        <span class="lbl">Live now</span>
+        <span class="name">Lead-ops + paid</span>
+        <span class="desc">Sample-Pack Triage and cart flows on Klaviyo, wired to WooCommerce. Competitor Ad Watcher and UGC ad generation feed your paid creative.</span>
+      </div>
+      <div class="card">
+        <span class="lbl">Building next</span>
+        <span class="name">HubSpot lifecycle</span>
+        <span class="desc">Segmentation, scoring, and nurture in HubSpot; abandoned-cart and post-purchase; TCPA-compliant SMS; and wholesale-application triage.</span>
+      </div>
+    </div>
+    <div class="foot">
+      <svg class="brandmark"><use href="#tbf-logo"/></svg>
+      <span class="pageno">06 / 09</span>
+    </div>
+  </section>
+
+  <!-- 07 · MANDATE 3 · DATA & MEASUREMENT -->
+  <section class="slide">
+    <div class="head-block">
+      <p class="eyebrow">06 · Mandate 03 · Data &amp; Measurement</p>
+      <div class="tick"></div>
+      <h2 class="title">One warehouse. Every number grounded.</h2>
+    </div>
+    <img class="flowimg" src="/works/flow/03-data-spine.png" alt="Data streams flowing into a central BigQuery warehouse, then back out to destinations" />
+    <p class="caption-flow">BigQuery becomes the spine: GA4, HubSpot, and WooCommerce land, model into a customer 360 and an AEO share-of-voice table, then sync back out for personalization. Looker dashboards for leadership, and a fact-check that verifies every lab number before anything publishes. BigQuery, GA4, and Looker are already on my resume.</p>
+    <div class="foot">
+      <svg class="brandmark"><use href="#tbf-logo"/></svg>
+      <span class="pageno">07 / 09</span>
+    </div>
+  </section>
+
+  <!-- 08 · THE ROLLOUT -->
+  <section class="slide">
+    <div class="head-block">
+      <p class="eyebrow">07 · The Rollout</p>
+      <div class="tick"></div>
+      <h2 class="title">Live today to a full system in 90 days.</h2>
+    </div>
+    <div class="cards cards-3">
+      <div class="card phase">
+        <span class="ph">Weeks 1 to 2</span>
+        <span class="name">Plug into your stack</span>
+        <ul>
+          <li>Connect HubSpot, WooCommerce, GA4</li>
+          <li>Brain reviewed with the SVP</li>
+          <li>Nine agents pointed at live triggers</li>
+        </ul>
+      </div>
+      <div class="card phase feature">
+        <span class="ph">Weeks 3 to 6</span>
+        <span class="name">Revenue automations</span>
+        <ul>
+          <li>HubSpot lifecycle and scoring live</li>
+          <li>Abandoned-cart + post-purchase</li>
+          <li>Wholesale triage + Friday digest</li>
+        </ul>
+      </div>
+      <div class="card phase">
+        <span class="ph">Weeks 7 to 12</span>
+        <span class="name">Measure and scale</span>
+        <ul>
+          <li>BigQuery spine + Looker dashboards</li>
+          <li>AEO visibility tracker live</li>
+          <li>Programmatic SKU pages + A/B tests</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot">
+      <svg class="brandmark"><use href="#tbf-logo"/></svg>
+      <span class="pageno">08 / 09</span>
+    </div>
+  </section>
+
+  <!-- 09 · CLOSE -->
+  <section class="slide close">
+    <div class="head-block">
+      <p class="eyebrow">The Ask</p>
+      <div class="tick"></div>
+      <h1>Let's start week one.</h1>
+      <p class="contact">
+        <b>Christopher Cook</b> &nbsp;·&nbsp; Marketing Engineer<br/>
+        topher.a.cook@gmail.com<br/>
+        To begin: access to HubSpot, the store, and GA4. I build from day one.
+      </p>
+    </div>
+    <div class="foot">
+      <svg class="brandmark"><use href="#tbf-logo"/></svg>
+      <span class="pageno">09 / 09</span>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var i = 0;
+  var bar = document.getElementById('progress');
+  var hint = document.getElementById('pmhint');
+  function setProgress() { if (bar) bar.style.width = ((i + 1) / total * 100) + '%'; }
+  function go(n) {
+    i = Math.max(0, Math.min(total - 1, n));
+    slides[i].scrollIntoView({ behavior: 'smooth' });
+    setProgress();
+  }
+  // keep the index in sync when the user scrolls or swipes manually
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { i = slides.indexOf(e.target); setProgress(); }
+    });
+  }, { threshold: 0.55 });
+  slides.forEach(function (s) { io.observe(s); });
+  setProgress();
+  document.addEventListener('keydown', function (e) {
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'ArrowDown' || k === ' ' || k === 'PageDown') { e.preventDefault(); go(i + 1); }
+    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp') { e.preventDefault(); go(i - 1); }
+    else if (k === 'Home') { e.preventDefault(); go(0); }
+    else if (k === 'End') { e.preventDefault(); go(total - 1); }
+    else if (k === 'f' || k === 'F') {
+      e.preventDefault();
+      if (!document.fullscreenElement) {
+        if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+      } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  });
+  setTimeout(function () { if (hint) hint.classList.add('hide'); }, 4500);
+})();
+</script>
+</body>
+</html>
