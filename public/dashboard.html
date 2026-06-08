@@ -32,6 +32,8 @@
   html,body{margin:0;padding:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.5;font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   a{color:inherit;text-decoration:none}
   button{font:inherit;cursor:pointer;background:none;border:none;color:inherit;padding:0}
+  :focus-visible{outline:2px solid var(--info);outline-offset:2px;border-radius:5px}
+  :focus:not(:focus-visible){outline:none}
   h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-0.011em;color:var(--ink)}
   .mono{font-family:var(--mono);font-feature-settings:"tnum","cv11"}
   .tnum{font-variant-numeric:tabular-nums}
@@ -179,14 +181,17 @@
   .status .led{width:6px;height:6px;border-radius:50%;background:var(--live);box-shadow:0 0 0 2px var(--live-bg)}
   .status.warn .led{background:var(--warn);box-shadow:0 0 0 2px rgba(182,90,38,.15)}
   .status.err .led{background:var(--error);box-shadow:0 0 0 2px rgba(197,59,31,.15)}
-  .err-msg{margin-top:var(--s-3);background:rgba(197,59,31,.06);border:1px solid rgba(197,59,31,.22);color:#7a2412;padding:10px 12px;border-radius:var(--r-2);font-size:13px}
+  .err-msg{margin-top:var(--s-3);background:rgba(197,59,31,.06);border:1px solid rgba(197,59,31,.22);color:#7a2412;padding:10px 12px;border-radius:var(--r-2);font-size:13px;align-items:center;justify-content:space-between;gap:var(--s-3)}
+  .err-msg .err-text{min-width:0}
+  .err-retry{flex:none;font-family:var(--font);font-size:12px;font-weight:500;color:#7a2412;background:rgba(197,59,31,.10);border:1px solid rgba(197,59,31,.30);border-radius:var(--r-2);padding:5px 13px;white-space:nowrap;transition:background var(--t)}
+  .err-retry:hover{background:rgba(197,59,31,.18)}
 
   /* === RESULTS === */
   .results{margin-top:var(--s-4);display:grid;gap:var(--s-4)}
   .result-section{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);overflow:hidden;box-shadow:var(--shadow-sm)}
   .result-section-head{padding:var(--s-4) var(--s-5);display:flex;align-items:center;justify-content:space-between;gap:var(--s-3);border-bottom:1px solid var(--line-2);background:var(--surface-2)}
-  .result-section-head h3{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:var(--s-2)}
-  .result-section-head h3 .accent{width:6px;height:6px;border-radius:50%}
+  .result-section-head h2{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:var(--s-2)}
+  .result-section-head h2 .accent{width:6px;height:6px;border-radius:50%}
   .result-section-head .meta{font-family:var(--mono);font-size:11px;color:var(--muted)}
   .result-section-body{padding:var(--s-4) var(--s-5)}
   .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-3)}
@@ -331,7 +336,7 @@
       <div class="wf-top">
         <div class="wf-title-row">
           <span class="wf-brand-chip" id="brand-chip"><span class="dot" id="brand-dot" style="background:var(--tbf)"></span><span id="brand-name">TBF</span></span>
-          <span class="wf-name" id="wf-label">Four Surfaces</span>
+          <h1 class="wf-name" id="wf-label">Four Surfaces</h1>
         </div>
         <div class="wf-actions">
           <button class="icon-btn" title="View logs (coming soon)" aria-label="Logs"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
@@ -348,14 +353,14 @@
       </div>
     </article>
 
-    <div class="tabs" role="tablist">
-      <button class="tab active" data-tab="run">Run</button>
-      <button class="tab" data-tab="output">Output</button>
-      <button class="tab" data-tab="json">Raw JSON</button>
-      <button class="tab" data-tab="curl">cURL</button>
+    <div class="tabs" role="tablist" aria-label="Workflow views">
+      <button class="tab active" data-tab="run" role="tab" id="tab-run" aria-controls="panel-run" aria-selected="true" tabindex="0">Run</button>
+      <button class="tab" data-tab="output" role="tab" id="tab-output" aria-controls="panel-output" aria-selected="false" tabindex="-1">Output</button>
+      <button class="tab" data-tab="json" role="tab" id="tab-json" aria-controls="panel-json" aria-selected="false" tabindex="-1">Raw JSON</button>
+      <button class="tab" data-tab="curl" role="tab" id="tab-curl" aria-controls="panel-curl" aria-selected="false" tabindex="-1">cURL</button>
     </div>
 
-    <div class="tab-content active" data-tab="run">
+    <div class="tab-content active" data-tab="run" role="tabpanel" id="panel-run" aria-labelledby="tab-run" tabindex="0">
       <div class="input-panel">
         <div class="panel-head">
           <span class="h">Input</span>
@@ -369,20 +374,20 @@
             <kbd>⌘↵</kbd>
             <svg class="arrow" width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 6h6m-3-3 3 3-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <span class="status" id="status"></span>
+          <span class="status" id="status" aria-live="polite" aria-atomic="true"></span>
         </div>
-        <div class="err-msg" id="error" style="display:none"></div>
+        <div class="err-msg" id="error" role="alert" style="display:none"></div>
       </div>
     </div>
 
-    <div class="tab-content" data-tab="output">
+    <div class="tab-content" data-tab="output" role="tabpanel" id="panel-output" aria-labelledby="tab-output" tabindex="0">
       <div id="results" class="results"></div>
     </div>
 
-    <div class="tab-content" data-tab="json">
+    <div class="tab-content" data-tab="json" role="tabpanel" id="panel-json" aria-labelledby="tab-json" tabindex="0">
       <div class="result-section">
         <div class="result-section-head">
-          <h3><span class="accent" style="background:var(--info)"></span>Raw JSON response</h3>
+          <h2><span class="accent" style="background:var(--info)"></span>Raw JSON response</h2>
           <span class="meta" id="json-meta">no run yet</span>
         </div>
         <div class="result-section-body">
@@ -394,10 +399,10 @@
       </div>
     </div>
 
-    <div class="tab-content" data-tab="curl">
+    <div class="tab-content" data-tab="curl" role="tabpanel" id="panel-curl" aria-labelledby="tab-curl" tabindex="0">
       <div class="result-section">
         <div class="result-section-head">
-          <h3><span class="accent" style="background:var(--info)"></span>cURL command</h3>
+          <h2><span class="accent" style="background:var(--info)"></span>cURL command</h2>
           <span class="meta">paste into your terminal</span>
         </div>
         <div class="result-section-body">
@@ -419,9 +424,11 @@
 </footer>
 
 <div class="cmdk" id="cmdk">
-  <div class="cmdk-box">
-    <input class="cmdk-input" id="cmdk-input" placeholder="Jump to a workflow…" autocomplete="off" />
-    <div class="cmdk-list" id="cmdk-list"></div>
+  <div class="cmdk-box" role="dialog" aria-modal="true" aria-label="Command palette">
+    <input class="cmdk-input" id="cmdk-input" placeholder="Jump to a workflow…" autocomplete="off"
+      role="combobox" aria-expanded="true" aria-controls="cmdk-list" aria-autocomplete="list"
+      aria-label="Search workflows" />
+    <div class="cmdk-list" id="cmdk-list" role="listbox" aria-label="Workflows"></div>
   </div>
 </div>
 
@@ -731,8 +738,11 @@ async function run(){
     renderResults(w, data, false);
     updateJson(data);
   } catch(e){
-    $("#error").textContent = e.message || "Generation failed. Try again.";
-    $("#error").style.display="block";
+    const raw = (e && e.message) ? e.message : "Generation failed.";
+    const friendly = /Failed to fetch|NetworkError|load failed|ERR_/i.test(raw)
+      ? "Couldn't reach the workflow. Check your connection, or that n8n is running, then retry."
+      : raw;
+    showError(friendly);
     $("#status").innerHTML = `<span class="led"></span><span>error</span>`;
     $("#status").classList.add("err");
     switchTab("run");
@@ -765,10 +775,27 @@ document.addEventListener("keydown", (e) => {
 
 // ----- Tabs -----
 function switchTab(name){
-  $$(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === name));
+  $$(".tab").forEach(t => {
+    const on = t.dataset.tab === name;
+    t.classList.toggle("active", on);
+    t.setAttribute("aria-selected", on ? "true" : "false");
+    t.tabIndex = on ? 0 : -1;
+  });
   $$(".tab-content").forEach(c => c.classList.toggle("active", c.dataset.tab === name));
 }
 $$(".tab").forEach(t => t.addEventListener("click", () => switchTab(t.dataset.tab)));
+$(".tabs").addEventListener("keydown", (e) => {
+  const tabs = $$(".tab");
+  let i = tabs.findIndex(t => t.classList.contains("active"));
+  if (e.key === "ArrowRight" || e.key === "ArrowDown") i = (i+1) % tabs.length;
+  else if (e.key === "ArrowLeft" || e.key === "ArrowUp") i = (i-1+tabs.length) % tabs.length;
+  else if (e.key === "Home") i = 0;
+  else if (e.key === "End") i = tabs.length-1;
+  else return;
+  e.preventDefault();
+  switchTab(tabs[i].dataset.tab);
+  tabs[i].focus();
+});
 
 // ----- Action buttons -----
 $("#open-n8n").addEventListener("click", () => {
@@ -792,6 +819,14 @@ function flash(sel){
   setTimeout(()=>{ el.style.color = ""; }, 800);
 }
 
+function showError(text){
+  const box = $("#error");
+  box.innerHTML = '<span class="err-text"></span><button class="err-retry" type="button">Retry</button>';
+  box.querySelector(".err-text").textContent = text;
+  box.querySelector(".err-retry").addEventListener("click", run);
+  box.style.display = "flex";
+}
+
 // ----- cURL gen -----
 function updateCurl(w){
   if (!w) return;
@@ -809,28 +844,47 @@ function updateJson(data){
 }
 
 // ----- Command palette -----
+let cmdkReturnFocus = null;
 function openCmdK(){
+  cmdkReturnFocus = document.activeElement;
   $("#cmdk").classList.add("open");
   $("#cmdk-input").value = "";
-  $("#cmdk-input").focus();
   renderCmdList("");
+  $("#cmdk-input").focus();
 }
-function closeCmdK(){ $("#cmdk").classList.remove("open"); }
+function closeCmdK(){
+  if (!$("#cmdk").classList.contains("open")) return;
+  $("#cmdk").classList.remove("open");
+  $("#cmdk-input").removeAttribute("aria-activedescendant");
+  if (cmdkReturnFocus && cmdkReturnFocus.focus) cmdkReturnFocus.focus();
+}
+function setCmdActive(idx){
+  const items = $$(".cmdk-item");
+  items.forEach((it,i) => {
+    const on = i === idx;
+    it.classList.toggle("cmdk-active", on);
+    it.setAttribute("aria-selected", on ? "true" : "false");
+    if (on){ $("#cmdk-input").setAttribute("aria-activedescendant", it.id); it.scrollIntoView({block:"nearest"}); }
+  });
+}
 $("#cmdk-open").addEventListener("click", openCmdK);
 $("#cmdk").addEventListener("click", (e) => { if (e.target === $("#cmdk")) closeCmdK(); });
 $("#cmdk-input").addEventListener("input", (e) => renderCmdList(e.target.value));
 $("#cmdk-input").addEventListener("keydown", (e) => {
   const items = $$(".cmdk-item");
   const cur = items.findIndex(i => i.classList.contains("cmdk-active"));
-  if (e.key === "ArrowDown"){ e.preventDefault(); items[cur]?.classList.remove("cmdk-active"); (items[cur+1] || items[0])?.classList.add("cmdk-active"); }
-  if (e.key === "ArrowUp"){ e.preventDefault(); items[cur]?.classList.remove("cmdk-active"); (items[cur-1] || items[items.length-1])?.classList.add("cmdk-active"); }
-  if (e.key === "Enter"){ const sel = $$(".cmdk-item.cmdk-active")[0] || items[0]; if (sel){ activate(sel.dataset.id); closeCmdK(); } }
+  if (e.key === "ArrowDown"){ e.preventDefault(); if (items.length) setCmdActive((cur+1) % items.length); }
+  else if (e.key === "ArrowUp"){ e.preventDefault(); if (items.length) setCmdActive((cur-1+items.length) % items.length); }
+  else if (e.key === "Enter"){ e.preventDefault(); const sel = items[cur] || items[0]; if (sel){ activate(sel.dataset.id); closeCmdK(); } }
+  else if (e.key === "Tab"){ e.preventDefault(); } // focus trap: input is the only tabbable element
 });
 function renderCmdList(q){
   const ql = (q||"").toLowerCase().trim();
   const list = WORKFLOWS.filter(w => !ql || w.label.toLowerCase().includes(ql) || w.n8nName.toLowerCase().includes(ql) || w.description.toLowerCase().includes(ql));
-  $("#cmdk-list").innerHTML = list.map((w,i) => `<button class="cmdk-item ${i===0?'cmdk-active':''}" data-id="${w.id}"><span class="status-dot" style="background:${w.group==='tbf'?'var(--tbf)':'var(--romanoff)'};box-shadow:none"></span><span class="label">${w.label}</span><span class="grp">${w.group}</span></button>`).join("");
+  $("#cmdk-list").innerHTML = list.map((w,i) => `<button class="cmdk-item ${i===0?'cmdk-active':''}" id="cmdk-opt-${i}" role="option" aria-selected="${i===0?'true':'false'}" data-id="${w.id}"><span class="status-dot" style="background:${w.group==='tbf'?'var(--tbf)':'var(--romanoff)'};box-shadow:none"></span><span class="label">${escapeHTML(w.label)}</span><span class="grp">${escapeHTML(w.group)}</span></button>`).join("");
   $$(".cmdk-item").forEach(it => it.addEventListener("click", () => { activate(it.dataset.id); closeCmdK(); }));
+  if (list.length) $("#cmdk-input").setAttribute("aria-activedescendant", "cmdk-opt-0");
+  else $("#cmdk-input").removeAttribute("aria-activedescendant");
 }
 
 // ----- Result renderers (same as before, polished) -----
@@ -861,7 +915,7 @@ function renderResults(w, data, loading){
 }
 
 function section(title, meta, accentColor, body){
-  return `<div class="result-section"><div class="result-section-head"><h3><span class="accent" style="background:${accentColor}"></span>${title}</h3><span class="meta">${meta}</span></div><div class="result-section-body">${body}</div></div>`;
+  return `<div class="result-section"><div class="result-section-head"><h2><span class="accent" style="background:${accentColor}"></span>${title}</h2><span class="meta">${meta}</span></div><div class="result-section-body">${body}</div></div>`;
 }
 function card(title, meta, body, opts={}){
   const cls = (opts.accent ? "accent " : "") + (opts.group || "");
@@ -1072,7 +1126,16 @@ function renderUgc(d, loading){
   const a = d?.ad || {};
   const cap = a.captions || {};
   const hb = a.hook_breakdown || {};
+  const liveUrl = a.video_url || a.seedance_video_url || a.render_url || "";
+  const videoUrl = liveUrl || "media/tbf-ugc-gas707.mp4";
+  const tag = liveUrl ? "fresh render" : "sample render · Gas-707";
+  const videoBody = loading
+    ? `<div class="card"><div class="top"><span class="ttl">Rendered ad</span></div><div class="body"><div class="skel" style="height:260px;border-radius:10px"></div></div></div>`
+    : `<div class="card accent tbf"><div class="top"><span class="ttl">Rendered ad</span><span class="wc">${tag}</span></div><div class="body" style="display:flex;justify-content:center;padding-top:4px">
+        <video src="${escapeHTML(videoUrl)}" controls playsinline preload="metadata" style="width:100%;max-width:248px;aspect-ratio:9/16;border-radius:10px;background:#000;display:block"></video>
+      </div></div>`;
   return [
+    section("Rendered ad","Seedance text-to-video · 9:16","var(--tbf)",videoBody),
     section("Seedance prompt + voiceover","text-to-video brief + timed VO","var(--tbf)",`<div class="g2">
       ${fieldCard("Seedance prompt", a.seedance_prompt, {mono:true,accent:true,group:"tbf",loading})}
       ${fieldCard("Voiceover script", a.voiceover_script, {loading})}
@@ -1092,7 +1155,7 @@ function renderUgc(d, loading){
 
 // ----- Utils -----
 function wc(s){ return s ? s.trim().split(/\s+/).filter(Boolean).length : 0; }
-function escapeHTML(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function escapeHTML(s){ return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
 function escapeMulti(s){ return escapeHTML(s).replace(/\n/g,"<br>"); }
 function safeJSON(s){ if(!s) return ""; try{ return JSON.stringify(JSON.parse(s),null,2); } catch{ return s; } }
 
