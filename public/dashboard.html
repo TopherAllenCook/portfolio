@@ -358,6 +358,74 @@
   .mode-seg{display:inline-flex;gap:2px;padding:3px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-2)}
   .mode-seg button{padding:5px 12px;border-radius:6px;font-size:11.5px;font-weight:500;color:var(--ink-3);transition:background var(--t),color var(--t)}
   .mode-seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-sm)}
+  /* ===== Agents view redesign (output-first) ===== */
+  .ag-head{margin-bottom:var(--s-3)}
+  .ag-head .wf-top{margin-bottom:var(--s-3)}
+  .ag-eta{font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r-pill);padding:2px 8px}
+  .ag-inbar{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);padding:var(--s-4) var(--s-5);box-shadow:var(--shadow-sm);margin-bottom:var(--s-4)}
+  .ag-inbar-row{display:flex;align-items:center;gap:var(--s-3);flex-wrap:wrap}
+  .ag-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .ag-inbar-row .chips{flex:1;display:flex;flex-wrap:wrap;gap:6px;margin:0}
+  .ag-edit{display:none;font-size:12px;font-weight:500;color:var(--info);border:1px solid var(--line);border-radius:var(--r-2);padding:6px 12px}
+  .ag-edit:hover{border-color:var(--line-strong);background:var(--surface-2)}
+  .ag-inbar.collapsed .ag-fields-wrap{display:none}
+  .ag-inbar.collapsed .ag-edit{display:inline-flex}
+  .ag-fields-wrap{margin-top:var(--s-3)}
+  .ag-fields-wrap .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--s-3) var(--s-4)}
+  .ag-fields-wrap .form textarea{min-height:62px}
+  .ag-meta-strip{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-2) var(--s-5);margin-top:var(--s-3);padding-top:var(--s-3);border-top:1px solid var(--line-2)}
+  .ag-meta{font-size:11px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+  .ag-meta b{color:var(--ink-3);font-weight:600;margin-right:5px;text-transform:uppercase;letter-spacing:.04em;font-size:9.5px}
+  .ag-meta code{font-family:var(--mono);color:var(--ink-2)}
+  .ag-on{display:inline-flex;align-items:center;gap:5px;color:var(--live);font-weight:500}
+  .ag-on .pulse{width:5px;height:5px;border-radius:50%;background:var(--live)}
+
+  .ag-output{min-width:0}
+  .ag-thinking{display:flex;align-items:center;gap:var(--s-4);padding:var(--s-4) var(--s-5);background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);margin-bottom:var(--s-4)}
+  .ag-thinking[hidden]{display:none}
+  .ag-spin{width:18px;height:18px;border:2px solid var(--line-strong);border-top-color:var(--info);border-radius:50%;animation:agspin .7s linear infinite;flex:none}
+  @keyframes agspin{to{transform:rotate(360deg)}}
+  .ag-think-steps{display:flex;gap:var(--s-5);flex-wrap:wrap}
+  .ag-step{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted-2);transition:color var(--t)}
+  .ag-step .ag-step-dot{width:7px;height:7px;border-radius:50%;background:var(--muted-2);flex:none}
+  .ag-step.on{color:var(--ink-2)}
+  .ag-step.on .ag-step-dot{background:var(--info);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+  .ag-step.done{color:var(--ink-3)}
+  .ag-step.done .ag-step-dot{background:var(--live)}
+
+  .ag-out-bar{display:flex;align-items:center;justify-content:space-between;gap:var(--s-3);flex-wrap:wrap;margin-bottom:var(--s-3)}
+  .ag-out-bar[hidden]{display:none}
+  .ag-out-meta{font-size:13px;font-weight:600;color:var(--ink)}
+  .ag-out-tools{display:flex;gap:6px;flex-wrap:wrap}
+  .ag-tool{font-size:11.5px;font-weight:500;color:var(--ink-3);border:1px solid var(--line);border-radius:var(--r-2);padding:6px 11px;background:var(--surface);transition:border-color var(--t),background var(--t),color var(--t)}
+  .ag-tool:hover{border-color:var(--line-strong);color:var(--ink);background:var(--surface-2)}
+  #ag-regen{color:var(--info);border-color:rgba(37,99,235,.25)}
+
+  .card-copy{font-family:var(--font);font-size:10px;font-weight:500;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:2px 7px;margin-left:auto;flex:none;transition:border-color var(--t),color var(--t)}
+  .card-copy:hover{border-color:var(--line-strong);color:var(--ink)}
+  #results .card .top{align-items:center}
+  #results .quote{position:relative}
+  #results .quote .card-copy{position:absolute;top:9px;right:9px;background:var(--surface);margin:0}
+
+  .ag-dev-panel{margin-top:var(--s-4)}
+  .ag-dev-panel[hidden]{display:none}
+  .ag-dev-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3)}
+  @media(max-width:900px){.ag-dev-grid{grid-template-columns:1fr}}
+  .ag-dev-block{border:1px solid var(--line);border-radius:var(--r-3);overflow:hidden;background:var(--surface)}
+  .ag-dev-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;background:var(--surface-2);border-bottom:1px solid var(--line);font-size:11px;font-weight:600;color:var(--ink-3)}
+  .ag-dev-block pre{margin:0;padding:12px;font-family:var(--mono);font-size:11px;line-height:1.5;color:var(--ink-2);max-height:300px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+
+  .ag-history{position:fixed;top:0;right:0;width:340px;max-width:90vw;height:100vh;background:var(--surface);border-left:1px solid var(--line);box-shadow:var(--shadow-lg);z-index:60;display:flex;flex-direction:column;animation:agslide 200ms cubic-bezier(.2,.7,.2,1)}
+  .ag-history[hidden]{display:none}
+  @keyframes agslide{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
+  .ag-hist-head{display:flex;align-items:center;justify-content:space-between;padding:var(--s-4) var(--s-5);border-bottom:1px solid var(--line);font-weight:600;font-size:14px}
+  .ag-hist-list{flex:1;overflow:auto;padding:var(--s-3)}
+  .ag-hist-empty{padding:var(--s-5);color:var(--muted);font-size:13px;text-align:center}
+  .ag-hist-item{width:100%;display:grid;grid-template-columns:1fr auto;gap:2px var(--s-3);text-align:left;padding:var(--s-3);border-radius:var(--r-2);transition:background var(--t)}
+  .ag-hist-item:hover{background:var(--bg-2)}
+  .ag-hist-ag{font-size:13px;font-weight:600;color:var(--ink)}
+  .ag-hist-t{font-family:var(--mono);font-size:10px;color:var(--muted-2);align-self:center}
+  .ag-hist-sn{grid-column:1/2;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   :focus-visible{outline:2px solid var(--info);outline-offset:2px;border-radius:4px}
 </style>
 </head>
@@ -532,42 +600,31 @@
 
     <!-- ===== AGENTS (the runner) ===== -->
     <div class="view" id="view-agents" hidden>
-    <article class="wf-header">
+    <article class="wf-header ag-head">
       <div class="wf-top">
         <div class="wf-title-row">
           <span class="wf-brand-chip" id="brand-chip"><span class="dot" id="brand-dot" style="background:var(--tbf)"></span><span id="brand-name">TBF</span></span>
           <span class="wf-name" id="wf-label">Repurpose Engine</span>
+          <span class="ag-eta">~<span id="wf-eta">30s</span></span>
         </div>
         <div class="wf-actions">
           <div class="mode-seg" id="run-mode" aria-label="Run mode"><button type="button" id="mode-demo" class="on" title="Replay a saved example instantly">Demo</button><button type="button" id="mode-live" title="Fire the real n8n webhook and Claude">Run live</button></div>
-          <button class="icon-btn" title="View logs (coming soon)" aria-label="Logs"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <button class="icon-btn" id="ag-history-btn" type="button" title="Run history" aria-label="Run history"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 8v4l3 2M3.05 11a9 9 0 1 1 .5 4M3 4v5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <button class="icon-btn" id="open-n8n" title="Open in n8n" aria-label="Open in n8n"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 3h6v6M21 3l-9 9M10 14v7H3v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <button class="icon-btn" id="copy-webhook" title="Copy webhook URL" aria-label="Copy webhook"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/><path d="M16 8V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="2"/></svg></button>
         </div>
       </div>
       <p class="wf-desc" id="wf-description">Single topic in, four polished social surfaces out.</p>
-      <div class="wf-meta-grid">
-        <div class="wf-meta-item"><div class="k">Status</div><div class="v live-pill"><span class="pulse"></span>Active</div></div>
-        <div class="wf-meta-item"><div class="k">Webhook</div><div class="v" id="wf-webhook" title="">not set</div></div>
-        <div class="wf-meta-item"><div class="k">n8n workflow</div><div class="v" id="wf-n8nname" title="">not set</div></div>
-        <div class="wf-meta-item"><div class="k">Expected latency</div><div class="v" id="wf-eta">not set</div></div>
-      </div>
     </article>
 
-    <div class="tabs" role="tablist">
-      <button class="tab active" data-tab="run">Run</button>
-      <button class="tab" data-tab="output">Output</button>
-      <button class="tab" data-tab="json">Raw JSON</button>
-      <button class="tab" data-tab="curl">cURL</button>
-    </div>
-
-    <div class="tab-content active" data-tab="run">
-      <div class="input-panel">
-        <div class="panel-head">
-          <span class="h">Input</span>
-          <span class="meta">brain loaded · 10 markdown files</span>
-        </div>
+    <!-- input bar (collapses after a run) -->
+    <div class="ag-inbar" id="ag-inbar">
+      <div class="ag-inbar-row">
+        <span class="ag-lbl">Examples</span>
         <div class="chips" id="wf-presets"></div>
+        <button class="ag-edit" id="ag-edit" type="button">Edit input</button>
+      </div>
+      <div class="ag-fields-wrap" id="ag-fields-wrap">
         <div class="form" id="wf-inputs"></div>
         <div class="actions">
           <button class="run-btn" id="run-btn" disabled>
@@ -578,38 +635,44 @@
           <span class="status" id="status"></span>
         </div>
         <div class="err-msg" id="error" style="display:none"></div>
+        <div class="ag-meta-strip">
+          <span class="ag-meta"><b>Status</b> <span class="ag-on"><span class="pulse"></span>Active</span></span>
+          <span class="ag-meta"><b>Webhook</b> <code id="wf-webhook" title="">not set</code></span>
+          <span class="ag-meta"><b>n8n</b> <code id="wf-n8nname" title="">not set</code></span>
+          <span class="ag-meta brain-note">brain loaded · 10 files</span>
+        </div>
       </div>
     </div>
 
-    <div class="tab-content" data-tab="output">
+    <!-- output, full width -->
+    <div class="ag-output">
+      <div class="ag-thinking" id="ag-thinking" hidden>
+        <span class="ag-spin"></span>
+        <div class="ag-think-steps" id="ag-think-steps"></div>
+      </div>
+      <div class="ag-out-bar" id="ag-out-bar" hidden>
+        <span class="ag-out-meta" id="ag-out-meta">Output</span>
+        <div class="ag-out-tools">
+          <button class="ag-tool" id="ag-regen" type="button" title="Run this agent again">&#8635; Run again</button>
+          <button class="ag-tool" id="ag-copyall" type="button">Copy all</button>
+          <button class="ag-tool" id="ag-dl-md" type="button">.md</button>
+          <button class="ag-tool" id="ag-dl-json" type="button">.json</button>
+          <button class="ag-tool" id="ag-dev" type="button">Developer</button>
+        </div>
+      </div>
       <div id="results" class="results"></div>
-    </div>
-
-    <div class="tab-content" data-tab="json">
-      <div class="result-section">
-        <div class="result-section-head">
-          <h3><span class="accent" style="background:var(--info)"></span>Raw JSON response</h3>
-          <span class="meta" id="json-meta">no run yet</span>
-        </div>
-        <div class="result-section-body">
-          <pre class="raw-json" id="raw-json">{
-  "status": "no run yet",
-  "hint": "Hit Run on the Run tab to populate."
-}</pre>
+      <div class="ag-dev-panel" id="ag-dev-panel" hidden>
+        <div class="ag-dev-grid">
+          <div class="ag-dev-block"><div class="ag-dev-h">cURL request <button class="copy-btn" id="copy-curl" type="button">Copy</button></div><pre id="curl-text">not set</pre></div>
+          <div class="ag-dev-block"><div class="ag-dev-h">Raw JSON response <span class="meta" id="json-meta">no run yet</span></div><pre class="raw-json" id="raw-json">{ "status": "no run yet" }</pre></div>
         </div>
       </div>
     </div>
 
-    <div class="tab-content" data-tab="curl">
-      <div class="result-section">
-        <div class="result-section-head">
-          <h3><span class="accent" style="background:var(--info)"></span>cURL command</h3>
-          <span class="meta">paste into your terminal</span>
-        </div>
-        <div class="result-section-body">
-          <div class="curl-block" id="curl-block"><button class="copy-btn" id="copy-curl">Copy</button><span id="curl-text">not set</span></div>
-        </div>
-      </div>
+    <!-- run history drawer -->
+    <div class="ag-history" id="ag-history" hidden>
+      <div class="ag-hist-head"><span>Run history</span><button class="ag-tool" id="ag-hist-close" type="button">Close</button></div>
+      <div class="ag-hist-list" id="ag-hist-list"></div>
     </div>
     </div><!-- /view-agents -->
   </section>
@@ -1467,6 +1530,98 @@ ovFeedInit();
 setInterval(ovFeedTick,3200);
 (function(){var p=new URLSearchParams(location.search);var _wf=p.get("wf"),_view=p.get("view");if(_view&&document.getElementById("view-"+_view)){showView(_view);}else{showView((_wf&&WORKFLOWS.find(function(w){return w.id===_wf;}))?"agents":"overview");}})();
 
+</script>
+
+<script>
+/* ===== Agents view functions: thinking, per-surface copy, history, regenerate, export ===== */
+(function(){
+  var resultsEl=document.getElementById("results"); if(!resultsEl)return;
+  function el(id){return document.getElementById(id);}
+  var pendingCapture=false, agThinkTimer=null, AGHIST=[];
+
+  function collapseInput(){var b=el("ag-inbar");if(b)b.classList.add("collapsed");}
+  function expandInput(){var b=el("ag-inbar");if(b)b.classList.remove("collapsed");}
+  if(el("ag-edit")) el("ag-edit").addEventListener("click",expandInput);
+
+  function showThinking(){
+    var t=el("ag-thinking"); if(!t)return; t.hidden=false;
+    var steps=["Reading the brain","Drafting in voice","Formatting surfaces"];
+    var box=el("ag-think-steps");
+    box.innerHTML=steps.map(function(s){return '<div class="ag-step"><span class="ag-step-dot"></span>'+s+'</div>';}).join("");
+    var stepEls=box.querySelectorAll(".ag-step"), i=0;
+    if(stepEls[0])stepEls[0].classList.add("on");
+    if(agThinkTimer)clearInterval(agThinkTimer);
+    agThinkTimer=setInterval(function(){ if(stepEls[i]){stepEls[i].classList.remove("on");stepEls[i].classList.add("done");} i++; if(stepEls[i])stepEls[i].classList.add("on"); else {clearInterval(agThinkTimer);agThinkTimer=null;} },360);
+  }
+  function hideThinking(){var t=el("ag-thinking");if(t)t.hidden=true;if(agThinkTimer){clearInterval(agThinkTimer);agThinkTimer=null;}}
+
+  function startRun(){ pendingCapture=true; showThinking(); collapseInput(); el("ag-out-bar").hidden=true; var dp=el("ag-dev-panel"); if(dp)dp.hidden=true; }
+  if(el("run-btn")) el("run-btn").addEventListener("click",function(){ startRun(); });
+
+  function agSync(){
+    var cards=resultsEl.querySelectorAll(".card, .quote");
+    var loading=resultsEl.querySelector(".skel");
+    var placeholder=resultsEl.querySelector(".placeholder");
+    var hasFinal=cards.length>0 && !loading && !placeholder;
+    el("ag-out-bar").hidden=!hasFinal;
+    if(!hasFinal) return;
+    hideThinking();
+    Array.prototype.forEach.call(cards,function(c){
+      var host=c.classList.contains("card")?c.querySelector(".top"):c;
+      if(host && !host.querySelector(".card-copy")){
+        var b=document.createElement("button"); b.type="button"; b.className="card-copy"; b.textContent="Copy";
+        b.addEventListener("click",function(ev){ ev.stopPropagation(); var body=c.querySelector(".body")||c.querySelector("q")||c; var txt=(body.innerText||body.textContent||"").trim(); if(navigator.clipboard)navigator.clipboard.writeText(txt).then(function(){b.textContent="Copied";setTimeout(function(){b.textContent="Copy";},1200);}); });
+        host.appendChild(b);
+      }
+    });
+    if(pendingCapture){ pendingCapture=false; pushHistory(); }
+  }
+  new MutationObserver(agSync).observe(resultsEl,{childList:true,subtree:true});
+
+  function stamp(){ try{return new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});}catch(e){return "";} }
+  function firstInput(inp){ for(var k in inp){ if(inp[k]&&typeof inp[k]==="string") return inp[k].slice(0,64); } return "(no input)"; }
+  function pushHistory(){
+    var w=WORKFLOWS.find(function(x){return x.id===activeId;}); if(!w||typeof lastResult==="undefined"||!lastResult)return;
+    AGHIST.unshift({id:activeId,label:(el("wf-label").textContent||w.label),inputs:JSON.parse(JSON.stringify(inputs)),result:lastResult,t:stamp()});
+    if(AGHIST.length>25)AGHIST.pop();
+    renderHistory();
+  }
+  function renderHistory(){
+    var list=el("ag-hist-list"); if(!list)return;
+    if(!AGHIST.length){ list.innerHTML='<div class="ag-hist-empty">No runs yet this session. Run an agent and it shows up here.</div>'; return; }
+    list.innerHTML=AGHIST.map(function(h,i){return '<button class="ag-hist-item" type="button" data-i="'+i+'"><span class="ag-hist-ag">'+h.label+'</span><span class="ag-hist-t">'+h.t+'</span><span class="ag-hist-sn">'+firstInput(h.inputs).replace(/&/g,"&amp;").replace(/</g,"&lt;")+'</span></button>';}).join("");
+    Array.prototype.forEach.call(list.querySelectorAll(".ag-hist-item"),function(b){ b.addEventListener("click",function(){ restoreRun(AGHIST[+b.dataset.i]); }); });
+  }
+  function restoreRun(h){
+    var w=WORKFLOWS.find(function(x){return x.id===h.id;}); if(!w)return;
+    if(typeof showView==="function") showView("agents");
+    activate(h.id);
+    for(var k in h.inputs){ inputs[k]=h.inputs[k]; }
+    renderInputs(w); if(typeof updateCurl==="function") updateCurl(w);
+    lastResult=h.result; renderResults(w,h.result,false); updateJson(h.result);
+    expandInput(); el("ag-history").hidden=true;
+  }
+  if(el("ag-history-btn")) el("ag-history-btn").addEventListener("click",function(){ var d=el("ag-history"); d.hidden=!d.hidden; });
+  if(el("ag-hist-close")) el("ag-hist-close").addEventListener("click",function(){ el("ag-history").hidden=true; });
+
+  if(el("ag-regen")) el("ag-regen").addEventListener("click",function(){ if(el("run-btn").disabled)return; startRun(); run(); });
+
+  function collectMD(){
+    var md="# "+(el("wf-label").textContent||"Agent output")+"\n\n";
+    var secs=resultsEl.querySelectorAll(".result-section");
+    if(secs.length){ Array.prototype.forEach.call(secs,function(sec){ var h=sec.querySelector("h3"); if(h)md+="## "+h.textContent.trim()+"\n\n"; Array.prototype.forEach.call(sec.querySelectorAll(".card"),function(c){ var t=c.querySelector(".ttl"); var b=c.querySelector(".body"); md+="### "+(t?t.textContent.trim():"")+"\n\n"+(b?b.innerText.trim():"")+"\n\n"; }); Array.prototype.forEach.call(sec.querySelectorAll(".quote"),function(q){ md+="> "+q.innerText.trim().replace(/\n/g,"\n> ")+"\n\n"; }); }); }
+    else { Array.prototype.forEach.call(resultsEl.querySelectorAll(".card"),function(c){ var t=c.querySelector(".ttl"); var b=c.querySelector(".body"); md+="### "+(t?t.textContent.trim():"")+"\n\n"+(b?b.innerText.trim():"")+"\n\n"; }); }
+    return md.trim()+"\n";
+  }
+  function download(name,text,type){ var blob=new Blob([text],{type:type}); var url=URL.createObjectURL(blob); var a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function(){URL.revokeObjectURL(url);},2000); }
+  function slug(){ return (el("wf-label").textContent||"output").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); }
+  if(el("ag-copyall")) el("ag-copyall").addEventListener("click",function(){ var b=el("ag-copyall"); if(navigator.clipboard)navigator.clipboard.writeText(collectMD()).then(function(){b.textContent="Copied all";setTimeout(function(){b.textContent="Copy all";},1300);}); });
+  if(el("ag-dl-md")) el("ag-dl-md").addEventListener("click",function(){ download(slug()+".md",collectMD(),"text/markdown"); });
+  if(el("ag-dl-json")) el("ag-dl-json").addEventListener("click",function(){ download(slug()+".json",JSON.stringify(typeof lastResult!=="undefined"?lastResult:{},null,2),"application/json"); });
+  if(el("ag-dev")) el("ag-dev").addEventListener("click",function(){ var d=el("ag-dev-panel"); d.hidden=!d.hidden; });
+
+  ["tbf-list","romanoff-list"].forEach(function(id){ var ul=el(id); if(ul) ul.addEventListener("click",function(e){ if(e.target.closest&&e.target.closest(".nav-item")){ expandInput(); el("ag-out-bar").hidden=true; el("ag-dev-panel").hidden=true; el("ag-history").hidden=true; hideThinking(); } }); });
+})();
 </script>
 </body>
 </html>
