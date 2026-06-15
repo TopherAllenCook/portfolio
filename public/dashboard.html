@@ -426,6 +426,20 @@
   .ag-hist-ag{font-size:13px;font-weight:600;color:var(--ink)}
   .ag-hist-t{font-family:var(--mono);font-size:10px;color:var(--muted-2);align-self:center}
   .ag-hist-sn{grid-column:1/2;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* workspace selector */
+  .ws-wrap{position:relative}
+  .ws-select{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid var(--line);border-radius:var(--r-2);background:var(--surface);color:var(--ink-2);font-size:13px;font-weight:500;transition:border-color var(--t),background var(--t)}
+  .ws-select:hover{border-color:var(--line-strong);background:var(--surface-2)}
+  .ws-dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--tbf),var(--romanoff));flex:none}
+  .ws-name{color:var(--ink);font-weight:600;letter-spacing:-.005em}
+  .ws-tag{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);border-radius:var(--r-pill);padding:1px 6px}
+  .ws-select svg{color:var(--muted)}
+  .ws-pop{position:absolute;top:calc(100% + 8px);left:0;width:290px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-3);box-shadow:var(--shadow-lg);padding:var(--s-3);z-index:70;animation:reveal 160ms both}
+  .ws-pop[hidden]{display:none}
+  .ws-pop-cur{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink);padding:var(--s-2) var(--s-2) var(--s-3);border-bottom:1px solid var(--line-2)}
+  .ws-pop-cur .ws-tag{margin-left:auto}
+  .ws-pop-note{font-size:12px;line-height:1.5;color:var(--ink-3);padding:var(--s-3) var(--s-2) var(--s-2)}
+  @media(max-width:640px){.ws-tag{display:none}.ws-name{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
   :focus-visible{outline:2px solid var(--info);outline-offset:2px;border-radius:4px}
 </style>
 </head>
@@ -438,7 +452,16 @@
       <span class="name">Nexus</span>
     </div>
     <span class="sep"></span>
-    <span class="crumb"><b>Marketing Engineer</b></span>
+    <div class="ws-wrap">
+      <button class="ws-select" id="ws-select" type="button" aria-haspopup="true" aria-expanded="false">
+        <span class="ws-dot"></span><span class="ws-name">Terpene Belt Farms</span><span class="ws-tag">example</span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="ws-pop" id="ws-pop" hidden>
+        <div class="ws-pop-cur"><span class="ws-dot"></span>Terpene Belt Farms<span class="ws-tag">connected</span></div>
+        <div class="ws-pop-note">This is the brand loaded for the demo. In a live setup you switch workspaces here, the agents and dashboards stay the same; only the brand they work for changes.</div>
+      </div>
+    </div>
     <span class="pill pill-live"><span class="pulse"></span>Live</span>
     <div class="spacer"></div>
     <button class="cmd-hint" id="cmdk-open">Search workflows… <kbd>⌘K</kbd></button>
@@ -448,14 +471,14 @@
 
 <div class="stats-strip">
   <div class="stat">
-    <div class="stat-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 12h4l2-8 4 16 2-8h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Live workflows</div>
-    <div class="stat-value">9<span class="unit">/ 9</span></div>
+    <div class="stat-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 12h4l2-8 4 16 2-8h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Live agents</div>
+    <div class="stat-value">8<span class="unit">/ 8</span></div>
     <div class="stat-delta"><span class="up">All systems operational</span></div>
   </div>
   <div class="stat">
-    <div class="stat-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 10h18" stroke="currentColor" stroke-width="2"/></svg>Brands</div>
-    <div class="stat-value">2<span class="unit">clients</span></div>
-    <div class="stat-delta">TBF · Dr. Romanoff (showcase)</div>
+    <div class="stat-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 10h18" stroke="currentColor" stroke-width="2"/></svg>Workspace</div>
+    <div class="stat-value">1<span class="unit">connected</span></div>
+    <div class="stat-delta">Terpene Belt Farms (example)</div>
   </div>
   <div class="stat">
     <div class="stat-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Avg latency</div>
@@ -482,20 +505,7 @@
           <li><button class="nav-view" data-view="campaigns"><span class="vico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M3 5h18M3 12h18M3 19h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="vlabel">Campaigns</span></button></li>
         </ul>
       </div>
-      <div class="nav-section">
-        <div class="nav-section-head">
-          <span class="ttl"><span class="ico" style="background:var(--tbf)"></span>Terpene Belt Farms</span>
-          <span class="count">6</span>
-        </div>
-        <ul class="nav-list" id="tbf-list"></ul>
-      </div>
-      <div class="nav-section">
-        <div class="nav-section-head">
-          <span class="ttl"><span class="ico" style="background:var(--romanoff)"></span>Showcase · Dr. Romanoff</span>
-          <span class="count">3</span>
-        </div>
-        <ul class="nav-list" id="romanoff-list"></ul>
-      </div>
+      <div id="agent-nav"></div>
       <div class="nav-footer">
         <div class="nav-footer-row"><span>n8n cloud</span><span class="v">9 active</span></div>
         <div class="nav-footer-row"><span>brain</span><span class="v">10 files · git-versioned</span></div>
@@ -680,7 +690,7 @@
 
 <footer>
   <div>
-    <a href="/pitch/nexus">/pitch/nexus</a> · <a href="/pitch/sabrina">/pitch/sabrina</a>
+    <span class="mono">Nexus</span> · marketing automation platform · 8 agents
   </div>
   <div class="right">
     <span>Single static file · <span class="mono">/dashboard.html</span></span>
@@ -802,7 +812,7 @@ const WORKFLOWS = [
   {
     id:"romanoff_full_stack", group:"romanoff",
     label:"Content Stack", badge:"~60s",
-    n8nName:"Nexus Agriscience · Showcase (Dr. Romanoff): Content Stack",
+    n8nName:"Nexus Agriscience · Showcase (Dr. Ellis): Content Stack",
     webhook:N8N+"/romanoff-content-stack", eta:60, renderer:"romanoff_full",
     fields:[
       {name:"topic",label:"Topic",type:"textarea",placeholder:"News event, cultural moment, clinical concept..."},
@@ -820,7 +830,7 @@ const WORKFLOWS = [
   {
     id:"romanoff_press_quote", group:"romanoff",
     label:"Press Quote Writer", badge:"~15s",
-    n8nName:"Nexus Agriscience · Showcase (Dr. Romanoff): Press Quote Writer",
+    n8nName:"Nexus Agriscience · Showcase (Dr. Ellis): Press Quote Writer",
     webhook:N8N+"/romanoff-press-quote", eta:15, renderer:"press_quotes",
     fields:[
       {name:"outlet",label:"Outlet",type:"text",placeholder:"e.g. Cosmopolitan, Today Show, BBC"},
@@ -837,7 +847,7 @@ const WORKFLOWS = [
   {
     id:"romanoff_aeo_page", group:"romanoff",
     label:"AEO Page Builder", badge:"~40s",
-    n8nName:"Nexus Agriscience · Showcase (Dr. Romanoff): AEO Page Builder",
+    n8nName:"Nexus Agriscience · Showcase (Dr. Ellis): AEO Page Builder",
     webhook:N8N+"/romanoff-aeo-page", eta:40, renderer:"aeo_page",
     fields:[{name:"question",label:"Question (search query)",type:"textarea",placeholder:"What are the 4 attachment styles in adult relationships?"}],
     presets:[
@@ -872,11 +882,22 @@ const $ = (s,r=document) => r.querySelector(s);
 const $$ = (s,r=document) => Array.from(r.querySelectorAll(s));
 
 // ----- Sidebar -----
+const AGENT_CATS=[
+  {label:"Content", color:"var(--tbf)", ids:["tbf_four_surfaces","tbf_full_stack","tbf_blog_splinter"]},
+  {label:"Ads & Creative", color:"var(--info)", ids:["tbf_competitor_ad","tbf_ugc_ad"]},
+  {label:"Leads", color:"var(--warn)", ids:["tbf_sample_pack_triage"]},
+  {label:"Search & PR", color:"var(--romanoff)", ids:["romanoff_aeo_page","romanoff_press_quote"]}
+];
 function renderSidebar(){
-  const tbf = WORKFLOWS.filter(w=>w.group==="tbf");
-  const ro  = WORKFLOWS.filter(w=>w.group==="romanoff");
-  $("#tbf-list").innerHTML = tbf.map((w,i) => listItem(w,i+1)).join("");
-  $("#romanoff-list").innerHTML = ro.map((w,i) => listItem(w,i+tbf.length+1)).join("");
+  let n=0, html="";
+  AGENT_CATS.forEach(c=>{
+    const items=c.ids.map(id=>WORKFLOWS.find(w=>w.id===id)).filter(Boolean);
+    if(!items.length) return;
+    html += `<div class="nav-section"><div class="nav-section-head"><span class="ttl"><span class="ico" style="background:${c.color}"></span>${c.label}</span><span class="count">${items.length}</span></div><ul class="nav-list">`;
+    items.forEach(w=>{ w.catLabel=c.label; w.catColor=c.color; n++; html += listItem(w,n); });
+    html += `</ul></div>`;
+  });
+  $("#agent-nav").innerHTML = html;
   $$("aside .nav-item").forEach(b => b.addEventListener("click", () => activate(b.dataset.id)));
 }
 function listItem(w,n){
@@ -906,8 +927,8 @@ function activate(id){
   $("#wf-webhook").textContent = pathname;
   $("#wf-webhook").title = w.webhook;
   $("#wf-eta").textContent = `~${w.eta}s`;
-  $("#brand-name").textContent = w.group === "tbf" ? "Terpene Belt Farms" : "Dr. Romanoff (Showcase)";
-  $("#brand-dot").style.background = w.group === "tbf" ? "var(--tbf)" : "var(--romanoff)";
+  $("#brand-name").textContent = w.catLabel || "Agent";
+  $("#brand-dot").style.background = w.catColor || "var(--tbf)";
 
   inputs = {};
   for (const f of w.fields){
@@ -1132,7 +1153,7 @@ function renderResults(w, data, loading){
   let html = "";
   if (w.renderer === "tbf_four") html = renderTbfFour(data, loading, w);
   else if (w.renderer === "tbf_full") html = renderTbfFull(data, loading, w);
-  else if (w.renderer === "romanoff_full") html = renderRomanoffFull(data, loading, w);
+  else if (w.renderer === "romanoff_full") html = renderEllisFull(data, loading, w);
   else if (w.renderer === "press_quotes") html = renderPressQuotes(data, loading, w);
   else if (w.renderer === "aeo_page") html = renderAeoPage(data, loading, w);
   else if (w.renderer === "triage") html = renderTriage(data, loading, w);
@@ -1204,7 +1225,7 @@ function renderTbfFull(d, loading){
   ].join("");
 }
 
-function renderRomanoffFull(d, loading){
+function renderEllisFull(d, loading){
   const s = d?.stack || {};
   return [
     section("Press + Social","4 surfaces","var(--romanoff)",`<div class="g2">
@@ -1439,26 +1460,26 @@ const DEMO = {
       captions:{tiktok:"POV: your terpenes do not survive your own hardware. Gas-707 holds flavor to 230C. Here is the GC-MS proof. #vapeformulation #terpenes #cannabisscience",instagram:"Most monoterpene blends drop off above 180C. Gas-707 holds its flavor curve to 230C, GC-MS verified. Built for the coil, not the tasting room.",meta_paid:"Formulating vape? Your terpene profile has to survive the coil. Gas-707 holds flavor integrity to 230C, documented by GC-MS, COA on every batch. See the thermal data."},
       hook_breakdown:{hook_first_seconds:"'Most terpenes quit at 180 degrees.' A specific, contrarian claim that indicts the category in three seconds.",why_it_stops_scroll:"It names a failure the viewer has personally experienced (flavor falling apart on a hot coil) and promises proof, not opinion.",retention_mechanism:"The on-screen temperature gauge climbing toward 230C creates an open loop: viewers stay to see whether the flavor curve holds."}}},
     romanoff_full_stack:{stack:{
-      press_quote:"\"Doomscrolling is not a willpower problem, it is a threat-detection problem. Your brain evolved to scan for danger, and an infinite feed of bad news convinces your nervous system the danger never ends. The anxiety you feel at 1 a.m. is not weakness. It is an ancient alarm system being exploited by a very modern design.\" Dr. Romanoff",
+      press_quote:"\"Doomscrolling is not a willpower problem, it is a threat-detection problem. Your brain evolved to scan for danger, and an infinite feed of bad news convinces your nervous system the danger never ends. The anxiety you feel at 1 a.m. is not weakness. It is an ancient alarm system being exploited by a very modern design.\" Dr. Ellis",
       instagram:"That 1 a.m. anxiety spiral has a name, and it is not 'being dramatic.'\n\nDoomscrolling hijacks your brain's threat-detection circuitry. The feed never ends, so your nervous system never gets the all-clear. Here is how to give it one.",
       tiktok_script:"[hook] If you doomscroll at night and then cannot figure out why you are anxious, this is for you. [body] Your brain has a threat-detection system. It scans for danger, then stands down. An infinite feed of bad news never lets it stand down. [turn] So the fix is not 'more willpower.' It is a hard stop. [close] Pick a time. Charge your phone in another room. Your alarm system needs to know the scan is over.",
-      podcast_pitch:"Subject: A clinical psychologist on why doomscrolling breaks your sleep. With anxiety and screen time both climbing, Dr. Romanoff offers a sharp, evidence-based angle: doomscrolling as a hijack of the brain's threat-detection circuitry, not a discipline failure. She gives audiences a concrete nervous-system off-ramp they can use that night. Available for a 20-minute segment this week.",
-      seo:{meta_title:"Why Doomscrolling Makes Anxiety Worse at Night | Dr. Romanoff",h1:"Doomscrolling and Nighttime Anxiety: What Is Actually Happening in Your Brain",primary_keyword:"doomscrolling anxiety at night",meta_description:"Clinical psychologist Dr. Romanoff explains why doomscrolling worsens nighttime anxiety and how to give your threat-detection system an off-ramp.",internal_link_suggestions:[{anchor:"anxiety therapy",target_url:"/services/anxiety"},{anchor:"sleep and the nervous system",target_url:"/answers/sleep-nervous-system"}],schema_jsonld:'{"@context":"https://schema.org","@type":"Article","headline":"Doomscrolling and Nighttime Anxiety","author":{"@type":"Person","name":"Dr. Romanoff"}}'},
-      aeo:{question:"Why does doomscrolling make anxiety worse at night?",direct_answer:"Doomscrolling worsens nighttime anxiety because it keeps the brain's threat-detection circuitry activated. An endless feed of negative information prevents the nervous system from receiving an all-clear, so the alarm state persists into the night.",full_answer:"According to clinical psychologist Dr. Romanoff, doomscrolling worsens nighttime anxiety by exploiting the brain's threat-detection system. This circuitry evolved to scan for danger and then stand down once the threat passes. An infinite feed of bad news never delivers the signal that the threat has passed, so the nervous system stays in a low-grade alarm state, most noticeable at night when other distractions fall away. The intervention is to give the system a clear stop: a set cut-off time and physical distance from the device.",schema_faq_markup:'{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does doomscrolling make anxiety worse at night?","acceptedAnswer":{"@type":"Answer","text":"It keeps the brain threat-detection circuitry activated, so the nervous system never gets an all-clear."}}]}'},
+      podcast_pitch:"Subject: A clinical psychologist on why doomscrolling breaks your sleep. With anxiety and screen time both climbing, Dr. Ellis offers a sharp, evidence-based angle: doomscrolling as a hijack of the brain's threat-detection circuitry, not a discipline failure. She gives audiences a concrete nervous-system off-ramp they can use that night. Available for a 20-minute segment this week.",
+      seo:{meta_title:"Why Doomscrolling Makes Anxiety Worse at Night | Dr. Ellis",h1:"Doomscrolling and Nighttime Anxiety: What Is Actually Happening in Your Brain",primary_keyword:"doomscrolling anxiety at night",meta_description:"Clinical psychologist Dr. Ellis explains why doomscrolling worsens nighttime anxiety and how to give your threat-detection system an off-ramp.",internal_link_suggestions:[{anchor:"anxiety therapy",target_url:"/services/anxiety"},{anchor:"sleep and the nervous system",target_url:"/answers/sleep-nervous-system"}],schema_jsonld:'{"@context":"https://schema.org","@type":"Article","headline":"Doomscrolling and Nighttime Anxiety","author":{"@type":"Person","name":"Dr. Ellis"}}'},
+      aeo:{question:"Why does doomscrolling make anxiety worse at night?",direct_answer:"Doomscrolling worsens nighttime anxiety because it keeps the brain's threat-detection circuitry activated. An endless feed of negative information prevents the nervous system from receiving an all-clear, so the alarm state persists into the night.",full_answer:"According to clinical psychologist Dr. Ellis, doomscrolling worsens nighttime anxiety by exploiting the brain's threat-detection system. This circuitry evolved to scan for danger and then stand down once the threat passes. An infinite feed of bad news never delivers the signal that the threat has passed, so the nervous system stays in a low-grade alarm state, most noticeable at night when other distractions fall away. The intervention is to give the system a clear stop: a set cut-off time and physical distance from the device.",schema_faq_markup:'{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does doomscrolling make anxiety worse at night?","acceptedAnswer":{"@type":"Answer","text":"It keeps the brain threat-detection circuitry activated, so the nervous system never gets an all-clear."}}]}'},
       geo:{definition_snippet:"Doomscrolling is the compulsive consumption of negative news that keeps the brain's threat-detection system activated, worsening anxiety.",three_signs_snippet:"Three signs doomscrolling is driving your anxiety: it spikes at night, you feel dread without a specific cause, and you keep scrolling for a resolution that never comes.",clinical_reframe_snippet:"Reframe: nighttime anxiety after scrolling is not weak willpower, it is an evolved alarm system being kept switched on.",permission_grant_snippet:"You are allowed to put the phone in another room. Protecting your nervous system is not avoidance, it is regulation."}}},
     romanoff_press_quote:{quotes:{
       variant_a:{angle:"mechanism-led",quote:"People stay past the expiration date because of intermittent reinforcement. The relationship still delivers occasional warmth, and unpredictable rewards are the most powerful kind. Your brain keeps betting because sometimes the bet pays off."},
       variant_b:{angle:"reframe-led",quote:"We frame it as 'not trying hard enough to leave,' but staying is often the nervous system choosing the familiar over the unknown. Familiar pain can feel safer than unfamiliar uncertainty, even when it costs more."},
       variant_c:{angle:"three-signs",quote:"Three signs you are staying out of sunk cost, not love: you talk more about the years invested than the future imagined, you defend the relationship to friends more than you enjoy it, and relief, not sadness, is what you feel imagining it ending."},
       suggested_pull_quote:"Familiar pain can feel safer than unfamiliar uncertainty, even when it costs more.",
-      credentials:"Dr. Romanoff is a licensed clinical psychologist specializing in attachment and relationship dynamics. Available for interviews and expert commentary."}},
+      credentials:"Dr. Ellis is a licensed clinical psychologist specializing in attachment and relationship dynamics. Available for interviews and expert commentary."}},
     romanoff_aeo_page:{page:{
-      url_slug:"/answers/four-attachment-styles",meta_title:"The 4 Attachment Styles in Adult Relationships | Dr. Romanoff",h1:"What Are the 4 Attachment Styles in Adult Relationships?",meta_description:"Clinical psychologist Dr. Romanoff explains the four adult attachment styles, secure, anxious, avoidant, and disorganized, and how each shows up in relationships.",
+      url_slug:"/answers/four-attachment-styles",meta_title:"The 4 Attachment Styles in Adult Relationships | Dr. Ellis",h1:"What Are the 4 Attachment Styles in Adult Relationships?",meta_description:"Clinical psychologist Dr. Ellis explains the four adult attachment styles, secure, anxious, avoidant, and disorganized, and how each shows up in relationships.",
       direct_answer:"The four adult attachment styles are secure, anxious (preoccupied), avoidant (dismissive), and disorganized (fearful-avoidant). They describe the patterns people use to seek or avoid closeness, shaped largely by early caregiving experiences.",
       full_answer:"Attachment theory identifies four primary styles in adult relationships. Secure attachment is marked by comfort with both closeness and independence. Anxious (preoccupied) attachment involves a strong desire for closeness paired with fear of abandonment. Avoidant (dismissive) attachment prioritizes self-reliance and deactivates under emotional demand. Disorganized (fearful-avoidant) attachment blends a desire for connection with a fear of it, often rooted in early experiences where a caregiver was both the source of comfort and of distress. Styles are patterns, not life sentences: with awareness and corrective relationships, people can move toward security.",
       ethics_caveat:"This is educational information, not a diagnosis or treatment. Attachment patterns are nuanced and best explored with a licensed clinician.",
       schema_faq_markup:'{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What are the 4 attachment styles?","acceptedAnswer":{"@type":"Answer","text":"Secure, anxious, avoidant, and disorganized."}}]}',
-      schema_person_markup:'{"@context":"https://schema.org","@type":"Person","name":"Dr. Romanoff","jobTitle":"Clinical Psychologist","knowsAbout":["attachment theory","adult relationships","anxiety"]}',
+      schema_person_markup:'{"@context":"https://schema.org","@type":"Person","name":"Dr. Ellis","jobTitle":"Clinical Psychologist","knowsAbout":["attachment theory","adult relationships","anxiety"]}',
       geo_snippets:{definition_snippet:"The four adult attachment styles are secure, anxious, avoidant, and disorganized, patterns for how people seek or avoid closeness.",three_signs_snippet:"Three signs of anxious attachment: fear of abandonment, a need for frequent reassurance, and heightened sensitivity to a partner's mood.",clinical_reframe_snippet:"Reframe: your attachment style is not a flaw, it is an adaptation that once kept you safe and can be updated.",permission_grant_snippet:"You are allowed to want closeness and independence at the same time. Secure attachment holds both."}}}
   };
 /* ===== Mission Control extension: views + overview telemetry ===== */
@@ -1470,7 +1491,7 @@ function showView(name){
 Array.prototype.forEach.call(document.querySelectorAll(".nav-view"),function(b){b.addEventListener("click",function(){showView(b.dataset.view);});});
 
 // clicking an agent in the sidebar switches to the Agents view (activate handled by base script)
-["tbf-list","romanoff-list"].forEach(function(id){var ul=document.getElementById(id);if(ul)ul.addEventListener("click",function(e){if(e.target.closest&&e.target.closest(".nav-item"))showView("agents");});});
+(function(){var an=document.getElementById("agent-nav");if(an)an.addEventListener("click",function(e){if(e.target.closest&&e.target.closest(".nav-item"))showView("agents");});})();
 
 // run mode toggle (Demo / Run live)
 var mdDemo=document.getElementById("mode-demo"), mdLive=document.getElementById("mode-live");
@@ -1620,7 +1641,15 @@ setInterval(ovFeedTick,3200);
   if(el("ag-dl-json")) el("ag-dl-json").addEventListener("click",function(){ download(slug()+".json",JSON.stringify(typeof lastResult!=="undefined"?lastResult:{},null,2),"application/json"); });
   if(el("ag-dev")) el("ag-dev").addEventListener("click",function(){ var d=el("ag-dev-panel"); d.hidden=!d.hidden; });
 
-  ["tbf-list","romanoff-list"].forEach(function(id){ var ul=el(id); if(ul) ul.addEventListener("click",function(e){ if(e.target.closest&&e.target.closest(".nav-item")){ expandInput(); el("ag-out-bar").hidden=true; el("ag-dev-panel").hidden=true; el("ag-history").hidden=true; hideThinking(); } }); });
+  var agentNav=el("agent-nav");
+  if(agentNav) agentNav.addEventListener("click",function(e){ if(e.target.closest&&e.target.closest(".nav-item")){ expandInput(); el("ag-out-bar").hidden=true; el("ag-dev-panel").hidden=true; el("ag-history").hidden=true; hideThinking(); } });
+
+  // workspace selector popover
+  var wsBtn=el("ws-select"), wsPop=el("ws-pop");
+  if(wsBtn&&wsPop){
+    wsBtn.addEventListener("click",function(e){ e.stopPropagation(); var willOpen=wsPop.hidden; wsPop.hidden=!willOpen; wsBtn.setAttribute("aria-expanded",String(willOpen)); });
+    document.addEventListener("click",function(e){ if(!wsPop.hidden && !wsPop.contains(e.target) && !wsBtn.contains(e.target)){ wsPop.hidden=true; wsBtn.setAttribute("aria-expanded","false"); } });
+  }
 })();
 </script>
 </body>
