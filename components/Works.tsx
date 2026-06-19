@@ -40,7 +40,7 @@ export default function Works() {
                   className="object-cover transition-transform duration-[700ms] ease-out group-hover:scale-[1.05]"
                 />
                 {/* gradient + overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                 <div className="absolute inset-0 bg-[color:var(--accent)]/0 group-hover:bg-[color:var(--accent)]/[0.08] transition-colors duration-500" />
 
                 {/* index */}
