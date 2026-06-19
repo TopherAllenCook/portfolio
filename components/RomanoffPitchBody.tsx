@@ -42,7 +42,7 @@ export default function RomanoffPitchBody() {
             index="01"
             title="Brain"
             subtitle="Obsidian / Markdown vault"
-            tint="#161512"
+            tint="#f5f5f5"
             body="Voice Manual (clinical authority delivered conversationally), brand canon, services catalog, audience personas (journalist, social audience, therapy prospect, podcast booker), SEO keywords, AEO question library, GEO snippet templates, press history (40+ outlets), research corpus, automation stack roadmap."
           />
           <ArchCard
@@ -198,7 +198,7 @@ function Section({ eyebrow, title, children }: { eyebrow: string; title: string;
 
 function ArchCard({ index, title, subtitle, tint, body }: { index: string; title: string; subtitle: string; tint: string; body: string }) {
   return (
-    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-white/50 h-full flex flex-col">
+    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-[color:var(--bg-panel)] h-full flex flex-col">
       <span className="text-[10px] tabular-nums text-[color:var(--muted)] tracking-widest">
         LAYER {index}
       </span>
@@ -215,7 +215,7 @@ function ArchCard({ index, title, subtitle, tint, body }: { index: string; title
 
 function PhaseCard({ phase, title, points }: { phase: string; title: string; points: string[] }) {
   return (
-    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-white/50 h-full">
+    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-[color:var(--bg-panel)] h-full">
       <p className="eyebrow">{phase}</p>
       <div className="font-display text-xl md:text-2xl tracking-tight leading-tight mt-1">
         {title}

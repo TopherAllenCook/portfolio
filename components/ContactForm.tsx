@@ -53,15 +53,17 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-lg border border-[color:var(--bg)]/30 bg-[color:var(--bg)]/[0.04] p-8">
-        <p className="eyebrow text-[color:var(--bg)]/60 mb-3">Message sent</p>
+      <div className="rounded-xl border border-[color:var(--line)] bg-[color:var(--bg-panel)] p-8">
+        <span className="bracket bracket-muted mb-4 inline-flex">
+          Message sent
+        </span>
         <p className="font-display text-3xl md:text-4xl tracking-tight">
           Thanks. I&rsquo;ll be in touch within a day.
         </p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 text-sm link-underline text-[color:var(--bg)]/80"
+          className="mt-6 text-sm link-underline text-[color:var(--muted)] hover:text-[color:var(--ink)]"
         >
           Send another message
         </button>
@@ -94,9 +96,9 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="inline-flex items-center gap-3 rounded-full bg-[color:var(--bg)] text-[color:var(--ink)] px-6 py-4 text-base font-medium hover:bg-[color:var(--bg-elev)] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          className="btn btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {status === "submitting" ? "Sending…" : "Send message"}
+          {status === "submitting" ? "Sending..." : "Send message"}
           {status !== "submitting" ? (
             <svg width="14" height="14" viewBox="0 0 12 12" fill="none" aria-hidden>
               <path
@@ -112,7 +114,7 @@ export default function ContactForm() {
         {status === "error" ? (
           <p className="text-sm text-[color:var(--accent)]">{errorMessage}</p>
         ) : (
-          <p className="text-xs text-[color:var(--bg)]/50 max-w-sm">
+          <p className="text-xs text-[color:var(--muted)] max-w-sm">
             Messages route straight to topher.a.cook@gmail.com. No tracking, no list signup.
           </p>
         )}
@@ -136,7 +138,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="block text-xs uppercase tracking-[0.18em] text-[color:var(--bg)]/50 mb-2">
+      <span className="block text-xs uppercase tracking-[0.16em] text-[color:var(--muted)] mb-2">
         {label}
         {required ? "" : <span className="normal-case tracking-normal ml-1">(optional)</span>}
       </span>
@@ -145,7 +147,7 @@ function Field({
         name={name}
         required={required}
         autoComplete={autoComplete}
-        className="w-full bg-transparent border-b border-[color:var(--bg)]/30 focus:border-[color:var(--bg)] outline-none py-3 text-lg text-[color:var(--bg)] placeholder:text-[color:var(--bg)]/30 transition-colors"
+        className="w-full bg-transparent border-b border-[color:var(--line)] focus:border-[color:var(--accent)] outline-none py-3 text-lg text-[color:var(--ink)] placeholder:text-[color:var(--muted)] transition-colors"
       />
     </label>
   );
@@ -162,14 +164,14 @@ function FieldArea({
 }) {
   return (
     <label className="block">
-      <span className="block text-xs uppercase tracking-[0.18em] text-[color:var(--bg)]/50 mb-2">
+      <span className="block text-xs uppercase tracking-[0.16em] text-[color:var(--muted)] mb-2">
         {label}
       </span>
       <textarea
         name={name}
         required={required}
         rows={5}
-        className="w-full bg-transparent border-b border-[color:var(--bg)]/30 focus:border-[color:var(--bg)] outline-none py-3 text-lg text-[color:var(--bg)] placeholder:text-[color:var(--bg)]/30 transition-colors resize-none"
+        className="w-full bg-transparent border-b border-[color:var(--line)] focus:border-[color:var(--accent)] outline-none py-3 text-lg text-[color:var(--ink)] placeholder:text-[color:var(--muted)] transition-colors resize-none"
       />
     </label>
   );

@@ -78,7 +78,7 @@ export default function LiveDemo({ brandSlug }: { brandSlug: string }) {
   return (
     <div className="not-prose">
       {/* Workflow picker */}
-      <div className="border border-[color:var(--line)] rounded-lg bg-white/40 p-4 mb-5">
+      <div className="border border-[color:var(--line)] rounded-lg bg-[color:var(--bg-panel)] p-4 mb-5">
         <p className="eyebrow mb-3">
           Workflow ({brand.workflows.length} live on this brand)
         </p>
@@ -93,7 +93,7 @@ export default function LiveDemo({ brandSlug }: { brandSlug: string }) {
                   "text-left px-4 py-3 rounded-lg border transition-all " +
                   (active
                     ? "border-[color:var(--ink)] bg-[color:var(--ink)] text-[color:var(--bg)]"
-                    : "border-[color:var(--line)] bg-white hover:bg-[color:var(--bg-elev)]")
+                    : "border-[color:var(--line)] bg-[color:var(--bg-panel)] hover:bg-[color:var(--bg-elev)]")
                 }
               >
                 <div className="text-sm font-medium leading-tight">
@@ -117,7 +117,7 @@ export default function LiveDemo({ brandSlug }: { brandSlug: string }) {
       </div>
 
       {/* Input panel */}
-      <div className="border border-[color:var(--line)] rounded-lg bg-white/60 p-5 md:p-6">
+      <div className="border border-[color:var(--line)] rounded-lg bg-[color:var(--bg-panel)] p-5 md:p-6">
         <div className="flex items-baseline justify-between gap-3 mb-4 flex-wrap">
           <p className="eyebrow">Input</p>
           <div className="flex flex-col items-end text-right">
@@ -138,7 +138,7 @@ export default function LiveDemo({ brandSlug }: { brandSlug: string }) {
                 onClick={() => setInputs((prev) => ({ ...prev, ...p.values }))}
                 disabled={loading}
                 className={
-                  "text-xs px-3 py-1.5 rounded-full border transition-colors bg-white border-[color:var(--line)] hover:bg-[color:var(--bg-elev)]" +
+                  "text-xs px-3 py-1.5 rounded-full border transition-colors bg-[color:var(--bg-panel)] border-[color:var(--line)] hover:bg-[color:var(--bg-elev)]" +
                   (loading ? " opacity-50 cursor-not-allowed" : "")
                 }
               >
@@ -236,7 +236,7 @@ function Field({
   disabled: boolean;
 }) {
   const baseInput =
-    "w-full text-sm border border-[color:var(--line)] rounded-md bg-white px-4 py-3 leading-relaxed text-[color:var(--ink-2)] focus:outline-none focus:ring-2 focus:border-current disabled:opacity-60";
+    "w-full text-sm border border-[color:var(--line)] rounded-md bg-[color:var(--bg-panel)] px-4 py-3 leading-relaxed text-[color:var(--ink-2)] focus:outline-none focus:ring-2 focus:border-current disabled:opacity-60";
 
   return (
     <div>
@@ -288,7 +288,7 @@ function Field({
                   "text-xs px-3 py-1.5 rounded-full border transition-colors " +
                   (active
                     ? "text-white border-current"
-                    : "bg-white border-[color:var(--line)] hover:bg-[color:var(--bg-elev)]") +
+                    : "bg-[color:var(--bg-panel)] border-[color:var(--line)] hover:bg-[color:var(--bg-elev)]") +
                   (disabled ? " opacity-50 cursor-not-allowed" : "")
                 }
                 style={

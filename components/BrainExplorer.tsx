@@ -45,9 +45,9 @@ export default function BrainExplorer({ brandSlug }: { brandSlug: string }) {
   const wordCount = body ? body.trim().split(/\s+/).filter(Boolean).length : 0;
 
   return (
-    <div className="not-prose grid grid-cols-12 gap-4 md:gap-5 border border-[color:var(--line)] rounded-lg bg-white/40 overflow-hidden">
+    <div className="not-prose grid grid-cols-12 gap-4 md:gap-5 border border-[color:var(--line)] rounded-lg bg-[color:var(--bg-panel)] overflow-hidden">
       {/* File tree */}
-      <aside className="col-span-12 md:col-span-4 border-b md:border-b-0 md:border-r border-[color:var(--line)] bg-white/60">
+      <aside className="col-span-12 md:col-span-4 border-b md:border-b-0 md:border-r border-[color:var(--line)] bg-[color:var(--bg-panel)]">
         <div className="p-4 border-b border-[color:var(--line)]">
           <p className="eyebrow">{brand.brainBase.replace(/^\//, ".")}/ </p>
           <p className="text-xs text-[color:var(--muted)] mt-1">
@@ -82,7 +82,7 @@ export default function BrainExplorer({ brandSlug }: { brandSlug: string }) {
       </aside>
 
       {/* Content viewer */}
-      <section className="col-span-12 md:col-span-8 bg-white/30">
+      <section className="col-span-12 md:col-span-8 bg-[color:var(--bg-elev)]">
         <div className="px-5 py-4 border-b border-[color:var(--line)] flex items-baseline justify-between gap-3">
           <div className="flex items-baseline gap-2">
             <span>{activeFile.emoji}</span>

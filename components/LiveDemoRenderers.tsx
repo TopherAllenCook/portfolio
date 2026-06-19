@@ -63,7 +63,7 @@ function TbfFullStack({ loading, result }: { loading: boolean; result: TbfFullRe
   const empty = !loading && !result;
   return (
     <div className="space-y-6">
-      <Row title="Social" badge="6 surfaces" tint="#161512">
+      <Row title="Social" badge="6 surfaces" tint="#f5f5f5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Card title="Instagram" meta={result ? `${wc(result.stack.social.instagram)} words` : "—"} loading={loading} text={result?.stack.social.instagram} />
           <Card title="LinkedIn" meta={result ? `${wc(result.stack.social.linkedin)} words` : "—"} loading={loading} text={result?.stack.social.linkedin} />
@@ -90,7 +90,7 @@ function RomanoffFullStack({ loading, result, accent }: { loading: boolean; resu
   const empty = !loading && !result;
   return (
     <div className="space-y-6">
-      <Row title="Press + Social" badge="4 surfaces" tint="#161512">
+      <Row title="Press + Social" badge="4 surfaces" tint="#f5f5f5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <Card title="Press quote" meta={result ? `${wc(result.stack.press_quote)} words` : "—"} loading={loading} text={result?.stack.press_quote} />
           <Card title="Instagram caption" meta={result ? `${wc(result.stack.instagram)} words` : "—"} loading={loading} text={result?.stack.instagram} />
@@ -128,7 +128,7 @@ function PressQuotes({ loading, result, accent }: { loading: boolean; result: Pr
           </div>
         )}
       </Row>
-      <Row title="Pull quote + cred block" badge="for the publication" tint="#161512">
+      <Row title="Pull quote + cred block" badge="for the publication" tint="#f5f5f5">
         {empty ? <Empty mode="callout" /> : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Field label="Suggested pull-quote line (the callout)" loading={loading} value={q?.suggested_pull_quote} accent />
@@ -164,7 +164,7 @@ function AeoPage({ loading, result, accent }: { loading: boolean; result: AeoPag
           </div>
         )}
       </Row>
-      <Row title="Schema markup" badge="paste into <head>" tint="#161512">
+      <Row title="Schema markup" badge="paste into <head>" tint="#f5f5f5">
         {empty ? <Empty mode="schema" /> : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Field label="FAQPage Schema" loading={loading} value={safeJSON(p?.schema_faq_markup)} mono scroll />
@@ -208,7 +208,7 @@ function SampleTriage({ loading, result, accent }: { loading: boolean; result: S
           </div>
         )}
       </Row>
-      <Row title="Personalized follow-up email" badge="ready to send (human-review queue)" tint="#161512">
+      <Row title="Personalized follow-up email" badge="ready to send (human-review queue)" tint="#f5f5f5">
         {empty ? <Empty mode="email" /> : (
           <Card title="Email" meta={t ? `${wc(t.email.body)} words` : "—"} loading={loading} subject={t?.email.subject} text={t?.email.body} />
         )}
@@ -226,7 +226,7 @@ function BlogSplinter({ loading, result, accent }: { loading: boolean; result: B
         {empty ? <Empty mode="carousels" /> : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {(s?.linkedin_carousels ?? [null, null, null]).map((c, i) => (
-              <div key={i} className="border border-[color:var(--line)] rounded-lg p-4 bg-white/60">
+              <div key={i} className="border border-[color:var(--line)] rounded-lg p-4 bg-[color:var(--bg-panel)]">
                 <p className="eyebrow">Carousel {i + 1}</p>
                 {loading && !c && <div className="mt-3 space-y-2"><Skel /><Skel w="11/12" /><Skel w="10/12" /></div>}
                 {c && (
@@ -250,11 +250,11 @@ function BlogSplinter({ loading, result, accent }: { loading: boolean; result: B
         )}
       </Row>
 
-      <Row title="X threads" badge="2 threads · hook + follow tweets + close" tint="#161512">
+      <Row title="X threads" badge="2 threads · hook + follow tweets + close" tint="#f5f5f5">
         {empty ? <Empty mode="threads" /> : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {(s?.x_threads ?? [null, null]).map((t, i) => (
-              <div key={i} className="border border-[color:var(--line)] rounded-lg p-4 bg-white/60">
+              <div key={i} className="border border-[color:var(--line)] rounded-lg p-4 bg-[color:var(--bg-panel)]">
                 <p className="eyebrow">Thread {i + 1}</p>
                 {loading && !t && <div className="mt-3 space-y-2"><Skel /><Skel w="11/12" /></div>}
                 {t && (
@@ -276,7 +276,7 @@ function BlogSplinter({ loading, result, accent }: { loading: boolean; result: B
         {empty ? <Empty mode="captions" /> : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {(s?.ig_captions ?? [null, null, null, null, null]).map((c, i) => (
-              <div key={i} className="border border-[color:var(--line)] rounded-lg p-4 bg-white/60">
+              <div key={i} className="border border-[color:var(--line)] rounded-lg p-4 bg-[color:var(--bg-panel)]">
                 <div className="flex items-baseline justify-between">
                   <p className="eyebrow">Caption {i + 1}</p>
                   <span className="text-[10px] text-[color:var(--muted)]">
@@ -291,11 +291,11 @@ function BlogSplinter({ loading, result, accent }: { loading: boolean; result: B
         )}
       </Row>
 
-      <Row title="Cold email + key quotes" badge="outbound pitch + 3 tweet-ready pull quotes" tint="#161512">
+      <Row title="Cold email + key quotes" badge="outbound pitch + 3 tweet-ready pull quotes" tint="#f5f5f5">
         {empty ? <Empty mode="outbound" /> : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Card title="Cold-email pitch" meta={s ? `${wc(s.cold_email_pitch.body)} words` : "—"} loading={loading} subject={s?.cold_email_pitch.subject} text={s?.cold_email_pitch.body} />
-            <div className="border border-[color:var(--line)] rounded-lg p-4 bg-white/60">
+            <div className="border border-[color:var(--line)] rounded-lg p-4 bg-[color:var(--bg-panel)]">
               <p className="eyebrow">Key quotes (drop as standalone tweets)</p>
               {loading && !s && <div className="mt-3 space-y-2"><Skel /><Skel w="11/12" /></div>}
               {s && (
@@ -367,7 +367,7 @@ function AeoRow({ loading, value, empty }: { loading: boolean; value?: AeoBlock;
 
 function Card({ title, meta, loading, subject, headline, text }: { title: string; meta: string; loading: boolean; subject?: string; headline?: string; text?: string }) {
   return (
-    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-white/60 min-h-[200px]">
+    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-[color:var(--bg-panel)] min-h-[200px]">
       <div className="flex items-baseline justify-between gap-2">
         <p className="eyebrow">{title}</p>
         <span className="text-[10px] text-[color:var(--muted)]">{meta}</span>
@@ -413,7 +413,7 @@ function QuoteCard({ angle, quote, loading }: { angle?: string; quote?: string; 
 function Field({ label, loading, value, cols = 1, mono = false, scroll = false, accent = false }: { label: string; loading: boolean; value?: string; cols?: 1 | 2 | 3; mono?: boolean; scroll?: boolean; accent?: boolean }) {
   const span = cols === 3 ? "md:col-span-3" : cols === 2 ? "md:col-span-2" : "md:col-span-1";
   return (
-    <div className={"border border-[color:var(--line)] rounded-lg p-4 " + (accent ? "bg-[color:var(--bg-elev)]" : "bg-white/60") + " " + span}>
+    <div className={"border border-[color:var(--line)] rounded-lg p-4 " + (accent ? "bg-[color:var(--bg-elev)]" : "bg-[color:var(--bg-panel)]") + " " + span}>
       <p className="eyebrow">{label}</p>
       {loading && (
         <div className="mt-3 space-y-2"><Skel /><Skel w="10/12" /></div>

@@ -86,8 +86,8 @@ export const BRANDS: Brand[] = [
     workflows: [
       {
         id: "tbf_four_surfaces",
-        n8nName: "Nexus Agriscience — TBF: Four Surfaces",
-        label: "Four Surfaces",
+        n8nName: "Nexus Agriscience — TBF: Content Repurposer",
+        label: "Content Repurposer",
         badge: "Social drop · ~30s",
         description: "Single topic in, four polished social surfaces out (Instagram, LinkedIn, cold email, blog opener). The simplest demonstration of voice-manual-driven generation.",
         webhook: `${N8N}/tbf-content-demo`,

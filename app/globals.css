@@ -1,25 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #f3efe7;
-  --bg-elev: #ebe6dc;
-  --ink: #161512;
-  --ink-2: #2a2722;
-  --muted: #6b6760;
-  --line: rgba(22, 21, 18, 0.12);
-  --accent: #b94a2c;
+  /* Dark, cinematic VidGraph palette */
+  --bg: #151515;
+  --bg-elev: #0f0f0f;
+  --bg-panel: #1c1c1c;
+  --ink: #f5f5f5;
+  --ink-2: #d8d8d8;
+  --muted: #9a9a9a;
+  --line: rgba(245, 245, 245, 0.12);
+  --line-strong: rgba(245, 245, 245, 0.24);
+  --accent: #0000ee;
+  --accent-ink: #ffffff;
 }
 
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-elev: var(--bg-elev);
+  --color-bg-panel: var(--bg-panel);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
   --font-sans: var(--font-inter);
-  --font-display: var(--font-serif);
+  --font-display: var(--font-archivo);
 }
 
 html,
@@ -30,31 +35,108 @@ body {
 
 body {
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  font-feature-settings: "ss01", "ss02", "cv11";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+/* ---- Display type: huge, tight, heavy ---- */
 .font-display {
-  font-family: var(--font-serif), "Iowan Old Style", "Apple Garamond", Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display), "Archivo", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-stretch: 112%;
 }
 
+.display-xl {
+  font-family: var(--font-display), "Archivo", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.86;
+  font-stretch: 115%;
+  text-transform: uppercase;
+}
+
+/* ---- Bracketed uppercase eyebrow label, the VidGraph signature ---- */
+.bracket {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5ch;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.bracket::before {
+  content: "[";
+  color: var(--accent);
+}
+
+.bracket::after {
+  content: "]";
+  color: var(--accent);
+}
+
+.bracket-muted {
+  color: var(--muted);
+}
+
+.bracket-muted::before,
+.bracket-muted::after {
+  color: var(--accent);
+}
+
+/* keep the old eyebrow class alive for any leftover usage */
 .eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  font-size: 12px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.rule {
-  height: 1px;
-  background: var(--line);
-  width: 100%;
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 10px;
+  padding: 0.85rem 1.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 180ms ease, background 180ms ease, color 180ms ease,
+    border-color 180ms ease;
+  will-change: transform;
 }
 
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 238, 0.7);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background: #0a0aff;
+}
+
+.btn-ghost {
+  background: var(--bg-panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-strong);
+  background: #242424;
+}
+
+/* ---- Links ---- */
 .link-underline {
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 100% 1px;
@@ -69,21 +151,73 @@ body {
   background-position: 100% 100%;
 }
 
-::selection {
-  background: var(--ink);
-  color: var(--bg);
+.link-accent {
+  color: var(--accent);
 }
 
+.rule {
+  height: 1px;
+  background: var(--line);
+  width: 100%;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+/* ---- Marquee ---- */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+
+.marquee-track:hover .marquee {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---- Scroll-in reveal ---- */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
     animation: reveal 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
-  .reveal-delay-1 { animation-delay: 80ms; }
-  .reveal-delay-2 { animation-delay: 160ms; }
-  .reveal-delay-3 { animation-delay: 240ms; }
+  .reveal-delay-1 {
+    animation-delay: 90ms;
+  }
+  .reveal-delay-2 {
+    animation-delay: 180ms;
+  }
+  .reveal-delay-3 {
+    animation-delay: 270ms;
+  }
+  .reveal-delay-4 {
+    animation-delay: 360ms;
+  }
 }
 
 @keyframes reveal {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+  }
 }

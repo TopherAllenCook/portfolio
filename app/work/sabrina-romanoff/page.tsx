@@ -10,7 +10,7 @@ export async function generateMetadata() {
   const work = works.find((w) => w.slug === SLUG);
   if (!work) return {};
   return {
-    title: `${work.client} — Chris Cook`,
+    title: `${work.client} · Chris Cook`,
     description: work.headline,
   };
 }
@@ -27,7 +27,7 @@ export default function SabrinaRomanoffCaseStudy() {
         <article className="pt-32 md:pt-40 pb-24 md:pb-32">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <Link
-              href="/#works"
+              href="/#work"
               className="inline-flex items-center gap-2 text-sm text-[color:var(--muted)] hover:text-[color:var(--ink)] transition-colors"
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -121,7 +121,7 @@ export default function SabrinaRomanoffCaseStudy() {
 
             <div className="mt-24 pt-10 border-t border-[color:var(--line)] flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <Link
-                href="/#works"
+                href="/#work"
                 className="inline-flex items-center gap-2 text-sm text-[color:var(--muted)] hover:text-[color:var(--ink)] transition-colors"
               >
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

@@ -67,18 +67,18 @@ export const works: Work[] = [
     image: "/works/nexus-marketing-engineer.svg",
   },
   {
-    slug: "lotus-company",
-    client: "Lotus Company",
-    role: "Brand Manager",
-    period: "2025 — May 2026",
+    slug: "real-estate-hospitality",
+    client: "Real Estate & Hospitality Group",
+    role: "Freelance Brand & Web Consultant",
+    period: "2025",
     category: "Brand & Web Redesign",
     headline:
       "Rebuilding the digital home of a Utah real estate and hospitality group, end to end.",
     summary:
-      "Owned the full website rebuild for Lotus Company and its sub-brands across real estate development and hospitality. Architecture, UX, visual design, and copy, with the brand told back to its audience in one coherent story across every page.",
+      "A freelance engagement rebuilding the full website for a Utah real estate and hospitality group and its sub-brands across development and hospitality. Architecture, UX, visual design, and copy, with the brand told back to its audience in one coherent story across every page.",
     highlights: [
       "Led information architecture, UX, visual design, and copy for the full site",
-      "Aligned multiple sub-brands (Lotus, Lotus Built, Lotus Hospitality) under one narrative system",
+      "Aligned multiple sub-brands across development and hospitality under one narrative system",
       "Translated a long history of buildings and projects into a clear, story-first presentation",
     ],
     metrics: [
@@ -86,9 +86,8 @@ export const works: Work[] = [
       { label: "Sub-brands aligned", value: "3" },
       { label: "Disciplines led", value: "4" },
     ],
-    link: { label: "lotuscompany.com", href: "https://www.lotuscompany.com" },
     accent: "#8B6F47",
-    image: "/works/lotus-company.jpeg",
+    image: "/works/real-estate-hospitality.jpeg",
   },
   {
     slug: "one-music-schools",

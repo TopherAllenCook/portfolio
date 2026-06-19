@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 
 const links = [
-  { label: "Works", href: "#works" },
-  { label: "Story", href: "#story" },
-  { label: "Services", href: "#services" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "/#work" },
+  { label: "About", href: "/#about" },
+  { label: "Capabilities", href: "/#capabilities" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Nav() {
@@ -23,18 +23,22 @@ export default function Nav() {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "backdrop-blur-md bg-[color:var(--bg)]/70 border-b border-[color:var(--line)]"
+          ? "backdrop-blur-md bg-[color:var(--bg)]/80 border-b border-[color:var(--line)]"
           : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-10 h-16 flex items-center justify-between">
-        <a href="#top" className="flex items-center gap-2 group">
-          <span className="font-display text-2xl leading-none">Chris Cook</span>
-          <span className="hidden sm:inline text-[color:var(--muted)] text-sm">
-            / Brand Manager &amp; Storyteller
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-10 h-16 flex items-center justify-between">
+        <a href="/#top" className="flex items-center gap-3 group">
+          <span className="font-display text-xl leading-none tracking-tight uppercase">
+            Chris Cook
+          </span>
+          <span className="hidden lg:inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] text-[color:var(--muted)]">
+            <span className="block w-1.5 h-1.5 rounded-full bg-[color:var(--accent)]" />
+            Available, 2026
           </span>
         </a>
-        <nav className="hidden md:flex items-center gap-8 text-sm">
+
+        <nav className="hidden md:flex items-center gap-9 text-[13px] uppercase tracking-[0.12em] font-medium">
           {links.map((l) => (
             <a
               key={l.href}
@@ -45,27 +49,9 @@ export default function Nav() {
             </a>
           ))}
         </nav>
-        <a
-          href="#contact"
-          className="hidden md:inline-flex items-center gap-2 rounded-full bg-[color:var(--ink)] text-[color:var(--bg)] px-4 py-2 text-sm font-medium hover:bg-[color:var(--ink-2)] transition-colors"
-        >
-          Book intro call
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-            <path
-              d="M2 6h8M6 2l4 4-4 4"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </a>
-        <a
-          href="#contact"
-          className="md:hidden text-sm link-underline"
-          aria-label="Contact"
-        >
-          Contact
+
+        <a href="/#contact" className="btn btn-primary !py-2.5 !px-4 text-xs">
+          Get in touch
         </a>
       </div>
     </header>

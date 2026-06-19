@@ -44,7 +44,7 @@ export default function NexusPitchBody() {
             index="01"
             title="Brain"
             subtitle="Obsidian / Markdown vault"
-            tint="#161512"
+            tint="#f5f5f5"
             body="The persistent memory of the brand. Voice Manual, product catalog, COA library, formulator personas, brand canon, harvest journal, competitor briefs, research corpus. Files, not a database. Versioned in git. Human-editable. The single source of truth every other layer reads from."
           />
           <ArchCard
@@ -134,7 +134,7 @@ export default function NexusPitchBody() {
         title="Two live n8n workflows. Pick a mode, pick a topic, watch the brain produce on-brand output."
       >
         <p>
-          Two production webhooks are wired up. The <em>Four Surfaces</em> mode
+          Two production webhooks are wired up. The <em>Content Repurposer</em> mode
           hits <code className="text-[12px] font-mono">/webhook/tbf-content-demo</code>{" "}
           and returns a social drop (IG, LinkedIn, cold email, blog opener) in
           about 30 seconds. The <em>Full Content Stack</em> mode hits{" "}
@@ -236,7 +236,7 @@ function ArchCard({
   body: string;
 }) {
   return (
-    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-white/50 h-full flex flex-col">
+    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-[color:var(--bg-panel)] h-full flex flex-col">
       <span className="text-[10px] tabular-nums text-[color:var(--muted)] tracking-widest">
         LAYER {index}
       </span>
@@ -261,7 +261,7 @@ function PhaseCard({
   points: string[];
 }) {
   return (
-    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-white/50 h-full">
+    <div className="border border-[color:var(--line)] rounded-lg p-5 bg-[color:var(--bg-panel)] h-full">
       <p className="eyebrow">{phase}</p>
       <div className="font-display text-xl md:text-2xl tracking-tight leading-tight mt-1">
         {title}

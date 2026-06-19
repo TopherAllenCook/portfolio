@@ -1,7 +1,10 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import Works from "@/components/Works";
+import Marquee from "@/components/Marquee";
 import Story from "@/components/Story";
+import Works from "@/components/Works";
+import Services from "@/components/Services";
+import Stats from "@/components/Stats";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -11,8 +14,11 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero />
-        <Works />
+        <Marquee />
         <Story />
+        <Works />
+        <Services />
+        <Stats />
         <Contact />
       </main>
       <Footer />
