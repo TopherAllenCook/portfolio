@@ -21,7 +21,7 @@ export default function RomanoffPitchBody() {
       <Section eyebrow="01 · The Proposition" title="Press cluster on autopilot. Practice protected. Voice consistent across every surface.">
         <p>
           Dr. Romanoff's brand is a forty-outlet press cluster, a clinical
-          practice, and a growing social presence — all carried by one
+          practice, and a growing social presence, all carried by one
           credentialed human. The pitch is to turn the press cluster from
           reactive (journalist emails, she replies) into proactive (cultural
           moment hits, she has a ready angle in three minutes), and to extend
@@ -50,7 +50,7 @@ export default function RomanoffPitchBody() {
             title="Agent"
             subtitle="Claude Code · MCP skills"
             tint={ACCENT}
-            body="Reads the entire brain on every task. Talks to Gmail (press replies and outbound pitches), Airtable (press queue and content DB), an RSS-driven cultural-moment watcher, and a TV-recap prep skill. Drafts press quotes, IG captions, TikTok scripts, podcast pitches, and AEO answer pages — all loaded with the Voice Manual first."
+            body="Reads the entire brain on every task. Talks to Gmail (press replies and outbound pitches), Airtable (press queue and content DB), an RSS-driven cultural-moment watcher, and a TV-recap prep skill. Drafts press quotes, IG captions, TikTok scripts, podcast pitches, and AEO answer pages, all loaded with the Voice Manual first."
           />
           <ArchCard
             index="03"
@@ -234,7 +234,7 @@ function PhaseCard({ phase, title, points }: { phase: string; title: string; poi
 
 const ROADMAP = [
   { rank: "01", name: "Press-Quote Generator", why: "Every journalist email turns into 2-3 ready-to-publish quote drafts in under three minutes, each tuned to outlet + topic + word-count. The brain loads her press history so the credibility paragraph is always current.", trigger: "Webhook from press-inquiry form / email forward", impact: "Cuts response time from hours to minutes; protects practice hours" },
-  { rank: "02", name: "Cultural-Moment Watcher", why: "Daily RSS / trend scan across lifestyle, pop-culture, and mental-health beats. When a relevant moment hits, the agent drafts a press pitch angle, an IG caption, and a 30-second Reel script — all coordinated to one position.", trigger: "Daily cron + RSS feeds", impact: "Turns the press cluster from reactive to proactive newsjacking" },
+  { rank: "02", name: "Cultural-Moment Watcher", why: "Daily RSS / trend scan across lifestyle, pop-culture, and mental-health beats. When a relevant moment hits, the agent drafts a press pitch angle, an IG caption, and a 30-second Reel script, all coordinated to one position.", trigger: "Daily cron + RSS feeds", impact: "Turns the press cluster from reactive to proactive newsjacking" },
   { rank: "03", name: "Reality-TV Recap Engine", why: "When she books a TV recap appearance, the agent ingests the episode summary and returns 5-8 clinical observations she can lead with, each tied to a named psychological concept (attachment, communication patterns, conflict styles).", trigger: "Manual trigger from her phone", impact: "Prep time per appearance drops from 60-90 min to 15" },
   { rank: "04", name: "Podcast Pitch Engine", why: "Customized 120-word pitches to a targeting list of relevant podcasts, each pitch drawing three specific topic ideas from her press-history specialty inventory.", trigger: "Weekly cron + curated podcast list", impact: "Expands outbound pitch capacity without staffing" },
   { rank: "05", name: "Therapy-Prospect FAQ Bot", why: "Auto-reply to contact-form submissions with answers to common pre-booking questions (out-of-network billing, telehealth, scheduling). Tags the inquiry for her to handle the clinical-match question only.", trigger: "Webhook on contact-form submission", impact: "Cuts pre-consult email back-and-forth by ~70%" },

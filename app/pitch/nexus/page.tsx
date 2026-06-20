@@ -2,7 +2,7 @@ import Link from "next/link";
 import NexusPitchBody from "@/components/NexusPitchBody";
 
 export const metadata = {
-  title: "Marketing Engineer Pitch — Nexus / Terpene Belt Farms — Chris Cook",
+  title: "Marketing Engineer Pitch, Nexus / Terpene Belt Farms, Chris Cook",
   description:
     "A content operating system pitched to Nexus / Terpene Belt Farms by Chris Cook, demonstrated on their own brand. Brain · Agent · Workflows. Voice Manual, automation roadmap, and demo outputs included.",
   robots: { index: false, follow: false },
@@ -11,7 +11,7 @@ export const metadata = {
 export default function PitchNexus() {
   return (
     <main className="flex-1">
-      {/* Minimal header — direct-link surface, no global nav */}
+      {/* Minimal header, direct-link surface, no global nav */}
       <header className="border-b border-[color:var(--line)]">
         <div className="mx-auto max-w-7xl px-6 lg:px-10 py-6 flex flex-col md:flex-row md:items-baseline md:justify-between gap-3">
           <div className="flex items-baseline gap-3">

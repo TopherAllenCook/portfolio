@@ -3,7 +3,7 @@
 import { RendererKind } from "@/lib/brands";
 
 // =============================================================
-// Public API — RenderResult is the dispatcher used by LiveDemo
+// Public API, RenderResult is the dispatcher used by LiveDemo
 // =============================================================
 
 export function RenderResult({
@@ -51,10 +51,10 @@ function TbfFourSurfaces({ loading, result }: { loading: boolean; result: TbfFou
   const s = result?.surfaces;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-      <Card title="Instagram caption" meta={s ? `${wc(s.instagram)} words` : "—"} loading={loading} text={s?.instagram} />
-      <Card title="LinkedIn post" meta={s ? `${wc(s.linkedin)} words` : "—"} loading={loading} text={s?.linkedin} />
-      <Card title="Cold email" meta={s ? `${wc(s.email_body)} words` : "—"} loading={loading} subject={s?.email_subject} text={s?.email_body} />
-      <Card title="Blog opener" meta={s ? `${wc(s.blog_lede)} words` : "—"} loading={loading} headline={s?.blog_headline} text={s?.blog_lede} />
+      <Card title="Instagram caption" meta={s ? `${wc(s.instagram)} words` : ", "} loading={loading} text={s?.instagram} />
+      <Card title="LinkedIn post" meta={s ? `${wc(s.linkedin)} words` : ", "} loading={loading} text={s?.linkedin} />
+      <Card title="Cold email" meta={s ? `${wc(s.email_body)} words` : ", "} loading={loading} subject={s?.email_subject} text={s?.email_body} />
+      <Card title="Blog opener" meta={s ? `${wc(s.blog_lede)} words` : ", "} loading={loading} headline={s?.blog_headline} text={s?.blog_lede} />
     </div>
   );
 }
@@ -65,10 +65,10 @@ function TbfFullStack({ loading, result }: { loading: boolean; result: TbfFullRe
     <div className="space-y-6">
       <Row title="Social" badge="6 surfaces" tint="#f5f5f5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card title="Instagram" meta={result ? `${wc(result.stack.social.instagram)} words` : "—"} loading={loading} text={result?.stack.social.instagram} />
-          <Card title="LinkedIn" meta={result ? `${wc(result.stack.social.linkedin)} words` : "—"} loading={loading} text={result?.stack.social.linkedin} />
-          <Card title="Cold email" meta={result ? `${wc(result.stack.social.email_body)} words` : "—"} loading={loading} subject={result?.stack.social.email_subject} text={result?.stack.social.email_body} />
-          <Card title="Blog opener" meta={result ? `${wc(result.stack.social.blog_lede)} words` : "—"} loading={loading} headline={result?.stack.social.blog_headline} text={result?.stack.social.blog_lede} />
+          <Card title="Instagram" meta={result ? `${wc(result.stack.social.instagram)} words` : ", "} loading={loading} text={result?.stack.social.instagram} />
+          <Card title="LinkedIn" meta={result ? `${wc(result.stack.social.linkedin)} words` : ", "} loading={loading} text={result?.stack.social.linkedin} />
+          <Card title="Cold email" meta={result ? `${wc(result.stack.social.email_body)} words` : ", "} loading={loading} subject={result?.stack.social.email_subject} text={result?.stack.social.email_body} />
+          <Card title="Blog opener" meta={result ? `${wc(result.stack.social.blog_lede)} words` : ", "} loading={loading} headline={result?.stack.social.blog_headline} text={result?.stack.social.blog_lede} />
         </div>
       </Row>
       <SeoRow loading={loading} value={result?.stack.seo} empty={empty} />
@@ -92,10 +92,10 @@ function RomanoffFullStack({ loading, result, accent }: { loading: boolean; resu
     <div className="space-y-6">
       <Row title="Press + Social" badge="4 surfaces" tint="#f5f5f5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card title="Press quote" meta={result ? `${wc(result.stack.press_quote)} words` : "—"} loading={loading} text={result?.stack.press_quote} />
-          <Card title="Instagram caption" meta={result ? `${wc(result.stack.instagram)} words` : "—"} loading={loading} text={result?.stack.instagram} />
-          <Card title="TikTok / Reel script" meta={result ? `${wc(result.stack.tiktok_script)} words` : "—"} loading={loading} text={result?.stack.tiktok_script} />
-          <Card title="Podcast pitch" meta={result ? `${wc(result.stack.podcast_pitch)} words` : "—"} loading={loading} text={result?.stack.podcast_pitch} />
+          <Card title="Press quote" meta={result ? `${wc(result.stack.press_quote)} words` : ", "} loading={loading} text={result?.stack.press_quote} />
+          <Card title="Instagram caption" meta={result ? `${wc(result.stack.instagram)} words` : ", "} loading={loading} text={result?.stack.instagram} />
+          <Card title="TikTok / Reel script" meta={result ? `${wc(result.stack.tiktok_script)} words` : ", "} loading={loading} text={result?.stack.tiktok_script} />
+          <Card title="Podcast pitch" meta={result ? `${wc(result.stack.podcast_pitch)} words` : ", "} loading={loading} text={result?.stack.podcast_pitch} />
         </div>
       </Row>
       <SeoRow loading={loading} value={result?.stack.seo} empty={empty} />
@@ -210,7 +210,7 @@ function SampleTriage({ loading, result, accent }: { loading: boolean; result: S
       </Row>
       <Row title="Personalized follow-up email" badge="ready to send (human-review queue)" tint="#f5f5f5">
         {empty ? <Empty mode="email" /> : (
-          <Card title="Email" meta={t ? `${wc(t.email.body)} words` : "—"} loading={loading} subject={t?.email.subject} text={t?.email.body} />
+          <Card title="Email" meta={t ? `${wc(t.email.body)} words` : ", "} loading={loading} subject={t?.email.subject} text={t?.email.body} />
         )}
       </Row>
     </div>
@@ -280,7 +280,7 @@ function BlogSplinter({ loading, result, accent }: { loading: boolean; result: B
                 <div className="flex items-baseline justify-between">
                   <p className="eyebrow">Caption {i + 1}</p>
                   <span className="text-[10px] text-[color:var(--muted)]">
-                    {c ? `${wc(c)} words` : "—"}
+                    {c ? `${wc(c)} words` : ", "}
                   </span>
                 </div>
                 {loading && !c && <div className="mt-3 space-y-2"><Skel /><Skel w="11/12" /><Skel w="10/12" /></div>}
@@ -294,7 +294,7 @@ function BlogSplinter({ loading, result, accent }: { loading: boolean; result: B
       <Row title="Cold email + key quotes" badge="outbound pitch + 3 tweet-ready pull quotes" tint="#f5f5f5">
         {empty ? <Empty mode="outbound" /> : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card title="Cold-email pitch" meta={s ? `${wc(s.cold_email_pitch.body)} words` : "—"} loading={loading} subject={s?.cold_email_pitch.subject} text={s?.cold_email_pitch.body} />
+            <Card title="Cold-email pitch" meta={s ? `${wc(s.cold_email_pitch.body)} words` : ", "} loading={loading} subject={s?.cold_email_pitch.subject} text={s?.cold_email_pitch.body} />
             <div className="border border-[color:var(--line)] rounded-lg p-4 bg-[color:var(--bg-panel)]">
               <p className="eyebrow">Key quotes (drop as standalone tweets)</p>
               {loading && !s && <div className="mt-3 space-y-2"><Skel /><Skel w="11/12" /></div>}
@@ -424,7 +424,7 @@ function Field({ label, loading, value, cols = 1, mono = false, scroll = false, 
         </pre>
       )}
       {!loading && !value && (
-        <p className="mt-3 text-xs text-[color:var(--muted)] italic">—</p>
+        <p className="mt-3 text-xs text-[color:var(--muted)] italic">, </p>
       )}
     </div>
   );

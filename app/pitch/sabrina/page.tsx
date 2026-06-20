@@ -2,7 +2,7 @@ import Link from "next/link";
 import RomanoffPitchBody from "@/components/RomanoffPitchBody";
 
 export const metadata = {
-  title: "Marketing Engineer Pitch — Dr. Sabrina Romanoff — Chris Cook",
+  title: "Marketing Engineer Pitch, Dr. Sabrina Romanoff, Chris Cook",
   description:
     "A content operating system pitched to Dr. Sabrina Romanoff by Chris Cook, demonstrated on her own brand. Brain, agent, workflows. Press-cluster on autopilot.",
   robots: { index: false, follow: false },

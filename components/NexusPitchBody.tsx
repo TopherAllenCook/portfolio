@@ -177,7 +177,7 @@ export default function NexusPitchBody() {
             phase="Weeks 7-12"
             title="Scale across surfaces"
             points={[
-              "Blog Splinter live — every existing blog backfilled into multi-platform",
+              "Blog Splinter live, every existing blog backfilled into multi-platform",
               "Research Watcher running daily on PubMed + trade press",
               "Formulator Q&A bot answering DMs with cited replies",
               "Newsletter automation publishing weekly to a real list",
@@ -288,7 +288,7 @@ const ROADMAP = [
   {
     rank: "01",
     name: "Sample-Pack Triage Agent",
-    why: "Every sample request is a $5K–$50K pipeline event. Webhook → Apify enrich → personalized technical follow-up referencing their actual product line.",
+    why: "Every sample request is a $5K-$50K pipeline event. Webhook → Apify enrich → personalized technical follow-up referencing their actual product line.",
     trigger: "Webhook (form submit)",
     impact: "Revenue, conversion lift on inbound",
   },
