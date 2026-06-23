@@ -115,24 +115,27 @@ export default function WellnessKitCaseBody() {
           perception measurably: when the program was explained in detail,
           neutral-and-negative views shifted positive.
         </p>
-        <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+        <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-8 mt-2">
           {[
-            { t: "Price", b: "“Good quality, but overpriced.”" },
-            { t: "Already stocked", b: "“I use what I need, as I need it.”" },
-            { t: "Bundle aversion", b: "“I'd rather pick & choose what I want.”" },
+            { t: "Price", b: "Good quality, but overpriced." },
+            { t: "Already stocked", b: "I use what I need, as I need it." },
+            { t: "Bundle aversion", b: "I'd rather pick & choose what I want." },
           ].map((c) => (
-            <blockquote
-              key={c.t}
-              className="border-l-2 pl-4 py-1"
-              style={{ borderColor: ACCENT }}
-            >
-              <div className="text-xs uppercase tracking-[0.08em] text-[color:var(--muted)]">
-                {c.t}
-              </div>
-              <p className="text-sm text-[color:var(--ink-2)] mt-1 italic leading-relaxed">
+            <figure key={c.t}>
+              <span
+                className="font-display text-5xl leading-[0.6] block"
+                style={{ color: ACCENT }}
+                aria-hidden
+              >
+                &ldquo;
+              </span>
+              <blockquote className="text-base text-[color:var(--ink-2)] italic leading-relaxed mt-1">
                 {c.b}
-              </p>
-            </blockquote>
+              </blockquote>
+              <figcaption className="text-xs uppercase tracking-[0.12em] text-[color:var(--muted)] mt-3">
+                {c.t}
+              </figcaption>
+            </figure>
           ))}
         </div>
       </Section>

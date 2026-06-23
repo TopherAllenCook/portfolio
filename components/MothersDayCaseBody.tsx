@@ -54,16 +54,6 @@ export default function MothersDayCaseBody() {
         </p>
       </Section>
 
-      <div className="mt-12 relative aspect-[1900/668] overflow-hidden rounded-lg border border-[color:var(--line)] bg-[color:var(--bg-elev)]">
-        <Image
-          src="/works/mothers-day/products-strip.jpeg"
-          alt="doTERRA Precious Florals Mother's Day campaign creative"
-          fill
-          sizes="(min-width: 1024px) 1200px, 100vw"
-          className="object-cover"
-        />
-      </div>
-
       <Section
         eyebrow="03 · Five Florals, Five Women"
         title="Like Magnolia, she is noble and strong."

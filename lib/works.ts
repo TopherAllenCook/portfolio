@@ -353,8 +353,8 @@ export const works: Work[] = [
   },
   {
     slug: "amavi",
-    client: "Amavi (doTERRA R&D)",
-    role: "Associate Product Marketing & Brand Manager",
+    client: "Amāvī",
+    role: "Associate Product Marketing & Brand Manager · doTERRA R&D",
     period: "2021",
     category: "Market Research & Product Concept",
     headline:
@@ -418,6 +418,6 @@ export const works: Work[] = [
       { label: "Channels", value: "Paid, organic, CRM" },
     ],
     accent: "#C2554A",
-    image: "/works/mothers-day-2020.jpeg",
+    image: "/works/mothers-day/products-strip.jpeg",
   },
 ];
