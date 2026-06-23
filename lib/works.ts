@@ -38,7 +38,7 @@ export const works: Work[] = [
     ],
     link: { label: "drsabrinaromanoff.com", href: "https://drsabrinaromanoff.com" },
     accent: "#7C5B8C",
-    image: "/works/sabrina-romanoff.svg",
+    image: "/works/sabrina-romanoff.jpeg",
   },
   {
     slug: "nexus-marketing-engineer",
@@ -64,7 +64,34 @@ export const works: Work[] = [
     ],
     link: { label: "terpenebeltfarms.com", href: "https://terpenebeltfarms.com" },
     accent: "#4F7A3C",
-    image: "/works/nexus-marketing-engineer.svg",
+    image: "/works/terpene-belt-farms.jpeg",
+  },
+  {
+    slug: "ridley-academy",
+    client: "Ridley Academy (Concept Pitch)",
+    role: "Designer & Builder (Pitch)",
+    period: "2026 — Proposal",
+    category: "Concept Site & VSL Funnel",
+    headline:
+      "A cinematic book-a-call funnel concept for a piano-education brand, built as a working site to win the role.",
+    summary:
+      "An unsolicited concept build for Stephen Ridley's piano-education brand: a dark, editorial landing experience and a book-a-call VSL funnel, designed and shipped as a real, browsable site to make the funnel strategy behind the application tangible rather than theoretical.",
+    highlights: [
+      "Designed and built a live concept site end to end (cinematic hero, VSL, book-a-call funnel)",
+      "Authored the funnel strategy and VSL framing around a free live-masterclass offer",
+      "Shipped the concept as a working site, not a slide, to demonstrate the build capability",
+    ],
+    metrics: [
+      { label: "Scope", value: "Concept + build" },
+      { label: "Turnaround", value: "Days" },
+      { label: "Stack", value: "Next.js" },
+    ],
+    link: {
+      label: "ridley-academy-concept.vercel.app",
+      href: "https://ridley-academy-concept.vercel.app",
+    },
+    accent: "#9B2D2D",
+    image: "/works/ridley-academy.jpeg",
   },
   {
     slug: "real-estate-hospitality",
@@ -202,6 +229,30 @@ export const works: Work[] = [
     ],
     accent: "#2F4858",
     image: "/works/inscipher.jpeg",
+  },
+  {
+    slug: "glymed-plus",
+    client: "GlyMed Plus",
+    role: "Fractional Marketing Director",
+    period: "2021 — 2022",
+    category: "Professional Skincare · Brand & Design",
+    headline:
+      "Leading brand, content, and a full design transformation for a professional medical-aesthetics skincare line.",
+    summary:
+      "Served as fractional Marketing Director for GlyMed Plus, a professional-grade, esthetician-trusted skincare brand sold through licensed aestheticians and medical spas. Directed brand and the monthly promotional and education calendar, ran protocol- and regimen-led campaigns across a deep professional catalog, and helped drive the brand's new design transformation.",
+    highlights: [
+      "Directed brand and the monthly promotional/education calendar across the professional catalog",
+      "Helped drive the brand's new design transformation",
+      "Built education-led marketing (protocols, regimens, blogs, toolkits) for a licensed-pro audience",
+    ],
+    metrics: [
+      { label: "Audience", value: "Licensed pros" },
+      { label: "Category", value: "Medical aesthetics" },
+      { label: "Scope", value: "Brand + content" },
+    ],
+    link: { label: "glymedplus.com", href: "https://www.glymedplus.com" },
+    accent: "#C8553D",
+    image: "/works/glymed-plus.jpeg",
   },
   {
     slug: "get-found-ai",
