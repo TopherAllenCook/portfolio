@@ -1,21 +1,21 @@
 const capabilities = [
   {
     n: "01",
-    title: "Brand & Story",
+    title: "AI & Automation",
     blurb:
-      "Positioning, narrative architecture, voice, brand stewardship, and creative direction. The work that makes the rest of the marketing actually mean something.",
+      "The core of every engagement. Practical AI inside your marketing stack: Claude, ChatGPT, Midjourney, custom agents, prompt engineering, AEO, and the workflow automation that lets a small team move like a large one.",
   },
   {
     n: "02",
-    title: "Product Marketing",
+    title: "Growth",
     blurb:
-      "Launches and go-to-market, positioning, market and customer research, and the messaging frameworks that tie product, sales, and brand together.",
+      "Paid media, SEO, CRO, and funnel architecture built as one growth system, with AI-accelerated creative testing and analytics at the core. Vendor and agency management included.",
   },
   {
     n: "03",
-    title: "Growth",
+    title: "Brand & Story",
     blurb:
-      "Paid media, SEO, CRO, and funnel architecture built as one growth system, with creative testing and analytics at the core. Vendor and agency management included.",
+      "Positioning, narrative architecture, voice, brand stewardship, and creative direction. The work that makes the rest of the marketing actually mean something.",
   },
   {
     n: "04",
@@ -25,15 +25,15 @@ const capabilities = [
   },
   {
     n: "05",
-    title: "AI & Automation",
+    title: "Product Marketing",
     blurb:
-      "Practical AI inside the marketing stack: Claude, ChatGPT, Midjourney, custom agents, prompt engineering, AEO, and the workflow automation that lets a small team move like a large one.",
+      "Launches and go-to-market, positioning, market and customer research, and the messaging frameworks that tie product, sales, and brand together.",
   },
   {
     n: "06",
-    title: "Leadership",
+    title: "Fractional Leadership",
     blurb:
-      "Direct-report teams, cross-functional alignment, and executive presentation. Pulling brand, product, and growth in the same direction toward a shared number.",
+      "Embedded as your marketing lead: direct-report teams, cross-functional alignment, and executive presentation. Pulling brand, product, and growth toward a shared number without a full-time hire.",
   },
 ];
 
@@ -46,15 +46,16 @@ export default function Services() {
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div>
-            <span className="bracket mb-5 inline-flex">Services</span>
+            <span className="bracket mb-5 inline-flex">Engagements</span>
             <h2 className="display-xl text-[clamp(2.5rem,7vw,6rem)] max-w-3xl">
               Capabilities
             </h2>
           </div>
           <p className="max-w-sm text-[color:var(--muted)] text-base leading-relaxed">
-            Story is where it starts. Without a brand that means something, the
-            rest is just noise. With it, growth and lifecycle do the work they
-            were built for.
+            AI is the multiplier. Put it inside the marketing stack and a lean
+            team ships brand, growth, and lifecycle like a company three times
+            its size &mdash; without losing the story that makes any of it
+            matter.
           </p>
         </div>
 

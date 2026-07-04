@@ -12,11 +12,11 @@ export default function Story() {
         <div className="grid grid-cols-12 gap-8 md:gap-12">
           <div className="col-span-12 lg:col-span-5">
             <h2 className="display-xl text-[clamp(2.5rem,6vw,5rem)]">
-              Brand
+              Brand.
               <br />
-              Manager.
+              Growth.
               <br />
-              <span className="text-[color:var(--accent)]">Builder.</span>
+              <span className="text-[color:var(--accent)]">AI-native.</span>
             </h2>
           </div>
 

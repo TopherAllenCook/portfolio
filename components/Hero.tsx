@@ -6,9 +6,9 @@ export default function Hero() {
     >
       <div className="mx-auto w-full max-w-[1400px] px-6 lg:px-10">
         <div className="flex items-center gap-3 mb-8 reveal">
-          <span className="bracket">Brand · Story · Build</span>
+          <span className="bracket">Brand · Growth · AI</span>
           <span className="hidden sm:inline text-[11px] uppercase tracking-[0.16em] text-[color:var(--muted)]">
-            Senior brand &amp; marketing, 2026
+            AI marketing consultant · Fractional, 2026
           </span>
         </div>
 
@@ -20,10 +20,11 @@ export default function Hero() {
 
         <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
           <p className="lg:col-span-7 max-w-2xl text-lg md:text-xl text-[color:var(--ink-2)] leading-relaxed reveal reveal-delay-2">
-            A brand manager and storyteller with a builder&rsquo;s bias. Fifteen
-            years of positioning, narrative work, and product launches, paired
-            with the technical growth and lifecycle systems that turn stories
-            into measurable demand.
+            An AI-native marketing consultant with fifteen years of brand and
+            growth behind him. I embed with lean teams &mdash; fractional
+            &mdash; and put AI inside the marketing stack, so a small team ships
+            like a large one: coherent brand, growth that converts, and the
+            automation that makes it move.
           </p>
 
           <div className="lg:col-span-5 flex flex-wrap items-center gap-4 lg:justify-end reveal reveal-delay-3">

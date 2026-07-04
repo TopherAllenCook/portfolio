@@ -15,9 +15,10 @@ export default function Contact() {
         </h2>
 
         <p className="mt-10 max-w-xl text-lg text-[color:var(--ink-2)] leading-relaxed">
-          Open to senior brand and marketing roles in-house, plus selective
-          consulting engagements. The fastest way to reach me is email, but a 15
-          minute intro call is usually more useful for both of us.
+          Available for fractional and consulting engagements &mdash; embedding
+          with your team as your AI marketing lead. Open to the right in-house
+          role too. The fastest way to reach me is email, but a 15 minute intro
+          call is usually more useful for both of us.
         </p>
 
         <div className="mt-12 flex flex-wrap gap-4">

@@ -34,7 +34,7 @@ export default function Nav() {
           </span>
           <span className="hidden lg:inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] text-[color:var(--muted)]">
             <span className="block w-1.5 h-1.5 rounded-full bg-[color:var(--accent)]" />
-            Available, 2026
+            Fractional &amp; consulting · 2026
           </span>
         </a>
 

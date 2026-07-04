@@ -18,14 +18,14 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: "Chris Cook · Brand Manager & Storyteller",
+  title: "Chris Cook · AI Marketing Consultant",
   description:
-    "Brand manager, storyteller, and senior marketing leader. Fifteen years of brand launches, narrative work, and growth programs for consumer and B2B companies.",
+    "AI-native marketing consultant and fractional brand + growth lead. Fifteen years of brand launches and growth systems, now wired with AI so lean teams ship like large ones.",
   metadataBase: new URL("https://chriscook.co"),
   openGraph: {
-    title: "Chris Cook · Brand Manager & Storyteller",
+    title: "Chris Cook · AI Marketing Consultant",
     description:
-      "Brand, story, and growth for consumer and B2B brands. Selected works and case studies.",
+      "Fractional AI marketing consultant. Brand, growth, and lifecycle systems built with AI inside the stack. Selected works and case studies.",
     type: "website",
   },
 };
