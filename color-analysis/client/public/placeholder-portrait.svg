@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" role="img" aria-label="Sample portrait placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdf2e3"/>
+      <stop offset="1" stop-color="#f6dfce"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9c3a0"/>
+      <stop offset="1" stop-color="#d9ab86"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="750" fill="url(#bg)"/>
+  <g>
+    <path d="M120 750 C120 600 200 540 300 540 C400 540 480 600 480 750 Z" fill="url(#skin)"/>
+    <circle cx="300" cy="330" r="130" fill="url(#skin)"/>
+    <path d="M300 470 C232 470 178 512 156 574 C214 540 254 528 300 528 C346 528 386 540 444 574 C422 512 368 470 300 470 Z" fill="#ffffff" opacity="0.35"/>
+  </g>
+  <text x="300" y="700" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="26" fill="#8a5a33" opacity="0.85">Sample photo</text>
+  <text x="300" y="732" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="18" fill="#8a5a33" opacity="0.65">Upload your own under My Analysis</text>
+</svg>

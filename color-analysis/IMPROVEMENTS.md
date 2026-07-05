@@ -4,7 +4,50 @@ This directory contains the Color Analysis website (a 12-season personal
 color-analysis tool: season explorer, "Find My Season" wizard, photo draping,
 and per-user saved analyses), imported here and then improved.
 
-## What changed in this pass
+## Pass 2 — decouple from Manus, ship on Vercel
+
+The app was generated on the Manus platform: it booted as an Express server,
+authenticated through Manus OAuth, stored photos in S3, saved analyses in
+MySQL, and depended on `vite-plugin-manus-runtime` plus a platform-injected
+`client/src/_core`. None of that runs off-platform. This pass turns it into a
+self-contained static SPA that deploys to Vercel with **zero external services
+to provision**.
+
+- **Local-first data layer.** New `client/src/lib/analysisStore.ts` persists
+  analyses in `localStorage` and inlines uploaded photos as data URLs. The tRPC
+  client (`client/src/lib/trpc.ts`) is rewritten as a thin TanStack Query shim
+  over that store, exposing the exact `trpc.analysis.*` / `useUtils()` surface
+  the pages already used (including optimistic `getData`/`setData`) — so the
+  pages did not have to change.
+- **Auth removed.** `_core/hooks/useAuth` is now a local stub (every visitor is
+  a local user); the non-functional sign-in/out controls are gone.
+- **Backend deleted.** Removed `server/`, `drizzle/`, the DB/S3/OAuth glue, and
+  the unused Manus template scaffolding (`Map`, `AIChatBox`, `ManusDialog`,
+  `DashboardLayout`, `ComponentShowcase`, `references/`, `template.json`).
+- **Missing imagery handled.** The hero/illustration images came from the Manus
+  storage proxy. A bundled `placeholder-portrait.svg` backs the default draping
+  photo, and a new `ImageWithFallback` component degrades missing images to a
+  styled placeholder instead of showing broken images.
+- **Build/deploy.** Clean `vite.config.ts` (no Manus plugins), Vite-only build
+  scripts, `vercel.json` (Vite preset + SPA rewrite), and fonts moved from a
+  CSS `@import` to a `<link>` so they aren't reordered out by Tailwind.
+- **Tests.** Relocated the pure tests to `tests/` and added coverage for the
+  local store.
+
+### Verification (pass 2)
+
+```
+pnpm check    # clean — the whole project typechecks (no _core errors)
+pnpm test     # 54 passing
+pnpm build    # succeeds -> dist/ (no warnings)
+```
+
+A headless (Playwright) smoke test of the production build confirmed all four
+routes render, and the create → reload flow persists to `localStorage`. The
+only blocked network request in the sandbox is the external Google Fonts
+stylesheet, which loads normally on Vercel.
+
+## Pass 1 — accessibility & color science
 
 The app was feature-complete but painted every palette color as a bare `<div>`
 with an inline `background-color`. That had three concrete problems:
@@ -50,15 +93,9 @@ of silently rendering a broken swatch.
 Pinned an inline (empty) PostCSS config so Vite's config search can't climb out
 of this project and load an unrelated parent `postcss.config.*`.
 
-## Verification
+### Verification (pass 1)
 
-```
-pnpm test     # 63 tests pass (was 32)
-pnpm check    # no new type errors from these changes*
-```
-
-\* `pnpm check` still reports `Cannot find module '@/_core/hooks/useAuth'` in
-six pre-existing files. `client/src/_core` is injected by the Manus platform
-runtime (`vite-plugin-manus-runtime`) at dev/build time and is intentionally
-not part of this source export, so a fully-clean standalone `tsc` isn't
-possible here. None of the errors come from the code added in this pass.
+At the time of this pass the suite went from 32 to 63 tests. (Pass 2 later
+removed the backend-specific tests and added store coverage; the current count
+is 54 — see above.) The color layer and accessible swatch component are
+unchanged and still in use.

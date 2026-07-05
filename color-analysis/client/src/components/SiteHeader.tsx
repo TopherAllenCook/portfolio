@@ -1,11 +1,7 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { getLoginUrl } from "@/const";
-import { LogIn, LogOut, Palette, User } from "lucide-react";
+import { Palette } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 export default function SiteHeader() {
-  const { user, isAuthenticated, logout } = useAuth();
   const [location] = useLocation();
 
   const navLinkClass = (path: string) =>
@@ -39,33 +35,6 @@ export default function SiteHeader() {
             <Link href="/my-analysis" className={navLinkClass("/my-analysis")}>
               My Analysis
             </Link>
-
-            {isAuthenticated ? (
-              <div className="flex items-center gap-2">
-                <span className="hidden md:flex items-center gap-1 text-sm text-amber-800">
-                  <User className="w-4 h-4" />
-                  {user?.name || "Signed in"}
-                </span>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => logout()}
-                  className="border-amber-300 text-amber-900 hover:bg-amber-50"
-                >
-                  <LogOut className="w-4 h-4 mr-1" />
-                  Sign Out
-                </Button>
-              </div>
-            ) : (
-              <Button
-                size="sm"
-                onClick={() => (window.location.href = getLoginUrl())}
-                className="bg-amber-700 hover:bg-amber-800 text-white"
-              >
-                <LogIn className="w-4 h-4 mr-1" />
-                Sign In
-              </Button>
-            )}
           </nav>
         </div>
       </div>

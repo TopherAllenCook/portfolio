@@ -1,8 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
-/* Import Google Fonts for sophisticated typography */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+/* Fonts (Playfair Display + Inter) load via <link> in index.html so the
+   external import isn't reordered after Tailwind's generated rules. */
 
 @custom-variant dark (&:is(.dark *));
 

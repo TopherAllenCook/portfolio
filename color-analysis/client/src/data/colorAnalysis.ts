@@ -1,5 +1,5 @@
 export const colorAnalysisData = {
-  personalPhoto: "/manus-storage/unnamed_41499fbf.webp",
+  personalPhoto: "/placeholder-portrait.svg",
   
   physicalCharacteristics: {
     skinTone: {

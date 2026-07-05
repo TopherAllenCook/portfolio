@@ -11,6 +11,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import ColorDrapeComparison from "@/components/ColorDrapeComparison";
 import CrossSeasonComparison from "@/components/CrossSeasonComparison";
 import ColorSwatch from "@/components/ColorSwatch";
+import ImageWithFallback from "@/components/ImageWithFallback";
 import SiteHeader from "@/components/SiteHeader";
 
 export default function Home() {
@@ -56,10 +57,11 @@ export default function Home() {
               <div className="sticky top-24 space-y-4">
                 {/* Photo */}
                 <div className="rounded-2xl overflow-hidden shadow-2xl border-8 border-white">
-                  <img 
-                    src={colorAnalysisData.personalPhoto} 
+                  <ImageWithFallback
+                    src={colorAnalysisData.personalPhoto}
                     alt="Personal photo for color analysis"
-                    className="w-full h-auto object-cover"
+                    className="w-full h-auto object-cover aspect-[4/5]"
+                    fallbackLabel="Sample photo"
                   />
                 </div>
 
@@ -430,10 +432,11 @@ export default function Home() {
             {/* Casual Style */}
             <Card className="border-amber-200/50 bg-white/60 backdrop-blur-sm overflow-hidden">
               <div className="aspect-[3/4] overflow-hidden">
-                <img 
-                  src={currentIllustrations.casual.image} 
+                <ImageWithFallback
+                  src={currentIllustrations.casual.image}
                   alt={currentIllustrations.casual.title}
                   className="w-full h-full object-cover"
+                  fallbackLabel={currentIllustrations.casual.title}
                 />
               </div>
               <CardHeader>
@@ -454,10 +457,11 @@ export default function Home() {
             {/* Business Style */}
             <Card className="border-amber-200/50 bg-white/60 backdrop-blur-sm overflow-hidden">
               <div className="aspect-[3/4] overflow-hidden">
-                <img 
-                  src={currentIllustrations.business.image} 
+                <ImageWithFallback
+                  src={currentIllustrations.business.image}
                   alt={currentIllustrations.business.title}
                   className="w-full h-full object-cover"
+                  fallbackLabel={currentIllustrations.business.title}
                 />
               </div>
               <CardHeader>
@@ -478,10 +482,11 @@ export default function Home() {
             {/* Evening Style */}
             <Card className="border-amber-200/50 bg-white/60 backdrop-blur-sm overflow-hidden">
               <div className="aspect-[3/4] overflow-hidden">
-                <img 
-                  src={currentIllustrations.evening.image} 
+                <ImageWithFallback
+                  src={currentIllustrations.evening.image}
                   alt={currentIllustrations.evening.title}
                   className="w-full h-full object-cover"
+                  fallbackLabel={currentIllustrations.evening.title}
                 />
               </div>
               <CardHeader>
@@ -502,10 +507,11 @@ export default function Home() {
             {/* Weekend Style */}
             <Card className="border-amber-200/50 bg-white/60 backdrop-blur-sm overflow-hidden">
               <div className="aspect-[3/4] overflow-hidden">
-                <img 
-                  src={currentIllustrations.weekend.image} 
+                <ImageWithFallback
+                  src={currentIllustrations.weekend.image}
                   alt={currentIllustrations.weekend.title}
                   className="w-full h-full object-cover"
+                  fallbackLabel={currentIllustrations.weekend.title}
                 />
               </div>
               <CardHeader>
