@@ -1,0 +1,17 @@
+- [x] Cross-season comparison mode: drape colors from two different seasons side-by-side (photo + drape for each season, independent season/color selection, synced analysis step)
+- [x] Complete 12-season data: seasons.ts with all 12 seasonal types (3 Spring, 3 Summer, 3 Autumn, 3 Winter), each with characteristics, primary/neutral/accent palettes, jewelry, avoid colors, patterns
+- [x] Drape colors for all 12 seasons (depth/undertone/chroma per season)
+- [x] Database schema: analyses table (userId, photoUrl, selected season, verdicts/notes)
+- [x] Backend: tRPC procedures for photo upload (S3), save/load/list user analyses
+- [x] Frontend: sign-in flow with header login/logout
+- [x] Frontend: photo upload for logged-in users (their own analysis photo)
+- [x] Frontend: season explorer covering all 12 seasons (palettes + draping + cross-season comparison)
+- [x] Frontend: save analysis results per user and "My Analysis" view
+- [x] Vitest tests for new backend procedures
+- [x] End-to-end verification and checkpoint (typecheck clean, 14 vitest tests pass, all 12 seasons in data + drapes, SiteHeader with auth on all 3 pages, MyAnalysis CRUD + upload wired with auth gating and optimistic updates)
+- [x] Wizard: season-inference logic mapping depth/undertone/chroma verdicts to one of the 12 seasons (shared module with unit tests)
+- [x] Wizard: multi-step UI (intro → depth A/B drapes → undertone A/B → chroma A/B → result) using user photo or featured photo
+- [x] Wizard: result screen with suggested season, palette preview, and links to explorer/My Analysis
+- [x] Wizard: save wizard verdicts + suggested season to user's analysis when signed in
+- [x] Wizard: /find-my-season route registered and linked in SiteHeader
+- [x] Wizard: typecheck, tests, and visual verification, then checkpoint
