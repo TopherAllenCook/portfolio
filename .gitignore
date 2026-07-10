@@ -58,3 +58,22 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# --- security hardening: never publish local scratch / client-confidential / job-automation artifacts ---
+# No .png/.jpeg/.yml/.txt/.html are legitimately tracked at repo root, so root-glob them as scratch.
+# (package.json, package-lock.json, tsconfig.json stay tracked; only the specific scratch JSON below is ignored.)
+/*.png
+/*.jpeg
+/*.jpg
+/*.yml
+/*.yaml
+/*.txt
+/*.html
+/caps*.json
+/endcard.json
+/upwork-shortlist-*.md
+# local scratch / automation / planning dirs and local Claude settings
+/.li-jobs/
+/.agents/
+/.planning/
+/.claude/

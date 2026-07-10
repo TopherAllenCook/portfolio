@@ -3,7 +3,7 @@
 
 ## Shipped (live in n8n)
 1. **TBF Content Demo — Four Surfaces** (`workflow ID Q18KG1AOdwNEn1B6`)
-   - Webhook: `https://financiallyfitphotographe.app.n8n.cloud/webhook/tbf-content-demo`
+   - Webhook: `https://webhook-endpoint-redacted.invalid/webhook/tbf-content-demo`
    - Input: `{ topic: string }`
    - Output: `{ surfaces: { instagram, linkedin, email_subject, email_body, blog_headline, blog_lede } }`
    - Voice Manual loaded as system prompt; Claude Sonnet 4.6 + Structured Output Parser

@@ -706,7 +706,7 @@
 </div>
 
 <script>
-const N8N = "https://financiallyfitphotographe.app.n8n.cloud/webhook";
+const N8N = "https://webhook-endpoint-redacted.invalid/webhook";
 
 const WORKFLOWS = [
   {
@@ -1077,7 +1077,7 @@ $$(".tab").forEach(t => t.addEventListener("click", () => switchTab(t.dataset.ta
 // ----- Action buttons -----
 $("#open-n8n").addEventListener("click", () => {
   const w = WORKFLOWS.find(x=>x.id===activeId);
-  const base = "https://financiallyfitphotographe.app.n8n.cloud";
+  const base = "https://webhook-endpoint-redacted.invalid";
   window.open(w && w.n8nId ? `${base}/workflow/${w.n8nId}` : `${base}/home/workflows`, "_blank");
 });
 $("#copy-webhook").addEventListener("click", async () => {
@@ -1495,7 +1495,7 @@ Array.prototype.forEach.call(document.querySelectorAll(".nav-view"),function(b){
 
 // run mode toggle (Demo / Run live)
 var mdDemo=document.getElementById("mode-demo"), mdLive=document.getElementById("mode-live");
-function setRunMode(m){RUN_MODE=m;if(mdDemo)mdDemo.classList.toggle("on",m==="demo");if(mdLive)mdLive.classList.toggle("on",m==="live");}
+function setRunMode(m){RUN_MODE="demo";if(mdDemo)mdDemo.classList.toggle("on",true);if(mdLive)mdLive.classList.toggle("on",false);}/* live mode disabled on public deploy */
 if(mdDemo)mdDemo.addEventListener("click",function(){setRunMode("demo");});
 if(mdLive)mdLive.addEventListener("click",function(){setRunMode("live");});
 
