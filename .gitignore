@@ -72,8 +72,7 @@ next-env.d.ts
 /caps*.json
 /endcard.json
 /upwork-shortlist-*.md
-# local scratch / automation / planning dirs and local Claude settings
+# local scratch / automation / planning dirs
 /.li-jobs/
 /.agents/
 /.planning/
-/.claude/
